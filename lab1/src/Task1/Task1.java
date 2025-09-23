@@ -1,15 +1,25 @@
 package Task1;
 
+/*
+Завдання № 1.
+Перетворення заданого цілого числа у двійкову систему.
+ */
+
 import java.util.Scanner;
 
 public class Task1 {
+
     public static void main(String[] args) {
+        final int number = 47;
+        final String binaryNumber = convertToBinary(number);
+        displayResult(number, binaryNumber);
+    }
 
-        System.out.print("Enter number: ");
-        Scanner scanner = new Scanner(System.in);
-        int number = scanner.nextInt();
+    private static String convertToBinary(final int number) {
+        return Integer.toBinaryString(number);
+    }
 
-        String binaryNumber = Integer.toBinaryString(number);
-        System.out.println(binaryNumber);
+    private static void displayResult(final int number,  final String result) {
+        System.out.println(number + " in binary: " + result);
     }
 }
