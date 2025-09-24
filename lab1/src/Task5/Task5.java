@@ -16,31 +16,22 @@ public class Task5 {
         };
 
         final String substring = "abc";
-        final int count = countSubsringInMatrix(matrix, substring);
+        final int count = countSubstringInMatrix(matrix, substring);
         printResult(substring, count);
 
     }
 
-    public static int countSubsringInMatrix(final String[][] matrix, final String substring) {
-        int totalCount = 0;
-
-        for (final String[] row : matrix) {
-            for (final String str : row) {
-                totalCount += countSubsringInSting(str, substring);
+    public static int countSubstringInMatrix(final String[][] matrix, final String substring) {
+        int total = 0;
+        for (String[] row : matrix) {
+            for (String cell : row) {
+                if (cell.contains(substring)) {
+                    total++;
+                }
             }
         }
-        return totalCount;
-    }
 
-    public static int countSubsringInSting(final String str, final String substring) {
-        int count = 0;
-        int index = 0;
-
-        while((index = str.indexOf(substring, index)) != -1) {
-            count++;
-            index += substring.length();
-        }
-        return count;
+        return total;
     }
 
     public static void printResult(final String substring, final int count) {

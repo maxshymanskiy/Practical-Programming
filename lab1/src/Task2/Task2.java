@@ -49,7 +49,7 @@ public class Task2 {
         double a = Double.parseDouble(input.substring(0, operatorIndex));
         double b = Double.parseDouble(input.substring(operatorIndex + 1).replaceAll("[=].*", ""));
 
-        double result = switch (operator) {
+        return switch (operator) {
             case '+' -> a + b;
             case '-' -> a - b;
             case '*' -> a * b;
@@ -59,6 +59,5 @@ public class Task2 {
             }
             default -> throw new IllegalArgumentException("Невідомий оператор");
         };
-        return result;
     }
 }
