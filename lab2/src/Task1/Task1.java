@@ -1,31 +1,46 @@
 package Task1;
 
+/*
+Завдання № 1. Бібліотека графів.
+Розробити бібліотеку графів. Функції що повинні підтримуватися:
+    - додавання вершини
+    - створення дуг
+    - виведення графу в консоль
+    - вершина повинна містити назву та значення (int, наприклад)
+    - реалізувати створення як орієнтованих, так і неорієнтованих графів
+ */
+
 public class Task1 {
 
     public static void main(String[] args) {
-        // Створення орієнтованого графа
+
         final Graph directedGraph = new Graph(true, 10);
         final GraphService directedService = new GraphService(directedGraph);
         final GraphView view = new GraphView();
 
-        directedService.addVertex("A", 1);
-        directedService.addVertex("B", 2);
-        directedService.addVertex("C", 3);
+        directedService.addVertex("A", 10);
+        directedService.addVertex("B", 20);
+        directedService.addVertex("C", 30);
+
         directedService.addEdge("A", "B");
+        directedService.addEdge("A", "C");
         directedService.addEdge("B", "C");
 
-        System.out.println("Directed Graph:");
         view.displayGraph(directedGraph);
 
-        // Створення неорієнтованого графа
+        System.out.println();
+
         final Graph undirectedGraph = new Graph(false, 10);
         final GraphService undirectedService = new GraphService(undirectedGraph);
 
-        undirectedService.addVertex("X", 10);
-        undirectedService.addVertex("Y", 20);
-        undirectedService.addEdge("X", "Y");
+        undirectedService.addVertex("A", 40);
+        undirectedService.addVertex("B", 20);
+        undirectedService.addVertex("C", 30);
 
-        System.out.println("\nUndirected Graph:");
+        undirectedService.addEdge("A", "B");
+        undirectedService.addEdge("A", "C");
+        undirectedService.addEdge("B", "C");
+
         view.displayGraph(undirectedGraph);
     }
 }

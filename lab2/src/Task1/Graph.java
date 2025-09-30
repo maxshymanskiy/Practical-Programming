@@ -15,8 +15,16 @@ public final class Graph {
         this.adjacencyMatrix = new boolean[maxVertices][maxVertices];
     }
 
-    public List<Vertex> getVertices() { return vertices; }
-    public boolean[][] getAdjacencyMatrix() { return adjacencyMatrix; }
-    public boolean isDirected() { return isDirected; }
+    public List<Vertex> getVertices() {
+        return vertices;
+    }
+
+    public boolean[][] getAdjacencyMatrix() {
+        return adjacencyMatrix;
+    }
+
+    public boolean isDirected() {
+        return isDirected;
+    }
 }
 

@@ -1,6 +1,6 @@
 package Task2;
 
-public class Pyramid implements ThreeDimensionalShape {
+public class Pyramid implements IThreeDimensionalShape {
     private final double baseLength;
     private final double baseWidth;
     private final double height;

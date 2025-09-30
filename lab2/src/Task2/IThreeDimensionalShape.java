@@ -1,6 +1,6 @@
 package Task2;
 
-public interface ThreeDimensionalShape extends Shape {
+public interface IThreeDimensionalShape extends IShape {
     double getArea();
     double getVolume();
 }

@@ -10,8 +10,26 @@ package Task2;
 public class Task2 {
 
     public static void main(String[] args) {
-        Triangle triangle = new Triangle(1,2,6);
-        System.out.println(triangle.getDescription());
-    }
+        final IShape[] shapes = {
+                new Circle(5),
+                new Triangle(3, 4, 5),
+                new Rectangle(4, 6),
+                new Square(5),
+                new Sphere(3),
+                new Cube(4),
+                new Pyramid(6, 4, 5)
+        };
 
+        for (final IShape shape : shapes) {
+            System.out.println(shape.getDescription());
+
+            if (shape instanceof ITwoDimensionalShape twoDimensionalShape) {
+                System.out.printf("Area: %.2f%n", twoDimensionalShape.getArea());
+            } else if (shape instanceof IThreeDimensionalShape threeDimensionalShape) {
+                System.out.printf("Surface area: %.2f%n", threeDimensionalShape.getArea());
+                System.out.printf("Volume: %.2f%n", threeDimensionalShape.getVolume());
+            }
+            System.out.println();
+        }
+    }
 }

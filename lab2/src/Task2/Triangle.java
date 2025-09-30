@@ -1,6 +1,6 @@
 package Task2;
 
-public class Triangle implements TwoDimensionalShape {
+public class Triangle implements ITwoDimensionalShape {
     private final double sideA;
     private final double sideB;
     private final double sideC;

@@ -1,6 +1,6 @@
 package Task2;
 
-public class Sphere implements ThreeDimensionalShape {
+public class Sphere implements IThreeDimensionalShape {
     private final double radius;
 
     public Sphere(final double radius) {

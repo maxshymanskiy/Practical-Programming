@@ -32,7 +32,7 @@ public final class GraphService {
 
     private Vertex findVertexByName(String name) {
         for (final Vertex vertex : graph.getVertices()) {
-            if (vertex.getName().equals(name)) {
+            if (vertex.name().equals(name)) {
                 return vertex;
             }
         }
