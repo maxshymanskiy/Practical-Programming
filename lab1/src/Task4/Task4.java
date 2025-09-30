@@ -2,10 +2,12 @@ package Task4;
 
 /*
 Завдання № 4.
-Вивести на екран кількість кожного символу у рядку. Виконати завдання
+    Вивести на екран кількість кожного символу у рядку. Виконати завдання
 використовуючи масиви та створити клас, що представляє пару значень
 (Символ, Кількість)
-*/
+ */
+
+import java.util.Arrays;
 
 public class Task4 {
 
@@ -16,34 +18,29 @@ public class Task4 {
     }
 
     private static CharCount[] countCharacters(String str) {
-        final CharCount[] tempResults = new CharCount[256];
+        CharCount[] tempResults = new CharCount[str.length()];
         int uniqueCharsCount = 0;
 
-        //TODO Understand how this loops works
         for (int i = 0; i < str.length(); i++) {
-            final char currentChar = str.charAt(i);
-            boolean found = false;
+            char currentChar = str.charAt(i);
+            boolean isFound = false;
 
-            // Шукаємо чи вже є такий символ в масиві
+            // O(n^2)
             for (int j = 0; j < uniqueCharsCount; j++) {
                 if (tempResults[j].getCharacter() == currentChar) {
                     tempResults[j].incrementCount();
-                    found = true;
+                    isFound = true;
                     break;
                 }
             }
 
-            // Якщо символ новий, додаємо його
-            if (!found) {
+            if (!isFound) {
                 tempResults[uniqueCharsCount] = new CharCount(currentChar, 1);
                 uniqueCharsCount++;
             }
         }
 
-        // Створюємо масив точного розміру
-        final CharCount[] results = new CharCount[uniqueCharsCount];
-        System.arraycopy(tempResults, 0, results, 0, uniqueCharsCount); // Better than loop
-        return results;
+        return Arrays.copyOf(tempResults, uniqueCharsCount);
     }
 
     private static void displayResults(CharCount[] results, String originalString) {

@@ -13,10 +13,6 @@ public class CharCount {
         return character;
     }
 
-    public int getCount() {
-        return count;
-    }
-
     public void incrementCount() {
         this.count++;
     }

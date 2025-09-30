@@ -8,23 +8,24 @@ package Task1;
 public class Task1 {
 
     public static void main(String[] args) {
-        final int number = 37;
+        final int number = 77;
         final String binaryNumber = convertToBinary(number);
         displayResult(number, binaryNumber);
     }
 
     private static String convertToBinary(int n) {
-        String s = "";
-
+        StringBuilder sb = new StringBuilder(); // SonarQube suggests using StringBuilder for better performance
+        if (n == 0) {
+            return "0";
+        }
         while (n > 0) {
-            s = ((n % 2 ) == 0 ? "0" : "1") + s;
+            sb.insert(0, (n % 2));
             n /= 2;
         }
-
-        return s;
+        return sb.toString();
     }
 
-    private static void displayResult(final int number,  final String result) {
+    private static void displayResult(final int number, final String result) {
         System.out.println(number + " in binary: " + result);
     }
 }

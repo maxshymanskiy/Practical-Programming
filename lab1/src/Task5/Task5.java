@@ -2,9 +2,9 @@ package Task5;
 
 /*
 Завдання № 5.
-Знайти кількість входжень заданого підрядка (substring) у двовимірну
+    Знайти кількість входжень заданого підрядка (substring) у двовимірну
 матрицю типу String*String.
-*/
+ */
 
 public class Task5 {
 
@@ -15,8 +15,10 @@ public class Task5 {
                 {"aaabc", "aabc", "abc"}
         };
 
-        final String substring = "abc";
+        final String substring = "aa";
+
         final int count = countSubstringInMatrix(matrix, substring);
+
         printResult(substring, count);
 
     }
