@@ -17,9 +17,13 @@ public class CharCount {
         this.count++;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     @Override
     public String toString() {
-        return "'" + character + "' - " + count + " time(s)";
+        return "'" + character + "' - " + getCount() + " time(s)";
     }
 }
 
