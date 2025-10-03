@@ -60,9 +60,18 @@ public class TransferService {
         final boolean sameOwner = from.getOwner().equals(to.getOwner());
         final boolean sameBank = from.getBank().equals(to.getBank());
 
-        if (sameOwner && sameBank) return "Own accounts in same bank (0% fee)";
-        if (sameOwner) return "Own accounts in different banks (2% fee)";
-        if (sameBank) return "Different users in same bank (3% fee)";
+        if (sameOwner && sameBank) {
+            return "Own accounts in same bank (0% fee)";
+        }
+
+        if (sameOwner) {
+            return "Own accounts in different banks (2% fee)";
+        }
+
+        if (sameBank) {
+            return "Different users in same bank (3% fee)";
+        }
+
         return "Different users in different banks (6% fee)";
     }
 
@@ -82,9 +91,18 @@ public class TransferService {
     }
 
     private static double calculateFee(boolean sameOwner, boolean sameBank) {
-        if (sameOwner && sameBank) return 0.0;
-        if (sameOwner) return 2.0;
-        if (sameBank) return 3.0;
+        if (sameOwner && sameBank) {
+            return 0.0;
+        }
+
+        if (sameOwner) {
+            return 2.0;
+        }
+
+        if (sameBank) {
+            return 3.0;
+        }
+
         return 6.0;
     }
 }

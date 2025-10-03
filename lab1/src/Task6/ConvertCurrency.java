@@ -9,8 +9,9 @@ public class ConvertCurrency {
     public double convert(final String input) {
         final String[] parts = input.split("\\s+");
 
-        if (parts.length != 4 || !parts[2].equalsIgnoreCase("into")) {
-            throw new IllegalArgumentException("Невірний формат. Використовуйте: число VAL into VAL");
+        String into = "into";
+        if (parts.length != 4 || !parts[2].equalsIgnoreCase(into)) {
+            throw new IllegalArgumentException("Invalid format. Use: number VAL into VAL");
         }
 
         final double amount = Double.parseDouble(parts[0]);
@@ -27,7 +28,7 @@ public class ConvertCurrency {
             case "USD" -> amount * USD_RATE;
             case "EUR" -> amount * EUR_RATE;
             case "CAD" -> amount * CAD_RATE;
-            default -> throw new IllegalArgumentException("Невідома валюта: " + currency);
+            default -> throw new IllegalArgumentException("Unknow value: " + currency);
         };
     }
 
@@ -37,7 +38,7 @@ public class ConvertCurrency {
             case "USD" -> amount / USD_RATE;
             case "EUR" -> amount / EUR_RATE;
             case "CAD" -> amount / CAD_RATE;
-            default -> throw new IllegalArgumentException("Невідома валюта: " + currency);
+            default -> throw new IllegalArgumentException("Unknow value: " + currency);
         };
     }
 }
