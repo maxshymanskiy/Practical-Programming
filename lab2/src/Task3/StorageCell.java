@@ -28,7 +28,7 @@ public class StorageCell {
 
     public void addProduct(final Product product) {
         if (products.size() >= CAPACITY) {
-            System.out.println("Error: Cell is full! Maximum " + CAPACITY + " products allowed.");
+            System.out.println("Error: Cell is full! Maximum " + CAPACITY + " products allowed."); // Or use custom exception
             return;
         }
 
@@ -53,9 +53,17 @@ public class StorageCell {
         return CAPACITY;
     }
 
-    public double getMaxLength() { return maxLength; }
-    public double getMaxWidth() { return maxWidth; }
-    public double getMaxHeight() { return maxHeight; }
+    public double getMaxLength() {
+        return maxLength;
+    }
+
+    public double getMaxWidth() {
+        return maxWidth;
+    }
+
+    public double getMaxHeight() {
+        return maxHeight;
+    }
 
     public boolean isFull() {
         return products.size() >= CAPACITY;

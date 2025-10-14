@@ -43,15 +43,6 @@ public class Warehouse {
         }
     }
 
-    public int findSuitableCell(final Product product) {
-        for (int i = 0; i < cells.size(); i++) {
-            if (cells.get(i).canAddProduct(product)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public int getTotalProducts() {
         int total = 0;
         for (StorageCell cell : cells) {
