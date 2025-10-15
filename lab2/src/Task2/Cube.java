@@ -1,6 +1,6 @@
 package Task2;
 
-public class Cube implements IThreeDimensionalShape {
+public class Cube implements ThreeDimensionalShape {
     private final double side;
 
     public Cube(final double side) {

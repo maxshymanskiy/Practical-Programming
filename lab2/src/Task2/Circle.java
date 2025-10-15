@@ -1,6 +1,6 @@
 package Task2;
 
-public class Circle implements ITwoDimensionalShape {
+public class Circle implements TwoDimensionalShape {
     private final double radius;
 
     public Circle(final double radius) {

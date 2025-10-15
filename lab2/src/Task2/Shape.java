@@ -1,5 +1,5 @@
 package Task2;
 
-public interface IShape {
+public interface Shape {
     String getDescription();
 }

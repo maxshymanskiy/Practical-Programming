@@ -1,6 +1,6 @@
 package Task2;
 
-public class Rectangle implements ITwoDimensionalShape {
+public class Rectangle implements TwoDimensionalShape {
     private final double height;
     private final double width;
 

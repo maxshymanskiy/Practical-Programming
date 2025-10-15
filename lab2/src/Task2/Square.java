@@ -1,6 +1,6 @@
 package Task2;
 
-public class Square implements ITwoDimensionalShape {
+public class Square implements TwoDimensionalShape {
     private final double side;
 
     public Square(final double side) {
