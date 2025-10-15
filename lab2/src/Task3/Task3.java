@@ -14,6 +14,7 @@ System.out.println(...)). Написати метод, що виведе у ко
 import static Task3.Constants.CELL_CAPACITY;
 
 public class Task3 {
+
     public static void main(String[] args) {
         final Warehouse warehouse = new Warehouse();
 

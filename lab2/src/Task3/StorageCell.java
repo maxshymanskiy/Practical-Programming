@@ -6,6 +6,7 @@ import java.util.List;
 import static Task3.Constants.CELL_CAPACITY;
 
 public class StorageCell {
+
     private final double maxLength;
     private final double maxWidth;
     private final double maxHeight;
