@@ -11,6 +11,8 @@ System.out.println(...)). Написати метод, що виведе у ко
 усі товари на складі.
  */
 
+import static Task3.Constants.CELL_CAPACITY;
+
 public class Task3 {
     public static void main(String[] args) {
         final Warehouse warehouse = new Warehouse();
@@ -34,7 +36,7 @@ public class Task3 {
         }
 
         System.out.println("\n=== Testing cell capacity ===");
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i <= CELL_CAPACITY; i++) {
             final Product smallProduct = new Product(1.0, 1.0, 1.0);
             warehouse.addProductToCell(1, smallProduct);
         }
