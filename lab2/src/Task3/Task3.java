@@ -27,19 +27,22 @@ public class Task3 {
 
         System.out.println("=== Adding products to warehouse ===");
 
-        warehouse.addProductToCell(0, p1);
-        warehouse.addProductToCell(1, p2);
-
         try {
+            warehouse.addProductToCell(0, p1);
+            warehouse.addProductToCell(1, p2);
             warehouse.addProductToCell(0, p3);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalStateException | IllegalArgumentException e) {
             System.out.println("Error adding product: " + e.getMessage());
         }
 
         System.out.println("\n=== Testing cell capacity ===");
         for (int i = 0; i <= CELL_CAPACITY; i++) {
             final Product smallProduct = new Product(1.0, 1.0, 1.0);
-            warehouse.addProductToCell(1, smallProduct);
+            try {
+                warehouse.addProductToCell(1, smallProduct);
+            } catch (IllegalStateException | IllegalArgumentException e) {
+                System.out.println("Error adding product: " + e.getMessage());
+            }
         }
 
         warehouse.printAllProducts();

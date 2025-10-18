@@ -13,17 +13,11 @@ public class Warehouse {
 
     public void addProductToCell(final int cellIndex, final Product product) {
         if (!isValidCellIndex(cellIndex)) {
-            System.out.println("Invalid cell index: " + cellIndex + ". Available cells: 0-" + (cells.size() - 1));
-            return;
+            throw new IllegalArgumentException("Invalid cell index: " + cellIndex);
         }
 
         final StorageCell cell = cells.get(cellIndex);
-
-        try {
-            cell.addProduct(product);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error adding product to cell " + cellIndex + ": " + e.getMessage());
-        }
+        cell.addProduct(product);
     }
 
     public boolean isValidCellIndex(final int cellIndex) {

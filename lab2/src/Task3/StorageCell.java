@@ -20,8 +20,7 @@ public class StorageCell {
 
     public void addProduct(final Product product) {
         if (isFull()) {
-            System.out.println("Error: Cell is full! Maximum " + CELL_CAPACITY + " products allowed.");
-            return;
+            throw new IllegalStateException("Cell is full!");
         }
 
         if (!canAddProductToCell(product)) {
