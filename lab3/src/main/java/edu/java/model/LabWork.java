@@ -20,7 +20,11 @@ public class LabWork {
     }
 
     public LabWork(String labId, String title, int maxPoints, LocalDate deadline) {
-        this(labId, title, maxPoints, deadline, GradingConstants.DEFAULT_PENALTY_PER_DAY);
+        this.labId = labId;
+        this.title = title;
+        this.maxPoints = maxPoints;
+        this.deadline = deadline;
+        this.penaltyPerDay = GradingConstants.DEFAULT_PENALTY_PER_DAY;
     }
 
     public String getLabId() {

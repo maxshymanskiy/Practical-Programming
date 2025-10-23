@@ -48,6 +48,6 @@ public class GradeService {
     }
 
     public void validateStudentGrade(Student student, Course course) {
-        ValidationService.validateStudentTotalGrade(student, course);
+        SubmissionValidator.validateStudentTotalGrade(student, course);
     }
 }

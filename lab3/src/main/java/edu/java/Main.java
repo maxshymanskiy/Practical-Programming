@@ -2,7 +2,9 @@ package edu.java;
 
 import edu.java.exception.*;
 import edu.java.model.*;
-import edu.java.service.*;
+import edu.java.service.CourseService;
+import edu.java.service.GradeService;
+import edu.java.service.StudentService;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -17,7 +19,7 @@ public class Main {
 
         System.out.println("--- 1. Creating Courses with Different Grading Formulas ---");
 
-        // 2. Create Course #1 (CS101) with formula: 40 points for labs + 60 for exam
+        // 2. Create Course #1 (CS101)
         final Course cs101 = courseService.createCourse(
                 "CS101",
                 "Introduction to Computer Science",
@@ -26,7 +28,7 @@ public class Main {
         );
         System.out.println("Created course: " + cs101.getCourseName() + " (Formula: 40L + 60E)");
 
-        // 3. Create Course #2 (MATH202) with formula: 70 points for labs + 30 for exam
+        // 3. Create Course #2 (MATH202)
         final Course math202 = courseService.createCourse(
                 "MATH202",
                 "Calculus II",
@@ -37,12 +39,11 @@ public class Main {
 
         System.out.println("\n--- 2. Populating Course 'CS101' ---");
 
-        // 4. Create LabWork for CS101 (4 labs * 10 points = 40)
+        // 4. Create LabWork for CS101
         final LocalDate deadline = LocalDate.now().plusDays(10);
         final LabWork lab1 = new LabWork("CS101-L1", "Data Types", 10, deadline);
         final LabWork lab2 = new LabWork("CS101-L2", "Loops", 10, deadline.plusDays(7));
-        // Create one lab with a custom penalty
-        final LabWork lab3 = new LabWork("CS101-L3", "Methods", 10, deadline.plusDays(14), 2); // 2 points penalty/day
+        final LabWork lab3 = new LabWork("CS101-L3", "Methods", 10, deadline.plusDays(14), 2);
         final LabWork lab4 = new LabWork("CS101-L4", "Arrays", 10, deadline.plusDays(21));
 
         cs101.addLabWork(lab1);
@@ -51,7 +52,7 @@ public class Main {
         cs101.addLabWork(lab4);
         System.out.println("Added 4 lab works to " + cs101.getCourseId());
 
-        // 5. Create Exam for CS101 (1 exam for 60 points)
+        // 5. Create Exam for CS101
         final Exam finalExam = new Exam("CS101-E1", "Final Exam", 60);
 
         // 6. Create Tasks for the Exam
@@ -64,8 +65,8 @@ public class Main {
         System.out.println("\n--- 3. Creating and Enrolling Students ---");
 
         // 7. Create students
-        final Student student1 = studentService.createStudent("S001", "Ivan Ivanov", "ivan@example.com");
-        final Student student2 = studentService.createStudent("S002", "Maria Shevchenko", "maria@example.com");
+        final Student student1 = studentService.createStudent("S001", "Ivan Petrenko", "ivan@example.com");
+        final Student student2 = studentService.createStudent("S002", "Maria Sydorenko", "maria@example.com");
 
         // 8. Add students to the CS101 course
         cs101.addStudent(student1);
@@ -85,20 +86,23 @@ public class Main {
         student2.takeExam(finalExam, 40);
 
         System.out.println("Students have received grades...");
+
         System.out.println("\n--- 4. Reviewing the Grade Journal (CS101) ---");
 
+        // 10. Generate the journal
         final Map<Student, Integer> journal = gradeService.generateCourseJournal(cs101);
-        journal.forEach((student, totalPoints) ->
-                System.out.printf("Student: %-20s | Total Points: %-3d | Grade: %s%n",
-                        student.getName(),
-                        totalPoints,
-                        gradeService.getGradeLetter(totalPoints)
-                ));
+
+        journal.forEach((student, totalPoints) -> {
+            System.out.printf("Student: %-20s | Total Points: %-3d | Grade: %s%n",
+                    student.getName(),
+                    totalPoints,
+                    gradeService.getGradeLetter(totalPoints)
+            );
+        });
 
         System.out.println("\n--- 5. Demonstrating Penalty Calculation (Separately) ---");
 
         // 11. Check deadline penalty
-        // Maria submitted lab1 (deadline +10 days) on day 11 (1 day late, 1 point penalty)
         final LocalDate lateSubmissionDate = lab1.getDeadline().plusDays(1);
         final int pointsWithPenalty = gradeService.calculateLabWithPenalty(student2, lab1, lateSubmissionDate);
 
@@ -117,21 +121,21 @@ public class Main {
             System.out.println("CAUGHT! -> " + e.getMessage());
         }
 
-        // 13. Attempt to add a lab that violates the formula (limit 40, already have 40)
+        // 13. Attempt to create inaccurate formula
         try {
             System.out.print("Attempting to add an 'extra' lab (10 points) to CS101: ");
             final LabWork extraLab = new LabWork("CS101-L5", "Extra", 10, deadline);
             cs101.addLabWork(extraLab);
-        } catch (ValidationException e) {
-            System.out.println("CAUGHT! -> " + e.getMessage());
+        } catch (GradingFormulaException e) {
+            System.out.println("CAUGHT! (Grading Formula Error) -> " + e.getMessage());
         }
 
-        // 14. Attempt to submit points higher than max
+        // 14. Grade out of bounds
         try {
             System.out.print("Attempting to give Ivan 15 points for a 10-point lab: ");
             student1.submitLab(lab1, 15);
-        } catch (ValidationException e) {
-            System.out.println("CAUGHT! -> " + e.getMessage());
+        } catch (GradeOutOfBoundsException e) {
+            System.out.println("CAUGHT! (Grade Out of Bounds) -> " + e.getMessage());
         }
 
         // 15. Attempt to find a non-existent course

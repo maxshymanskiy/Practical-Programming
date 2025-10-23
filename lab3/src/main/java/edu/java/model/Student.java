@@ -1,6 +1,6 @@
 package edu.java.model;
 
-import edu.java.service.ValidationService;
+import edu.java.service.SubmissionValidator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,12 +24,12 @@ public class Student {
     }
 
     public void submitLab(LabWork labWork, int points) {
-        ValidationService.validateLabPoints(points, labWork);
+        SubmissionValidator.validateLabPoints(points, labWork);
         labSubmissions.put(labWork, points);
     }
 
     public void takeExam(Exam exam, int points) {
-        ValidationService.validateExamPoints(points, exam);
+        SubmissionValidator.validateExamPoints(points, exam);
         examGrades.put(exam, points);
     }
 

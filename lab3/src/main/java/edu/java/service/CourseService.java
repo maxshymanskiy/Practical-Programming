@@ -26,12 +26,11 @@ public class CourseService {
         return course;
     }
 
-    public Course getCourse(String courseId) {
+    public void getCourse(String courseId) {
         Course course = courses.get(courseId);
         if (course == null) {
             throw new EntityNotFoundException("Course with ID " + courseId + " not found");
         }
-        return course;
     }
 
     public List<Course> getAllCourses() {

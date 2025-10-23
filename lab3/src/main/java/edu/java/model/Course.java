@@ -1,6 +1,6 @@
 package edu.java.model;
 
-import edu.java.service.ValidationService;
+import edu.java.service.CourseValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Course {
     private final List<Student> students;
 
     public Course(String courseId, String courseName, int maxTotalLabPoints, int maxTotalExamPoints) {
-        ValidationService.validateCourseFormula(maxTotalLabPoints, maxTotalExamPoints);
+        CourseValidator.validateCourseFormula(maxTotalLabPoints, maxTotalExamPoints);
 
         this.courseId = courseId;
         this.courseName = courseName;
@@ -31,12 +31,12 @@ public class Course {
     }
 
     public void addLabWork(LabWork labWork) {
-        ValidationService.validateCourseAfterAddingLab(this, labWork);
+        CourseValidator.validateCourseAfterAddingLab(this, labWork);
         labWorks.add(labWork);
     }
 
     public void addExam(Exam exam) {
-        ValidationService.validateCourseAfterAddingExam(this, exam);
+        CourseValidator.validateCourseAfterAddingExam(this, exam);
         exams.add(exam);
     }
 
