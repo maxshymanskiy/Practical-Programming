@@ -1,40 +1,78 @@
 package edu.java.model;
 
-import java.time.LocalDate;
+import edu.java.service.ValidationService;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Student {
-    private String id;
-    private String name;
-    private String email;
-    private Map<String, Double> labGrades; // labId -> points
-    private Map<String, Double> examGrades; // examId -> points
-    private Map<String, LocalDate> submissionDates;
+    private final String studentId;
+    private final String name;
+    private final String email;
+    private final Map<LabWork, Integer> labSubmissions;
+    private final Map<Exam, Integer> examGrades;
 
-    public Student(String id, String name, String email) {
-        this.id = id;
+    public Student(String studentId, String name, String email) {
+        this.studentId = studentId;
         this.name = name;
         this.email = email;
-        this.labGrades = new HashMap<>();
+        this.labSubmissions = new HashMap<>();
         this.examGrades = new HashMap<>();
-        this.submissionDates = new HashMap<>();
     }
 
-    public void addLabGrade(String labId, double points, LocalDate submissionDate) {
-        labGrades.put(labId, points);
-        submissionDates.put(labId, submissionDate);
+    public void submitLab(LabWork labWork, int points) {
+        ValidationService.validateLabPoints(points, labWork);
+        labSubmissions.put(labWork, points);
     }
 
-    public void addExamGrade(String examId, double points) {
-        examGrades.put(examId, points);
+    public void takeExam(Exam exam, int points) {
+        ValidationService.validateExamPoints(points, exam);
+        examGrades.put(exam, points);
     }
 
-    // Getters
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public Double getLabGrade(String labId) { return labGrades.get(labId); }
-    public Double getExamGrade(String examId) { return examGrades.get(examId); }
-    public LocalDate getSubmissionDate(String assignmentId) { return submissionDates.get(assignmentId); }
+    public int calculateLabPoints() {
+        return labSubmissions.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    public int calculateExamPoints() {
+        return examGrades.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    public int calculateTotalGrade() {
+        return calculateLabPoints() + calculateExamPoints();
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Map<LabWork, Integer> getLabSubmissions() {
+        return new HashMap<>(labSubmissions);
+    }
+
+    public Map<Exam, Integer> getExamGrades() {
+        return new HashMap<>(examGrades);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(studentId, student.studentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentId);
+    }
 }

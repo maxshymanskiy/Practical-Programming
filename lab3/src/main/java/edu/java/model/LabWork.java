@@ -1,40 +1,57 @@
 package edu.java.model;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class LabWork {
-    private String id;
-    private String title;
-    private LocalDate deadline;
-    private double penaltyPerDay;
-    private List<Task> tasks;
+    private final String labId;
+    private final String title;
+    private final int maxPoints;
+    private final LocalDate deadline;
+    private final int penaltyPerDay;
 
-    public LabWork(String id, String title, LocalDate deadline) {
-        this.id = id;
+    public LabWork(String labId, String title, int maxPoints, LocalDate deadline, int penaltyPerDay) {
+        this.labId = labId;
         this.title = title;
+        this.maxPoints = maxPoints;
         this.deadline = deadline;
-        this.penaltyPerDay = GradingConstants.DEFAULT_PENALTY_PER_DAY;
-        this.tasks = new ArrayList<>();
+        this.penaltyPerDay = penaltyPerDay;
     }
 
-    public double calculateFinalScore(double pointsEarned, LocalDate submissionDate) {
-        if (submissionDate.isAfter(deadline)) {
-            long daysLate = ChronoUnit.DAYS.between(deadline, submissionDate);
-            double penalty = daysLate * penaltyPerDay;
-            return Math.max(0, pointsEarned - penalty);
-        }
-        return pointsEarned;
+    public LabWork(String labId, String title, int maxPoints, LocalDate deadline) {
+        this(labId, title, maxPoints, deadline, (int) GradingConstants.DEFAULT_PENALTY_PER_DAY);
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
+    public String getLabId() {
+        return labId;
     }
 
-    public String getId() { return id; }
-    public String getTitle() { return title; }
-    public LocalDate getDeadline() { return deadline; }
-    public List<Task> getTasks() { return new ArrayList<>(tasks); }
+    public String getTitle() {
+        return title;
+    }
+
+    public int getMaxPoints() {
+        return maxPoints;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public int getPenaltyPerDay() {
+        return penaltyPerDay;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LabWork labWork = (LabWork) o;
+        return Objects.equals(labId, labWork.labId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(labId);
+    }
 }

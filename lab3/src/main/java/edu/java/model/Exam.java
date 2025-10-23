@@ -1,36 +1,52 @@
 package edu.java.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Exam {
-    private String id;
-    private String title;
-    private LocalDate examDate;
-    private List<Task> tasks;
-    private List<String> variants;
+    private final String examId;
+    private final String title;
+    private final int maxPoints;
+    private final List<Task> tasks;
 
-    public Exam(String id, String title, LocalDate examDate) {
-        this.id = id;
+    public Exam(String examId, String title, int maxPoints) {
+        this.examId = examId;
         this.title = title;
-        this.examDate = examDate;
+        this.maxPoints = maxPoints;
         this.tasks = new ArrayList<>();
-        this.variants = new ArrayList<>();
     }
 
     public void addTask(Task task) {
         tasks.add(task);
     }
 
-    public void addVariant(String variant) {
-        variants.add(variant);
+    public String getExamId() {
+        return examId;
     }
 
-    // Getters
-    public String getId() { return id; }
-    public String getTitle() { return title; }
-    public LocalDate getExamDate() { return examDate; }
-    public List<Task> getTasks() { return new ArrayList<>(tasks); }
-    public List<String> getVariants() { return new ArrayList<>(variants); }
+    public String getTitle() {
+        return title;
+    }
+
+    public int getMaxPoints() {
+        return maxPoints;
+    }
+
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exam exam = (Exam) o;
+        return Objects.equals(examId, exam.examId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(examId);
+    }
 }

@@ -1,14 +1,19 @@
 package edu.java.model;
 
-public class Task {
-    private String description;
-    private double points;
+import java.util.Objects;
 
-    public Task(String description, double points) {
-        this.description = description;
-        this.points = points;
+public record Task(String taskId, String description, int points) {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(taskId, task.taskId);
     }
 
-    public String getDescription() { return description; }
-    public double getPoints() { return points; }
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskId);
+    }
 }

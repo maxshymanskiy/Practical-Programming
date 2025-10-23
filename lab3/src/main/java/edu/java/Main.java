@@ -1,67 +1,145 @@
 package edu.java;
 
-import edu.java.service.*;
-import edu.java.model.*;
 import edu.java.exception.*;
-
+import edu.java.model.*;
+import edu.java.service.*;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        CourseService courseService = new CourseService();
-        StudentService studentService = new StudentService();
-        GradeService gradeService = new GradeService();
+        // 1. Create services (Logic)
+        final CourseService courseService = new CourseService();
+        final StudentService studentService = new StudentService();
+        final GradeService gradeService = new GradeService();
 
+        System.out.println("--- 1. Creating Courses with Different Grading Formulas ---");
+
+        // 2. Create Course #1 (CS101) with formula: 40 points for labs + 60 for exam
+        final Course cs101 = courseService.createCourse(
+                "CS101",
+                "Introduction to Computer Science",
+                40, // maxTotalLabPoints
+                60  // maxTotalExamPoints
+        );
+        System.out.println("Created course: " + cs101.getCourseName() + " (Formula: 40L + 60E)");
+
+        // 3. Create Course #2 (MATH202) with formula: 70 points for labs + 30 for exam
+        final Course math202 = courseService.createCourse(
+                "MATH202",
+                "Calculus II",
+                70, // maxTotalLabPoints
+                30  // maxTotalExamPoints
+        );
+        System.out.println("Created course: " + math202.getCourseName() + " (Formula: 70L + 30E)");
+
+        System.out.println("\n--- 2. Populating Course 'CS101' ---");
+
+        // 4. Create LabWork for CS101 (4 labs * 10 points = 40)
+        final LocalDate deadline = LocalDate.now().plusDays(10);
+        final LabWork lab1 = new LabWork("CS101-L1", "Data Types", 10, deadline);
+        final LabWork lab2 = new LabWork("CS101-L2", "Loops", 10, deadline.plusDays(7));
+        // Create one lab with a custom penalty
+        final LabWork lab3 = new LabWork("CS101-L3", "Methods", 10, deadline.plusDays(14), 2); // 2 points penalty/day
+        final LabWork lab4 = new LabWork("CS101-L4", "Arrays", 10, deadline.plusDays(21));
+
+        cs101.addLabWork(lab1);
+        cs101.addLabWork(lab2);
+        cs101.addLabWork(lab3);
+        cs101.addLabWork(lab4);
+        System.out.println("Added 4 lab works to " + cs101.getCourseId());
+
+        // 5. Create Exam for CS101 (1 exam for 60 points)
+        final Exam finalExam = new Exam("CS101-E1", "Final Exam", 60);
+
+        // 6. Create Tasks for the Exam
+        finalExam.addTask(new Task("T1", "Task about variables", 20));
+        finalExam.addTask(new Task("T2", "Task about algorithms", 40));
+
+        cs101.addExam(finalExam);
+        System.out.println("Added 1 exam (for " + finalExam.getMaxPoints() + " points) to " + cs101.getCourseId());
+
+        System.out.println("\n--- 3. Creating and Enrolling Students ---");
+
+        // 7. Create students
+        final Student student1 = studentService.createStudent("S001", "Ivan Ivanov", "ivan@example.com");
+        final Student student2 = studentService.createStudent("S002", "Maria Shevchenko", "maria@example.com");
+
+        // 8. Add students to the CS101 course
+        cs101.addStudent(student1);
+        cs101.addStudent(student2);
+        System.out.println("Added students '" + student1.getName() + "' and '" + student2.getName() + "' to the CS101 course.");
+
+        // 9. Students submit work and get grades
+        // Ivan submitted everything perfectly
+        student1.submitLab(lab1, 10);
+        student1.submitLab(lab2, 10);
+        student1.submitLab(lab3, 10);
+        student1.submitLab(lab4, 10);
+        student1.takeExam(finalExam, 55); // ...but scored a bit lower on the exam
+
+        student2.submitLab(lab1, 8);
+        student2.submitLab(lab2, 7);
+        student2.submitLab(lab4, 9);
+        student2.takeExam(finalExam, 40);
+
+        System.out.println("Students have received grades...");
+        System.out.println("\n--- 4. Reviewing the Grade Journal (CS101) ---");
+
+        final Map<Student, Integer> journal = gradeService.generateCourseJournal(cs101);
+        journal.forEach((student, totalPoints) ->
+                System.out.printf("Student: %-20s | Total Points: %-3d | Grade: %s%n",
+                        student.getName(),
+                        totalPoints,
+                        gradeService.getGradeLetter(totalPoints)
+                ));
+
+        System.out.println("\n--- 5. Demonstrating Penalty Calculation (Separately) ---");
+
+        // 11. Check deadline penalty
+        // Maria submitted lab1 (deadline +10 days) on day 11 (1 day late, 1 point penalty)
+        final LocalDate lateSubmissionDate = lab1.getDeadline().plusDays(1);
+        final int pointsWithPenalty = gradeService.calculateLabWithPenalty(student2, lab1, lateSubmissionDate);
+
+        System.out.println("Calculation for " + student2.getName() + " for " + lab1.getTitle() + ":");
+        System.out.println("  Original points: " + student2.getLabSubmissions().get(lab1));
+        System.out.println("  Submission date: " + lateSubmissionDate + " (Deadline: " + lab1.getDeadline() + ")");
+        System.out.println("  Points with penalty: " + pointsWithPenalty);
+
+        System.out.println("\n--- 6. Handling Exceptional Situations (Exceptions) ---");
+
+        // 12. Attempt to create a duplicate course
         try {
-            System.out.println("=== Coursework Management System ===\n");
+            System.out.print("Attempting to create duplicate course 'CS101': ");
+            courseService.createCourse("CS101", "Duplicate Course", 10, 10);
+        } catch (DuplicateCourseException e) {
+            System.out.println("CAUGHT! -> " + e.getMessage());
+        }
 
-            Course course = courseService.createCourse("CS101", "Java Programming");
-            System.out.println("Created course: " + course.getName());
+        // 13. Attempt to add a lab that violates the formula (limit 40, already have 40)
+        try {
+            System.out.print("Attempting to add an 'extra' lab (10 points) to CS101: ");
+            final LabWork extraLab = new LabWork("CS101-L5", "Extra", 10, deadline);
+            cs101.addLabWork(extraLab);
+        } catch (ValidationException e) {
+            System.out.println("CAUGHT! -> " + e.getMessage());
+        }
 
-            LabWork lab1 = courseService.addLabWork(course, "LAB1", "Basic Syntax",
-                    LocalDate.now().plusDays(7));
-            lab1.addTask(new Task("Write Hello World", 3.0));
-            lab1.addTask(new Task("Create variables", 4.0));
-            lab1.addTask(new Task("Simple arithmetic", 3.0));
+        // 14. Attempt to submit points higher than max
+        try {
+            System.out.print("Attempting to give Ivan 15 points for a 10-point lab: ");
+            student1.submitLab(lab1, 15);
+        } catch (ValidationException e) {
+            System.out.println("CAUGHT! -> " + e.getMessage());
+        }
 
-            LabWork lab2 = courseService.addLabWork(course, "LAB2", "OOP Principles",
-                    LocalDate.now().plusDays(14));
-            lab2.addTask(new Task("Create Student class", 4.0));
-            lab2.addTask(new Task("Implement encapsulation", 3.0));
-            lab2.addTask(new Task("Demonstrate inheritance", 3.0));
-
-            Exam exam = courseService.addExam(course, "EXAM1", "Final Exam",
-                    LocalDate.now().plusDays(35));
-            exam.addTask(new Task("Multiple choice", 20.0));
-            exam.addTask(new Task("Code analysis", 20.0));
-            exam.addTask(new Task("Programming problem", 20.0));
-            exam.addVariant("Variant A");
-            exam.addVariant("Variant B");
-
-            System.out.println("Added labs and exam with tasks");
-
-            Student alice = studentService.enrollStudent(course, "S001", "Alice Johnson", "alice@edu.com");
-            Student bob = studentService.enrollStudent(course, "S002", "Bob Smith", "bob@edu.com");
-
-            studentService.recordLabGrade(alice, lab1, 9.5, LocalDate.now().plusDays(5));
-            studentService.recordLabGrade(alice, lab2, 8.0, LocalDate.now().plusDays(12));
-            studentService.recordExamGrade(alice, exam, 55.0);
-
-            studentService.recordLabGrade(bob, lab1, 7.0, LocalDate.now().plusDays(8));
-            studentService.recordLabGrade(bob, lab2, 6.5, LocalDate.now().plusDays(16)); // спізнення
-            studentService.recordExamGrade(bob, exam, 42.0);
-
-            System.out.println("\n" + gradeService.generateCourseJournal(course));
-
-            System.out.println("=== Grade Boundaries ===");
-            double[] testScores = {95.0, 88.0, 80.0, 71.0, 65.0, 51.0, 45.0};
-            for (double score : testScores) {
-                System.out.printf("Score %.1f: %s\n", score, gradeService.getGradeLetter(score));
-            }
-
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+        // 15. Attempt to find a non-existent course
+        try {
+            System.out.print("Attempting to find non-existent course 'CS999': ");
+            courseService.getCourse("CS999");
+        } catch (EntityNotFoundException e) {
+            System.out.println("CAUGHT! -> " + e.getMessage());
         }
     }
 }
