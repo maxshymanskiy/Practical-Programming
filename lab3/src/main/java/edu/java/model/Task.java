@@ -2,7 +2,10 @@ package edu.java.model;
 
 import java.util.Objects;
 
-public record Task(String taskId, String description, int points) {
+public record Task(
+        String taskId,
+        String description,
+        int points) {
 
     @Override
     public boolean equals(Object o) {

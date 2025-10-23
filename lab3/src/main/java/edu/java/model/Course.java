@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class Course {
+
     private final String courseId;
     private final String courseName;
+
     private final int maxTotalLabPoints;
     private final int maxTotalExamPoints;
+
     private final List<LabWork> labWorks;
     private final List<Exam> exams;
     private final List<Student> students;

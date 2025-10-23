@@ -7,9 +7,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Student {
+
     private final String studentId;
     private final String name;
     private final String email;
+
     private final Map<LabWork, Integer> labSubmissions;
     private final Map<Exam, Integer> examGrades;
 
@@ -32,11 +34,15 @@ public class Student {
     }
 
     public int calculateLabPoints() {
-        return labSubmissions.values().stream().mapToInt(Integer::intValue).sum();
+        return labSubmissions.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     public int calculateExamPoints() {
-        return examGrades.values().stream().mapToInt(Integer::intValue).sum();
+        return examGrades.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     public int calculateTotalGrade() {

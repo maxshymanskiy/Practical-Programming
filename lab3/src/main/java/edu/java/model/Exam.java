@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Exam {
+
     private final String examId;
     private final String title;
     private final int maxPoints;
+    
     private final List<Task> tasks;
 
     public Exam(String examId, String title, int maxPoints) {

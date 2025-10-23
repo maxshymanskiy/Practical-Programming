@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 public class Main {
+
     public static void main(String[] args) {
         // 1. Create services (Logic)
         final CourseService courseService = new CourseService();
@@ -20,8 +21,8 @@ public class Main {
         final Course cs101 = courseService.createCourse(
                 "CS101",
                 "Introduction to Computer Science",
-                40, // maxTotalLabPoints
-                60  // maxTotalExamPoints
+                40,
+                60
         );
         System.out.println("Created course: " + cs101.getCourseName() + " (Formula: 40L + 60E)");
 
@@ -29,8 +30,8 @@ public class Main {
         final Course math202 = courseService.createCourse(
                 "MATH202",
                 "Calculus II",
-                70, // maxTotalLabPoints
-                30  // maxTotalExamPoints
+                70,
+                30
         );
         System.out.println("Created course: " + math202.getCourseName() + " (Formula: 70L + 30E)");
 
@@ -72,12 +73,11 @@ public class Main {
         System.out.println("Added students '" + student1.getName() + "' and '" + student2.getName() + "' to the CS101 course.");
 
         // 9. Students submit work and get grades
-        // Ivan submitted everything perfectly
         student1.submitLab(lab1, 10);
         student1.submitLab(lab2, 10);
         student1.submitLab(lab3, 10);
         student1.submitLab(lab4, 10);
-        student1.takeExam(finalExam, 55); // ...but scored a bit lower on the exam
+        student1.takeExam(finalExam, 55);
 
         student2.submitLab(lab1, 8);
         student2.submitLab(lab2, 7);

@@ -8,7 +8,8 @@ import edu.java.model.LabWork;
 import edu.java.model.Student;
 
 public class ValidationService {
-    private ValidationService() {}
+    private ValidationService() {
+    }
 
     public static void validateCourseFormula(int maxTotalLabPoints, int maxTotalExamPoints) {
         if (maxTotalLabPoints < 0 || maxTotalExamPoints < 0) {

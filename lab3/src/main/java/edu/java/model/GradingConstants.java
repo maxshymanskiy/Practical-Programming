@@ -9,5 +9,5 @@ public final class GradingConstants {
     public static final int GOOD_MIN = 71;
     public static final int SATISFACTORY_MIN = 51;
 
-    public static final double DEFAULT_PENALTY_PER_DAY = 1;
+    public static final int DEFAULT_PENALTY_PER_DAY = 1;
 }

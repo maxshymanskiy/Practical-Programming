@@ -4,7 +4,9 @@ import edu.java.model.Course;
 import edu.java.model.GradingConstants;
 import edu.java.model.LabWork;
 import edu.java.model.Student;
+
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -17,7 +19,7 @@ public class GradeService {
         }
 
         if (submissionDate.isAfter(lab.getDeadline())) {
-            long daysLate = java.time.temporal.ChronoUnit.DAYS.between(lab.getDeadline(), submissionDate);
+            long daysLate = ChronoUnit.DAYS.between(lab.getDeadline(), submissionDate);
             int penalty = (int) (daysLate * lab.getPenaltyPerDay());
             return Math.max(0, points - penalty);
         }

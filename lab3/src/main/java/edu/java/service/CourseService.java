@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CourseService {
+
     private final Map<String, Course> courses;
 
     public CourseService() {
@@ -35,9 +36,5 @@ public class CourseService {
 
     public List<Course> getAllCourses() {
         return new ArrayList<>(courses.values());
-    }
-
-    public boolean courseExists(String courseId) {
-        return courses.containsKey(courseId);
     }
 }

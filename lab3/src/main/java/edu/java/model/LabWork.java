@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class LabWork {
+
     private final String labId;
     private final String title;
     private final int maxPoints;
@@ -19,7 +20,7 @@ public class LabWork {
     }
 
     public LabWork(String labId, String title, int maxPoints, LocalDate deadline) {
-        this(labId, title, maxPoints, deadline, (int) GradingConstants.DEFAULT_PENALTY_PER_DAY);
+        this(labId, title, maxPoints, deadline, GradingConstants.DEFAULT_PENALTY_PER_DAY);
     }
 
     public String getLabId() {
