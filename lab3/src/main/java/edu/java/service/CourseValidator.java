@@ -25,10 +25,12 @@ public final class CourseValidator {
     }
 
     public static void validateCourseAfterAddingLab(Course course, LabWork newLab) {
-        int totalLabPoints = course.getLabWorks().stream()
-                .mapToInt(LabWork::getMaxPoints)
-                .sum() + newLab.getMaxPoints();
+        int totalLabPoints = course.getLabWorks()
+                .stream()
+                .mapToInt(LabWork::maxPoints)
+                .sum();
 
+        totalLabPoints += newLab.maxPoints();
         int maxAllowedLabPoints = course.getMaxTotalLabPoints();
 
         if (totalLabPoints > maxAllowedLabPoints) {
@@ -40,10 +42,12 @@ public final class CourseValidator {
     }
 
     public static void validateCourseAfterAddingExam(Course course, Exam newExam) {
-        int totalExamPoints = course.getExams().stream()
+        int totalExamPoints = course.getExams()
+                .stream()
                 .mapToInt(Exam::getMaxPoints)
-                .sum() + newExam.getMaxPoints();
+                .sum();
 
+        totalExamPoints += newExam.getMaxPoints();
         int maxAllowedExamPoints = course.getMaxTotalExamPoints();
 
         if (totalExamPoints > maxAllowedExamPoints) {

@@ -14,9 +14,9 @@ public class Course {
     private final int maxTotalLabPoints;
     private final int maxTotalExamPoints;
 
-    private final List<LabWork> labWorks;
-    private final List<Exam> exams;
-    private final List<Student> students;
+    private final List<LabWork> labWorks = new ArrayList<>();
+    private final List<Exam> exams = new ArrayList<>();
+    private final List<Student> students = new ArrayList<>();
 
     public Course(String courseId, String courseName, int maxTotalLabPoints, int maxTotalExamPoints) {
         CourseValidator.validateCourseFormula(maxTotalLabPoints, maxTotalExamPoints);
@@ -25,9 +25,6 @@ public class Course {
         this.courseName = courseName;
         this.maxTotalLabPoints = maxTotalLabPoints;
         this.maxTotalExamPoints = maxTotalExamPoints;
-        this.labWorks = new ArrayList<>();
-        this.exams = new ArrayList<>();
-        this.students = new ArrayList<>();
     }
 
     public void addLabWork(LabWork labWork) {

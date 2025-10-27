@@ -11,10 +11,10 @@ public final class SubmissionValidator {
     private SubmissionValidator() {}
 
     public static void validateLabPoints(int points, LabWork labWork) {
-        if (points < 0 || points > labWork.getMaxPoints()) {
+        if (points < 0 || points > labWork.maxPoints()) {
             throw new GradeOutOfBoundsException(
                     String.format("Lab points must be between 0 and %d, but got %d",
-                            labWork.getMaxPoints(), points)
+                            labWork.maxPoints(), points)
             );
         }
     }

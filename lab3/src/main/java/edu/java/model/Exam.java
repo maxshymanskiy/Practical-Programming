@@ -9,14 +9,13 @@ public class Exam {
     private final String examId;
     private final String title;
     private final int maxPoints;
-    
-    private final List<Task> tasks;
+
+    private final List<Task> tasks = new ArrayList<>();
 
     public Exam(String examId, String title, int maxPoints) {
         this.examId = examId;
         this.title = title;
         this.maxPoints = maxPoints;
-        this.tasks = new ArrayList<>();
     }
 
     public void addTask(Task task) {

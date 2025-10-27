@@ -10,11 +10,9 @@ import java.util.Map;
 
 public class CourseService {
 
-    private final Map<String, Course> courses;
+    private final Map<String, Course> courses = new HashMap<>();
 
-    public CourseService() {
-        this.courses = new HashMap<>();
-    }
+    public CourseService() {}
 
     public Course createCourse(String courseId, String courseName, int maxTotalLabPoints, int maxTotalExamPoints) {
         if (courses.containsKey(courseId)) {

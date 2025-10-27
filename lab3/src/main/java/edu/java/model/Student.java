@@ -12,15 +12,13 @@ public class Student {
     private final String name;
     private final String email;
 
-    private final Map<LabWork, Integer> labSubmissions;
-    private final Map<Exam, Integer> examGrades;
+    private final Map<LabWork, Integer> labSubmissions = new HashMap<>();
+    private final Map<Exam, Integer> examGrades = new HashMap<>();
 
     public Student(String studentId, String name, String email) {
         this.studentId = studentId;
         this.name = name;
         this.email = email;
-        this.labSubmissions = new HashMap<>();
-        this.examGrades = new HashMap<>();
     }
 
     public void submitLab(LabWork labWork, int points) {
@@ -34,13 +32,15 @@ public class Student {
     }
 
     public int calculateLabPoints() {
-        return labSubmissions.values().stream()
+        return labSubmissions.values()
+                .stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }
 
     public int calculateExamPoints() {
-        return examGrades.values().stream()
+        return examGrades.values()
+                .stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }

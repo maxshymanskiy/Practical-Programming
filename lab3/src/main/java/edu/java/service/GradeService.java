@@ -18,9 +18,9 @@ public class GradeService {
             return 0;
         }
 
-        if (submissionDate.isAfter(lab.getDeadline())) {
-            long daysLate = ChronoUnit.DAYS.between(lab.getDeadline(), submissionDate);
-            int penalty = (int) (daysLate * lab.getPenaltyPerDay());
+        if (submissionDate.isAfter(lab.deadline())) {
+            long daysLate = ChronoUnit.DAYS.between(lab.deadline(), submissionDate);
+            int penalty = (int) (daysLate * lab.penaltyPerDay());
             return Math.max(0, points - penalty);
         }
 
@@ -28,11 +28,9 @@ public class GradeService {
     }
 
     public Map<Student, Integer> generateCourseJournal(Course course) {
-        return course.getStudents().stream()
-                .collect(Collectors.toMap(
-                        student -> student,
-                        Student::calculateTotalGrade
-                ));
+        return course.getStudents()
+                .stream()
+                .collect(Collectors.toMap(student -> student, Student::calculateTotalGrade));
     }
 
     public String getGradeLetter(int totalPoints) {

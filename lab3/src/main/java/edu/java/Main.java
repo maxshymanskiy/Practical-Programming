@@ -66,7 +66,7 @@ public class Main {
 
         // 7. Create students
         final Student student1 = studentService.createStudent("S001", "Ivan Petrenko", "ivan@example.com");
-        final Student student2 = studentService.createStudent("S002", "Maria Sydorenko", "maria@example.com");
+        final Student student2 = studentService.createStudent("S002", "Maria Nazarenko", "maria@example.com");
 
         // 8. Add students to the CS101 course
         cs101.addStudent(student1);
@@ -92,23 +92,22 @@ public class Main {
         // 10. Generate the journal
         final Map<Student, Integer> journal = gradeService.generateCourseJournal(cs101);
 
-        journal.forEach((student, totalPoints) -> {
-            System.out.printf("Student: %-20s | Total Points: %-3d | Grade: %s%n",
-                    student.getName(),
-                    totalPoints,
-                    gradeService.getGradeLetter(totalPoints)
-            );
-        });
+        journal.forEach((student, totalPoints) ->
+                System.out.printf("Student: %-20s | Total Points: %-3d | Grade: %s%n",
+                student.getName(),
+                totalPoints,
+                gradeService.getGradeLetter(totalPoints)
+        ));
 
         System.out.println("\n--- 5. Demonstrating Penalty Calculation (Separately) ---");
 
         // 11. Check deadline penalty
-        final LocalDate lateSubmissionDate = lab1.getDeadline().plusDays(1);
+        final LocalDate lateSubmissionDate = lab1.deadline().plusDays(1);
         final int pointsWithPenalty = gradeService.calculateLabWithPenalty(student2, lab1, lateSubmissionDate);
 
-        System.out.println("Calculation for " + student2.getName() + " for " + lab1.getTitle() + ":");
+        System.out.println("Calculation for " + student2.getName() + " for " + lab1.title() + ":");
         System.out.println("  Original points: " + student2.getLabSubmissions().get(lab1));
-        System.out.println("  Submission date: " + lateSubmissionDate + " (Deadline: " + lab1.getDeadline() + ")");
+        System.out.println("  Submission date: " + lateSubmissionDate + " (Deadline: " + lab1.deadline() + ")");
         System.out.println("  Points with penalty: " + pointsWithPenalty);
 
         System.out.println("\n--- 6. Handling Exceptional Situations (Exceptions) ---");

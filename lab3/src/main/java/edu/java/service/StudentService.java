@@ -10,11 +10,9 @@ import java.util.Map;
 
 public class StudentService {
 
-    private final Map<String, Student> students;
+    private final Map<String, Student> students = new HashMap<>();
 
-    public StudentService() {
-        this.students = new HashMap<>();
-    }
+    public StudentService() {}
 
     public Student createStudent(String studentId, String name, String email) {
         Student student = new Student(studentId, name, email);
