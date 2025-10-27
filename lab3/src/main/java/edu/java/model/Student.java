@@ -1,6 +1,6 @@
 package edu.java.model;
 
-import edu.java.service.SubmissionValidator;
+import edu.java.validation.SubmissionValidator;
 
 import java.util.HashMap;
 import java.util.Map;

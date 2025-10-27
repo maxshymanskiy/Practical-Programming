@@ -1,4 +1,4 @@
-package edu.java.service;
+package edu.java.validation;
 
 import edu.java.exception.GradingFormulaException;
 import edu.java.exception.ValidationException;

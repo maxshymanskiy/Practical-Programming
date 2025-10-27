@@ -1,4 +1,4 @@
-package edu.java.service;
+package edu.java.validation;
 
 import edu.java.exception.GradeOutOfBoundsException;
 import edu.java.exception.ValidationException;

@@ -1,6 +1,6 @@
 package edu.java.model;
 
-import edu.java.service.CourseValidator;
+import edu.java.validation.CourseValidator;
 
 import java.util.ArrayList;
 import java.util.List;
