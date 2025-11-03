@@ -1,14 +1,16 @@
 package edu.java.lab4.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "lab_submissions")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class LabSubmission {
 

@@ -1,12 +1,14 @@
 package edu.java.lab4.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "exam_submissions")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class ExamSubmission {
 
