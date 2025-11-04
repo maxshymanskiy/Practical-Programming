@@ -10,13 +10,14 @@ The main focus of these labs is to practice and demonstrate fundamental concepts
 
 This repository is structured by lab number. Each directory contains the source code and any necessary resources for that specific assignment.
 
-* `lab1/`
-* `lab2/`
-* `lab3/`
-
+* `lab1/` - Java basics
+* `lab2/` - Java OOP
+* `lab3/` - StreamAPI, Exception
+* `lab4/` - Spring Boot, Maven
+  
 ---
 
 ### Prerequisites
 
-* **Java Development Kit (JDK)** - 25.
+* **Java Development Kit (JDK)** - 21.
 * IDE [IntelliJ IDEA](https://www.jetbrains.com/idea/)
