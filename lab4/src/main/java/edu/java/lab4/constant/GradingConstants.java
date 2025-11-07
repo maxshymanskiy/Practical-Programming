@@ -1,13 +1,20 @@
 package edu.java.lab4.constant;
 
-public final class GradingConstants {
-    private GradingConstants() {}
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-    public static final int MAX_TOTAL_POINTS = 100;
+@Getter
+@AllArgsConstructor
+public enum GradingConstants {
 
-    public static final int EXCELLENT_MIN = 88;
-    public static final int GOOD_MIN = 71;
-    public static final int SATISFACTORY_MIN = 51;
+    MAX_TOTAL_POINTS(100, "Max total points"),
+    EXCELLENT_MIN(88, "Excellent"),
+    GOOD_MIN(71, "Good"),
+    SATISFACTORY_MIN(51, "Satisfactory"),
+    DEFAULT_PENALTY_PER_DAY(1, "Default penalty per day"),
+    FAIL(50, "Fail"),
+    ;
 
-    public static final int DEFAULT_PENALTY_PER_DAY = 1;
+    private final int value;
+    private final String description;
 }
