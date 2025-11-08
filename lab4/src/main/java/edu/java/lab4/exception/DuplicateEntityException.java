@@ -1,10 +1,11 @@
 package edu.java.lab4.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-@ResponseStatus(HttpStatus.CONFLICT)
 public class DuplicateEntityException extends RuntimeException {
+
+    public DuplicateEntityException(String entityType, String field, String value) {
+        super(String.format("%s with %s '%s' already exists", entityType, field, value));
+    }
+
     public DuplicateEntityException(String message) {
         super(message);
     }
