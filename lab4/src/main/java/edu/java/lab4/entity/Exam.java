@@ -1,59 +1,54 @@
 package edu.java.lab4.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "exams")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Exam {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String examId;
-
+    @Column(nullable = false, length = 200)
     private String title;
-    private int maxPoints;
 
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks = new ArrayList<>();
+    @Column(length = 1000)
+    private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @Column(name = "scheduled_date", nullable = false)
+    private LocalDateTime scheduledDate;
+
+    @Column(name = "duration_minutes")
+    private Integer durationMinutes;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    public Exam(String examId, String title, int maxPoints) {
-        this.examId = examId;
-        this.title = title;
-        this.maxPoints = maxPoints;
-    }
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Task> tasks = new ArrayList<>();
 
-    public void addTask(Task task) {
-        tasks.add(task);
-        task.setExam(this);
-    }
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<ExamSubmission> submissions = new ArrayList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Exam exam = (Exam) o;
-        return Objects.equals(examId, exam.examId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(examId);
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 }

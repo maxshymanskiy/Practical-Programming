@@ -1,60 +1,72 @@
 package edu.java.lab4.entity;
 
-
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "students")
+@Table(name = "students", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "student_number")
+})
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String studentId;
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true, length = 100)
     private String email;
 
+    @Column(name = "student_number", nullable = false, unique = true, length = 20)
+    private String studentNumber;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @ManyToMany(mappedBy = "students")
-    private List<Course> courses = new ArrayList<>();
+    @Builder.Default
+    private Set<Course> courses = new HashSet<>();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<LabSubmission> labSubmissions = new ArrayList<>();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<ExamSubmission> examSubmissions = new ArrayList<>();
 
-    public Student(String studentId, String name, String email) {
-        this.studentId = studentId;
-        this.name = name;
-        this.email = email;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return Objects.equals(studentId, student.studentId);
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(studentId);
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }

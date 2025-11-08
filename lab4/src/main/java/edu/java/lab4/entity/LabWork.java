@@ -1,55 +1,76 @@
 package edu.java.lab4.entity;
 
-import edu.java.lab4.constant.GradingConstants;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDate;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "lab_works")
+@Table(name = "lab_works", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"course_id", "lab_number"})
+})
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class LabWork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String labId;
+    @Column(name = "lab_number", nullable = false)
+    private Integer labNumber;
 
+    @Column(nullable = false, length = 200)
     private String title;
-    private int maxPoints;
-    private LocalDate deadline;
-    private int penaltyPerDay = GradingConstants.DEFAULT_PENALTY_PER_DAY;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @Column(length = 1000)
+    private String description;
+
+    @Column(nullable = false)
+    private LocalDateTime deadline;
+
+    @Column(name = "allows_late_submission", nullable = false)
+    @Builder.Default
+    private Boolean allowsLateSubmission = true;
+
+    @Column(name = "late_penalty_per_day")
+    private Double latePenaltyPerDay; // Percentage (e.g., 0.10 = 10%)
+
+    @Column(name = "max_late_days")
+    private Integer maxLateDays;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    public LabWork(String labId, String title, int maxPoints, LocalDate deadline, int penaltyPerDay) {
-        this.labId = labId;
-        this.title = title;
-        this.maxPoints = maxPoints;
-        this.deadline = deadline;
-        this.penaltyPerDay = penaltyPerDay;
+    @OneToMany(mappedBy = "labWork", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<LabSubmission> submissions = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LabWork labWork = (LabWork) o;
-        return Objects.equals(labId, labWork.labId);
-    }
+    public double calculatePenaltyMultiplier(LocalDateTime submissionTime) {
+        if (submissionTime.isBefore(deadline) || !allowsLateSubmission) {
+            return 1.0; // No penalty
+        }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(labId);
+        long daysLate = java.time.Duration.between(deadline, submissionTime).toDays();
+        if (maxLateDays != null && daysLate > maxLateDays) {
+            return 0.0; // Too late, no points
+        }
+
+        double penalty = (latePenaltyPerDay != null ? latePenaltyPerDay : 0.0) * daysLate;
+        return Math.max(0.0, (1.0 - penalty));
     }
 }

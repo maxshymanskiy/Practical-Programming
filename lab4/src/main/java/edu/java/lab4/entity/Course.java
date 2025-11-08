@@ -1,64 +1,80 @@
 package edu.java.lab4.entity;
 
-
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "courses")
+@Table(name = "courses", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "academic_year"})
+})
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String courseId;
+    @Column(nullable = false, length = 100)
+    private String name;
 
-    @Column(nullable = false)
-    private String courseName;
+    @Column(length = 500)
+    private String description;
 
-    private int maxTotalLabPoints;
-    private int maxTotalExamPoints;
+    @Column(name = "academic_year", nullable = false)
+    private String academicYear; // e.g., "2024-2025"
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LabWork> labWorks = new ArrayList<>();
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Exam> exams = new ArrayList<>();
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    // ✅ Grading formula configuration
+    @Column(name = "lab_weight", nullable = false)
+    private Integer labWeight; // Points per lab (default: 10)
+
+    @Column(name = "lab_count", nullable = false)
+    private Integer labCount; // Expected number of labs (default: 4)
+
+    @Column(name = "exam_weight", nullable = false)
+    private Integer examWeight; // Exam points (default: 60)
 
     @ManyToMany
     @JoinTable(
-        name = "course_students",
-        joinColumns = @JoinColumn(name = "course_id"),
-        inverseJoinColumns = @JoinColumn(name = "student_id")
+            name = "course_students",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private List<Student> students = new ArrayList<>();
+    @Builder.Default
+    private Set<Student> students = new HashSet<>();
 
-    public Course(String courseId, String courseName, int maxTotalLabPoints, int maxTotalExamPoints) {
-        this.courseId = courseId;
-        this.courseName = courseName;
-        this.maxTotalLabPoints = maxTotalLabPoints;
-        this.maxTotalExamPoints = maxTotalExamPoints;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<LabWork> labWorks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Exam> exams = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    public void addLabWork(LabWork labWork) {
-        labWorks.add(labWork);
-        labWork.setCourse(this);
-    }
-
-    public void addExam(Exam exam) {
-        exams.add(exam);
-        exam.setCourse(this);
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
     public void addStudent(Student student) {
@@ -66,16 +82,12 @@ public class Course {
         student.getCourses().add(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return Objects.equals(courseId, course.courseId);
+    public void removeStudent(Student student) {
+        students.remove(student);
+        student.getCourses().remove(this);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(courseId);
+    public int calculateMaxGrade() {
+        return (labWeight * labCount) + examWeight;
     }
 }
