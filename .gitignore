@@ -8,3 +8,11 @@ out/
 .project
 .settings/
 target/
+
+### Spring Boot ###
+.gitattributes
+mvnw
+mvnw.cmd
+lab4.iml
+data/
+.mvn/
