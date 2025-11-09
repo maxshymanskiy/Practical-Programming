@@ -1,19 +1,17 @@
 package edu.java.lab4.mapper;
 
 import edu.java.lab4.dto.request.StudentCreateRequest;
+import edu.java.lab4.dto.response.CourseResponse;
 import edu.java.lab4.dto.response.StudentDetailResponse;
 import edu.java.lab4.dto.response.StudentResponse;
+import edu.java.lab4.entity.Course;
 import edu.java.lab4.entity.Student;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class StudentMapper {
-
-    @Lazy
-    private final CourseMapper courseMapper;
 
     public Student toEntity(StudentCreateRequest request) {
         return Student.builder()
@@ -46,9 +44,33 @@ public class StudentMapper {
                 .studentNumber(student.getStudentNumber())
                 .courses(student.getCourses()
                         .stream()
-                        .map(courseMapper::toResponse)
+                        .map(this::toCourseResponse)
                         .toList())
                 .createdAt(student.getCreatedAt())
+                .build();
+    }
+
+    /*
+     For fixing circular dependency reference in StudentMapper
+     ┌─────┐
+     |  courseMapper defined in file CourseMapper.class
+     ↑     ↓
+     |  studentMapper defined in file StudentMapper.class
+     └─────┘
+    */
+    private CourseResponse toCourseResponse(Course course) {
+        return CourseResponse.builder()
+                .id(course.getId())
+                .name(course.getName())
+                .description(course.getDescription())
+                .academicYear(course.getAcademicYear())
+                .labWeight(course.getLabWeight())
+                .labCount(course.getLabCount())
+                .examWeight(course.getExamWeight())
+                .maxGrade(course.calculateMaxGrade())
+                .enrolledStudents(course.getStudents().size())
+                .createdAt(course.getCreatedAt())
+                .updatedAt(course.getUpdatedAt())
                 .build();
     }
 }

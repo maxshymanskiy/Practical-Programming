@@ -3,7 +3,9 @@ package edu.java.lab4.mapper;
 import edu.java.lab4.dto.request.CourseCreateRequest;
 import edu.java.lab4.dto.response.CourseDetailResponse;
 import edu.java.lab4.dto.response.CourseResponse;
+import edu.java.lab4.dto.response.StudentResponse;
 import edu.java.lab4.entity.Course;
+import edu.java.lab4.entity.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CourseMapper {
 
-    private final StudentMapper studentMapper;
     private final LabWorkMapper labWorkMapper;
     private final ExamMapper examMapper;
 
@@ -63,7 +64,7 @@ public class CourseMapper {
                 .maxGrade(course.calculateMaxGrade())
                 .students(course.getStudents()
                         .stream()
-                        .map(studentMapper::toResponse)
+                        .map(this::toStudentResponse)
                         .toList())
                 .labWorks(course.getLabWorks()
                         .stream()
@@ -74,6 +75,27 @@ public class CourseMapper {
                         .map(examMapper::toResponse)
                         .toList())
                 .createdAt(course.getCreatedAt())
+                .build();
+    }
+
+    /*
+     For fixing circular dependency reference in CourseMapper
+     ┌─────┐
+     |  courseMapper defined in file CourseMapper.class
+     ↑     ↓
+     |  studentMapper defined in file StudentMapper.class
+     └─────┘
+    */
+    private StudentResponse toStudentResponse(Student student) {
+        return StudentResponse.builder()
+                .id(student.getId())
+                .firstName(student.getFirstName())
+                .lastName(student.getLastName())
+                .fullName(student.getFullName())
+                .email(student.getEmail())
+                .studentNumber(student.getStudentNumber())
+                .enrolledCoursesCount(student.getCourses().size())
+                .createdAt(student.getCreatedAt())
                 .build();
     }
 }

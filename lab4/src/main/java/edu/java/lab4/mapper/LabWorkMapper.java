@@ -5,6 +5,8 @@ import edu.java.lab4.dto.response.*;
 import edu.java.lab4.entity.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class LabWorkMapper {
 
@@ -35,6 +37,16 @@ public class LabWorkMapper {
                 .courseName(labWork.getCourse().getName())
                 .submissionsCount(labWork.getSubmissions().size())
                 .createdAt(labWork.getCreatedAt())
+                .build();
+    }
+
+    public LabSubmission toSubmissionEntity(LabSubmissionRequest request, Student student, LabWork labWork) {
+        return LabSubmission.builder()
+                .student(student)
+                .labWork(labWork)
+                .submissionUrl(request.getSubmissionUrl())
+                .notes(request.getNotes())
+                .submittedAt(LocalDateTime.now())
                 .build();
     }
 

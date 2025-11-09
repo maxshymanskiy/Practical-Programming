@@ -5,6 +5,8 @@ import edu.java.lab4.dto.response.*;
 import edu.java.lab4.entity.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class ExamMapper {
 
@@ -15,6 +17,26 @@ public class ExamMapper {
                 .scheduledDate(request.getScheduledDate())
                 .durationMinutes(request.getDurationMinutes())
                 .course(course)
+                .build();
+    }
+
+    public Task toTaskEntity(TaskCreateRequest request, Exam exam) {
+        return Task.builder()
+                .exam(exam)
+                .variantNumber(request.getVariantNumber())
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .build();
+    }
+
+    public ExamSubmission toSubmissionEntity(ExamSubmissionRequest request, Student student, Exam exam, Task assignedTask) {
+        return ExamSubmission.builder()
+                .student(student)
+                .exam(exam)
+                .assignedTask(assignedTask)
+                .submissionUrl(request.getSubmissionUrl())
+                .answer(request.getAnswer())
+                .submittedAt(LocalDateTime.now())
                 .build();
     }
 
