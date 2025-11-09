@@ -16,6 +16,5 @@ public class StudentGradeResponse {
     private Double labTotal;
     private Double examGrade;
     private Double totalGrade;
-    private String letterGrade; // A, B, C, D, F
     private Boolean passed;
 }
