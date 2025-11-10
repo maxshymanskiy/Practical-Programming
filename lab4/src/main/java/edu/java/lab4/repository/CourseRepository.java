@@ -17,7 +17,10 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("SELECT DISTINCT c FROM Course c " +
             "LEFT JOIN FETCH c.students " +
             "LEFT JOIN FETCH c.labWorks " +
-            "LEFT JOIN FETCH c.exams " +
+            /*"LEFT JOIN FETCH c.exams " +
+            exam will be lazy fetched by Hibernate using @Transactional(readOnly = true)
+            FIXED: MultipleBagFetchException
+            */
             "WHERE c.id = :id")
     Optional<Course> findByIdWithDetails(@Param("id") Long id);
 }
