@@ -19,21 +19,17 @@ public class ExamValidator {
     public void validateTaskUniqueness(Long examId, Integer variantNumber) {
         if (taskRepository.existsByExamIdAndVariantNumber(examId, variantNumber)) {
             throw new DuplicateEntityException(
-                    String.format("Task variant %d already exists for this exam",
-                            variantNumber)
+                    String.format("Task variant %d already exists for this exam", variantNumber)
             );
         }
     }
 
     public void validateExamSubmission(Student student, Exam exam) {
-        // Перевірка чи студент записаний на курс
         if (!exam.getCourse().getStudents().contains(student)) {
             throw InvalidSubmissionException.notEnrolled();
         }
 
-        // Перевірка чи вже здавав
-        if (examSubmissionRepository.existsByStudentIdAndExamId(
-                student.getId(), exam.getId())) {
+        if (examSubmissionRepository.existsByStudentIdAndExamId(student.getId(), exam.getId())) {
             throw InvalidSubmissionException.alreadySubmitted("exam");
         }
     }

@@ -9,6 +9,7 @@ import edu.java.lab4.repository.LabWorkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Component
@@ -27,28 +28,22 @@ public class LabWorkValidator {
     }
 
     public void validateLabSubmission(Student student, LabWork labWork) {
-        // Перевірка чи студент записаний на курс
         if (!labWork.getCourse().getStudents().contains(student)) {
             throw InvalidSubmissionException.notEnrolled();
         }
 
-        // Перевірка чи вже здавав
-        if (labSubmissionRepository.existsByStudentIdAndLabWorkId(
-                student.getId(), labWork.getId())) {
+        if (labSubmissionRepository.existsByStudentIdAndLabWorkId(student.getId(), labWork.getId())) {
             throw InvalidSubmissionException.alreadySubmitted("lab work");
         }
 
-        // Перевірка дедлайну
         LocalDateTime now = LocalDateTime.now();
         if (now.isAfter(labWork.getDeadline())) {
             if (!labWork.getAllowsLateSubmission()) {
                 throw InvalidSubmissionException.deadlinePassed(false);
             }
 
-            // Перевірка чи не занадто пізно
             if (labWork.getMaxLateDays() != null) {
-                long daysLate = java.time.Duration.between(
-                        labWork.getDeadline(), now).toDays();
+                long daysLate = Duration.between(labWork.getDeadline(), now).toDays();
 
                 if (daysLate > labWork.getMaxLateDays()) {
                     throw InvalidSubmissionException.deadlinePassed(true);

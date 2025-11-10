@@ -16,15 +16,12 @@ public class CourseValidator {
 
     public void validateCourseUniqueness(String name, String academicYear) {
         if (courseRepository.existsByNameAndAcademicYear(name, academicYear)) {
-            throw new DuplicateEntityException("Course", "name + year",
-                    name + " " + academicYear
-            );
+            throw new DuplicateEntityException("Course", "name + year", name + " " + academicYear);
         }
     }
 
     public void validateCourseNameOnUpdate(String newName, String oldName, String academicYear) {
-        if (!newName.equals(oldName) &&
-                courseRepository.existsByNameAndAcademicYear(newName, academicYear)) {
+        if (!newName.equals(oldName) && courseRepository.existsByNameAndAcademicYear(newName, academicYear)) {
             throw new DuplicateEntityException("Course", "name", newName);
         }
     }

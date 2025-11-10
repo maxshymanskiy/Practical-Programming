@@ -20,12 +20,8 @@ public class InvalidSubmissionException extends RuntimeException {
 
     public static InvalidSubmissionException deadlinePassed(boolean allowsLate) {
         if (allowsLate) {
-            return new InvalidSubmissionException(
-                    "Submission is too late - maximum late days exceeded"
-            );
+            return new InvalidSubmissionException("Submission is too late - maximum late days exceeded");
         }
-        return new InvalidSubmissionException(
-                "Deadline has passed and late submissions are not allowed"
-        );
+        return new InvalidSubmissionException("Deadline has passed and late submissions are not allowed");
     }
 }
