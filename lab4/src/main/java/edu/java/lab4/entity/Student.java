@@ -37,6 +37,9 @@ public class Student {
     @Column(name = "student_number", nullable = false, unique = true, length = 20)
     private String studentNumber;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

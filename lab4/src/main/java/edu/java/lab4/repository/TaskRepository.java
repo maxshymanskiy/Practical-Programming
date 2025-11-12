@@ -11,6 +11,4 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     boolean existsByExamIdAndVariantNumber(Long examId, Integer variantNumber);
 
     List<Task> findByExamIdOrderByVariantNumber(Long examId);
-
-    Optional<Task> findByExamIdAndVariantNumber(Long examId, Integer variantNumber);
 }

@@ -18,9 +18,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationErrors(
-            MethodArgumentNotValidException ex,
-            HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex, HttpServletRequest request) {
 
         List<String> validationErrors = ex.getBindingResult()
                 .getAllErrors()
@@ -49,10 +47,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityNotFound(
-            EntityNotFoundException ex,
-            HttpServletRequest request) {
-
+    public ResponseEntity<ErrorResponse> handleEntityNotFound(EntityNotFoundException ex, HttpServletRequest request) {
         log.warn("Entity not found: {}", ex.getMessage());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
@@ -68,10 +63,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(DuplicateEntityException.class)
-    public ResponseEntity<ErrorResponse> handleDuplicateEntity(
-            DuplicateEntityException ex,
-            HttpServletRequest request) {
-
+    public ResponseEntity<ErrorResponse> handleDuplicateEntity(DuplicateEntityException ex, HttpServletRequest request) {
         log.warn("Duplicate entity: {}", ex.getMessage());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
@@ -87,10 +79,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(InvalidGradeFormulaException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidGradeFormula(
-            InvalidGradeFormulaException ex,
-            HttpServletRequest request) {
-
+    public ResponseEntity<ErrorResponse> handleInvalidGradeFormula(InvalidGradeFormulaException ex, HttpServletRequest request) {
         log.warn("Invalid grade formula: {}", ex.getMessage());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
@@ -106,10 +95,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(InvalidSubmissionException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidSubmission(
-            InvalidSubmissionException ex,
-            HttpServletRequest request) {
-
+    public ResponseEntity<ErrorResponse> handleInvalidSubmission(InvalidSubmissionException ex, HttpServletRequest request) {
         log.warn("Invalid submission: {}", ex.getMessage());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
@@ -125,10 +111,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgument(
-            IllegalArgumentException ex,
-            HttpServletRequest request) {
-
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
         log.warn("Illegal argument: {}", ex.getMessage());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
@@ -144,10 +127,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(
-            Exception ex,
-            HttpServletRequest request) {
-
+    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex, HttpServletRequest request) {
         log.error("Unexpected error occurred", ex);
 
         ErrorResponse errorResponse = ErrorResponse.builder()
