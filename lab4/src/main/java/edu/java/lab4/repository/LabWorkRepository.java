@@ -13,8 +13,4 @@ public interface LabWorkRepository extends JpaRepository<LabWork, Long> {
     boolean existsByCourseIdAndLabNumber(Long courseId, Integer labNumber);
 
     List<LabWork> findByCourseIdOrderByLabNumber(Long courseId);
-
-    @Query("SELECT l FROM LabWork l WHERE l.course.id = :courseId " +
-            "AND l.labNumber = :labNumber")
-    Optional<LabWork> findByCourseIdAndLabNumber(@Param("courseId") Long courseId, @Param("labNumber") Integer labNumber);
 }

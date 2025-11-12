@@ -13,6 +13,4 @@ public interface ExamSubmissionRepository extends JpaRepository<ExamSubmission, 
     Optional<ExamSubmission> findByStudentIdAndExamId(Long studentId, Long examId);
 
     List<ExamSubmission> findByExamIdOrderBySubmittedAt(Long examId);
-
-    List<ExamSubmission> findByExamIdAndGradedAtIsNull(Long examId);
 }
