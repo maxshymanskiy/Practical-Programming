@@ -51,14 +51,13 @@ public class Lab4Application {
     [X] Get Course Journal - 500 error, when don't exist --- FIXED
     [X] Grade Lab Submission and Grade Exam Submission - teacher can give a higher grade than labs can take (labWeight = 10, assigned 15) --- FIXED
     [X] Get Student Grade - return 0 if a student is not enrolled in a course --- FIXED
+    [] Creating labwork when my limitation is 3, but I can create 4
      */
 
     /*
     - error with @Transactional and @Lazy - circular dependency(FIXED) in StudentMapper and CourseMapper
+    - InvalidGradeException - not handle by global exception handler (FIXED)
      */
-
-
-
 }
 
 

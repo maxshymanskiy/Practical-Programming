@@ -15,5 +15,4 @@ public class ErrorResponse {
     private String message;
     private String path;
     private LocalDateTime timestamp;
-    private List<String> validationErrors; // For validation failures
 }

@@ -19,27 +19,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex, HttpServletRequest request) {
-
-        List<String> validationErrors = ex.getBindingResult()
-                .getAllErrors()
-                .stream()
-                .map(error -> {
-                    if (error instanceof FieldError fieldError) {
-                        return fieldError.getField() + ": " + fieldError.getDefaultMessage();
-                    }
-                    return error.getDefaultMessage();
-                })
-                .toList();
-
-        log.warn("Validation failed: {}", validationErrors);
+        log.warn("Validation failed: {}", ex.getMessage());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Validation Failed")
-                .message("Invalid input parameters")
+                .message("Invalid request body. Please check the request body and try again.")
                 .path(request.getRequestURI())
                 .timestamp(LocalDateTime.now())
-                .validationErrors(validationErrors)
                 .build();
 
         return ResponseEntity.badRequest().body(errorResponse);
@@ -117,6 +104,22 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Bad Request")
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+
+    @ExceptionHandler(InvalidGradeException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidGrade(InvalidGradeException ex, HttpServletRequest request) {
+        log.warn("Invalid grade: {}", ex.getMessage());
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("Invalid Grade")
                 .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .timestamp(LocalDateTime.now())
