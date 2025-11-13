@@ -15,4 +15,6 @@ mvnw
 mvnw.cmd
 lab4.iml
 data/
+logs/
+postman_collection.json
 .mvn/
