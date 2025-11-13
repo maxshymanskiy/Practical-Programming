@@ -24,7 +24,8 @@ public class LabWorkCreateRequest {
     @Size(min = 5, max = 200)
     private String title;
 
-    @Size(min = MIN_TASK_DESCRIPTION_LENGTH, max = MAX_TASK_DESCRIPTION_LENGTH)
+    @Size(min = MIN_COURSE_NAME_LENGTH,
+            max = MAX_TASK_DESCRIPTION_LENGTH)
     private String description;
 
     @NotNull(message = "Deadline is required")

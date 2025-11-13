@@ -31,10 +31,10 @@ public class Lab4Application {
 
 
     /* ERRORS to fix
-    [ ] Get Course Details - getting detail when students are not enrolled in a course and/or the labTask are not assigned
+    [X] Get Course Details - getting detail when students are not enrolled in a course and/or the labTask are not assigned
     [X] Get Course Journal - 500 error, when don't exist --- FIXED
-    [ ] Grade Lab Submission and Grade Exam Submission - teacher can give a higher grade than labs can take (labWeight = 10, assigned 15)
-    [ ] Get Student Grade - return 0 if a student is not enrolled in a course
+    [X] Grade Lab Submission and Grade Exam Submission - teacher can give a higher grade than labs can take (labWeight = 10, assigned 15)
+    [X] Get Student Grade - return 0 if a student is not enrolled in a course
      */
 
 

@@ -1,5 +1,6 @@
 package edu.java.lab4.mapper;
 
+import edu.java.lab4.constant.GradingConstants;
 import edu.java.lab4.dto.response.JournalResponse;
 import edu.java.lab4.dto.response.StudentGradeResponse;
 import edu.java.lab4.entity.Course;
@@ -7,8 +8,6 @@ import edu.java.lab4.entity.Student;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static edu.java.lab4.constant.GradingConstants.PASSING_GRADE;
 
 @Component
 public class JournalMapper {
@@ -33,7 +32,7 @@ public class JournalMapper {
             Integer maxGrade
     ) {
         Double totalGrade = labTotal + (examGrade != null ? examGrade : 0.0);
-        Boolean passed = totalGrade >= PASSING_GRADE;
+        Boolean passed = totalGrade >= GradingConstants.PASSING_GRADE;
 
         return StudentGradeResponse.builder()
                 .studentId(student.getId())

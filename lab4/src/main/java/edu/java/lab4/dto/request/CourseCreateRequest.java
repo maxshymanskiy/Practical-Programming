@@ -15,8 +15,9 @@ import static edu.java.lab4.constant.GradingConstants.*;
 public class CourseCreateRequest {
 
     @NotBlank(message = "Course name is required")
-    @Size(min = MIN_COURSE_NAME_LENGTH, max = MAX_COURSE_NAME_LENGTH,
-            message = "Course name must be between 3 and 100 characters"
+    @Size(min = MIN_COURSE_NAME_LENGTH,
+          max = MAX_COURSE_NAME_LENGTH,
+          message = "Course name must be between 3 and 100 characters"
     )
     private String name;
 

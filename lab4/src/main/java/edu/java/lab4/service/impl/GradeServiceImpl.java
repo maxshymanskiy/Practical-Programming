@@ -1,11 +1,11 @@
 package edu.java.lab4.service.impl;
 
 import edu.java.lab4.dto.response.*;
-        import edu.java.lab4.entity.*;
-        import edu.java.lab4.exception.EntityNotFoundException;
+import edu.java.lab4.entity.*;
+import edu.java.lab4.exception.EntityNotFoundException;
 import edu.java.lab4.mapper.JournalMapper;
 import edu.java.lab4.repository.*;
-        import edu.java.lab4.service.GradeService;
+import edu.java.lab4.service.GradeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static edu.java.lab4.constant.GradingConstants.*;
+import static edu.java.lab4.constant.GradingConstants.CACHE_JOURNAL;
 
 /**
  * Calculates student grades and generates journal reports.
@@ -54,6 +54,14 @@ public class GradeServiceImpl implements GradeService {
     public Double calculateStudentTotalGrade(Long courseId, Long studentId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException("Course", courseId));
+                
+        boolean isEnrolled = course.getStudents().stream()
+                .anyMatch(student -> student.getId().equals(studentId));
+                
+        if (!isEnrolled) {
+            log.info("Student {} is not enrolled in course {}. Returning zero grade.", studentId, courseId);
+            return 0.0;
+        }
 
         Double labTotal = calculateLabTotal(course, studentId);
         Double examGrade = getExamGrade(course, studentId);

@@ -18,7 +18,8 @@ import static edu.java.lab4.constant.GradingConstants.MIN_COURSE_NAME_LENGTH;
 @Builder
 public class CourseUpdateRequest {
 
-    @Size(min = MIN_COURSE_NAME_LENGTH, max = MAX_COURSE_NAME_LENGTH)
+    @Size(min = MIN_COURSE_NAME_LENGTH,
+            max = MAX_COURSE_NAME_LENGTH)
     private String name;
 
     @Size(max = 500)

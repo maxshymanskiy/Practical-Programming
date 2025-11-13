@@ -8,6 +8,7 @@ import edu.java.lab4.mapper.ExamMapper;
 import edu.java.lab4.repository.*;
 import edu.java.lab4.service.ExamService;
 import edu.java.lab4.service.validation.ExamValidator;
+import edu.java.lab4.service.validation.GradeValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,6 +32,7 @@ public class ExamServiceImpl implements ExamService {
     private final StudentRepository studentRepository;
     private final ExamMapper examMapper;
     private final ExamValidator examValidator;
+    private final GradeValidator gradeValidator;
     private final Random random = new Random();
 
     @Override
@@ -142,6 +144,8 @@ public class ExamServiceImpl implements ExamService {
         ExamSubmission submission = examSubmissionRepository.findById(request.getSubmissionId())
                 .orElseThrow(() -> new EntityNotFoundException("ExamSubmission", request.getSubmissionId()));
 
+        gradeValidator.validateExamGrade(submission.getExam(), request.getGrade());
+        
         submission.setGrade(request.getGrade());
         submission.setGraderNotes(request.getGraderNotes());
         submission.setGradedAt(java.time.LocalDateTime.now());

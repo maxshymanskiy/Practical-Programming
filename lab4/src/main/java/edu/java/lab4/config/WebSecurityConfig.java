@@ -2,6 +2,7 @@ package edu.java.lab4.config;
 
 import edu.java.lab4.security.AuthEntryPointJwt;
 import edu.java.lab4.security.AuthTokenFilter;
+import edu.java.lab4.security.JwtUtil;
 import edu.java.lab4.service.impl.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +29,11 @@ public class WebSecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
     private final AuthEntryPointJwt unauthorizedHandler;
+    private final JwtUtil jwtUtil;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
+        return new AuthTokenFilter(jwtUtil, userDetailsService);
     }
 
     @Bean

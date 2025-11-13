@@ -9,6 +9,8 @@ import edu.java.lab4.entity.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class CourseMapper {
@@ -62,18 +64,19 @@ public class CourseMapper {
                 .labCount(course.getLabCount())
                 .examWeight(course.getExamWeight())
                 .maxGrade(course.calculateMaxGrade())
-                .students(course.getStudents()
+                .students(course.getStudents() != null ? course.getStudents()
                         .stream()
                         .map(this::toStudentResponse)
-                        .toList())
-                .labWorks(course.getLabWorks()
+                        .toList() : List.of())
+                .labWorks(course.getLabWorks() != null ? course.getLabWorks()
                         .stream()
                         .map(labWorkMapper::toResponse)
-                        .toList())
-                .exams(course.getExams()
+                        .toList() : List.of())
+                .exams(course.getExams() != null ? course.getExams()
                         .stream()
                         .map(examMapper::toResponse)
-                        .toList())
+                        .toList() : List.of())
+
                 .createdAt(course.getCreatedAt())
                 .build();
     }

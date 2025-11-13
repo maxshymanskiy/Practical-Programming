@@ -26,6 +26,6 @@ public class TaskCreateRequest {
     private String title;
 
     @NotBlank(message = "Description is required")
-    @Size(min = MIN_TASK_DESCRIPTION_LENGTH, max = 2000)
+    @Size(min = MIN_TASK_DESCRIPTION_LENGTH)
     private String description;
 }

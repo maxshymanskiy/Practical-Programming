@@ -22,7 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static edu.java.lab4.constant.GradingConstants.*;
+import static edu.java.lab4.constant.GradingConstants.CACHE_COURSES;
+import static edu.java.lab4.constant.GradingConstants.CACHE_JOURNAL;
 
 @Slf4j
 @Service

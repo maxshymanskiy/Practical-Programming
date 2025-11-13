@@ -11,16 +11,17 @@ import edu.java.lab4.mapper.LabWorkMapper;
 import edu.java.lab4.repository.*;
 import edu.java.lab4.service.LabWorkService;
 import edu.java.lab4.service.validation.LabWorkValidator;
+import edu.java.lab4.service.validation.GradeValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static edu.java.lab4.constant.GradingConstants.*;
+
 
 @Slf4j
 @Service
@@ -33,6 +34,7 @@ public class LabWorkServiceImpl implements LabWorkService {
     private final StudentRepository studentRepository;
     private final LabWorkMapper labWorkMapper;
     private final LabWorkValidator labWorkValidator;
+    private final GradeValidator gradeValidator;
 
     @Override
     @Transactional
@@ -119,6 +121,8 @@ public class LabWorkServiceImpl implements LabWorkService {
 
         LabSubmission submission = labSubmissionRepository.findById(request.getSubmissionId())
                 .orElseThrow(() -> new EntityNotFoundException("LabSubmission", request.getSubmissionId()));
+
+        gradeValidator.validateLabGrade(submission.getLabWork(), request.getGrade());
 
         submission.setRawGrade(request.getGrade());
         submission.setGraderNotes(request.getGraderNotes());

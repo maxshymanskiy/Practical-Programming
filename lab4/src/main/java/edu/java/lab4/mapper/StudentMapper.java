@@ -9,6 +9,8 @@ import edu.java.lab4.entity.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class StudentMapper {
@@ -30,7 +32,7 @@ public class StudentMapper {
                 .fullName(student.getFullName())
                 .email(student.getEmail())
                 .studentNumber(student.getStudentNumber())
-                .enrolledCoursesCount(student.getCourses().size())
+                .enrolledCoursesCount(student.getCourses() != null ? student.getCourses().size() : 0)
                 .createdAt(student.getCreatedAt())
                 .build();
     }
@@ -42,10 +44,10 @@ public class StudentMapper {
                 .lastName(student.getLastName())
                 .email(student.getEmail())
                 .studentNumber(student.getStudentNumber())
-                .courses(student.getCourses()
+                .courses(student.getCourses() != null ? student.getCourses()
                         .stream()
                         .map(this::toCourseResponse)
-                        .toList())
+                        .toList() : List.of())
                 .createdAt(student.getCreatedAt())
                 .build();
     }
