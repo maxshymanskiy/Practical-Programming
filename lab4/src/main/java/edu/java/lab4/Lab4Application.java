@@ -58,6 +58,15 @@ public class Lab4Application {
     - error with @Transactional and @Lazy - circular dependency(FIXED) in StudentMapper and CourseMapper
     - InvalidGradeException - not handle by global exception handler (FIXED)
      */
+
+    /*
+    1) Don't use LocalDateTime instead use Instant
+    2) Move @Transactional above class, not method
+    3) instead of ```task = taskRepository.save(task);``` use ```taskRepository.save(task);```
+    4) for tables make ```if not exist```
+    5) @PreAutorized
+
+     */
 }
 
 
