@@ -44,7 +44,8 @@ public class ExamServiceImpl implements ExamService {
                 .orElseThrow(() -> new EntityNotFoundException("Course", request.getCourseId()));
 
         Exam exam = examMapper.toEntity(request, course);
-        exam = examRepository.save(exam);
+
+        examRepository.save(exam);
 
         log.info("Exam created with ID: {}", exam.getId());
         return examMapper.toResponse(exam);
@@ -94,7 +95,7 @@ public class ExamServiceImpl implements ExamService {
 
         Task task = examMapper.toTaskEntity(request, exam);
 
-        task = taskRepository.save(task);
+        taskRepository.save(task);
 
         log.info("Task created with ID: {}", task.getId());
         return examMapper.toTaskResponse(task);
@@ -124,9 +125,9 @@ public class ExamServiceImpl implements ExamService {
 
         Task assignedTask = assignTaskToStudent(request, exam);
 
-        ExamSubmission submission = examMapper.toSubmissionEntity(request, student, exam, assignedTask);
+        var submission = examMapper.toSubmissionEntity(request, student, exam, assignedTask);
 
-        submission = examSubmissionRepository.save(submission);
+        examSubmissionRepository.save(submission);
 
         log.info("Exam submission created with ID: {}, task variant: {}",
                 submission.getId(),
@@ -150,7 +151,7 @@ public class ExamServiceImpl implements ExamService {
         submission.setGraderNotes(request.getGraderNotes());
         submission.setGradedAt(java.time.LocalDateTime.now());
 
-        submission = examSubmissionRepository.save(submission);
+        examSubmissionRepository.save(submission);
 
         log.info("Exam submission graded: {}", submission.getGrade());
         return examMapper.toSubmissionResponse(submission);

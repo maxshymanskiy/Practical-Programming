@@ -56,8 +56,9 @@ public class LabWorkServiceImpl implements LabWorkService {
             request.setMaxLateDays(MAX_LATE_DAYS);
         }
 
-        LabWork labWork = labWorkMapper.toEntity(request, course);
-        labWork = labWorkRepository.save(labWork);
+        var labWork = labWorkMapper.toEntity(request, course);
+
+        labWorkRepository.save(labWork);
 
         log.info("Lab work created with ID: {}", labWork.getId());
         return labWorkMapper.toResponse(labWork);
@@ -105,9 +106,9 @@ public class LabWorkServiceImpl implements LabWorkService {
 
         labWorkValidator.validateLabSubmission(student, labWork);
 
-        LabSubmission submission = labWorkMapper.toSubmissionEntity(request, student, labWork);
+        var submission = labWorkMapper.toSubmissionEntity(request, student, labWork);
 
-        submission = labSubmissionRepository.save(submission);
+        labSubmissionRepository.save(submission);
 
         log.info("Lab submission created with ID: {}", submission.getId());
         return labWorkMapper.toSubmissionResponse(submission);
@@ -128,7 +129,8 @@ public class LabWorkServiceImpl implements LabWorkService {
         submission.setGraderNotes(request.getGraderNotes());
 
         submission.calculateFinalGrade();
-        submission = labSubmissionRepository.save(submission);
+
+        labSubmissionRepository.save(submission);
 
         log.info("Lab submission graded: raw={}, final={}, penalty={}%",
                 submission.getRawGrade(),

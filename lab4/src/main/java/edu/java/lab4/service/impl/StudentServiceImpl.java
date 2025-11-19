@@ -39,7 +39,8 @@ public class StudentServiceImpl implements StudentService {
         studentValidator.validateStudentUniqueness(request.getEmail(), request.getStudentNumber());
 
         Student student = studentMapper.toEntity(request);
-        student = studentRepository.save(student);
+
+        studentRepository.save(student);
 
         log.info("Student created with ID: {}", student.getId());
         return studentMapper.toResponse(student);

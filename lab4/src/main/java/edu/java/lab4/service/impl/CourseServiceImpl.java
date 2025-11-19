@@ -51,8 +51,9 @@ public class CourseServiceImpl implements CourseService {
                 request.getExamWeight()
         );
 
-        Course course = courseMapper.toEntity(request);
-        course = courseRepository.save(course);
+        var course = courseMapper.toEntity(request);
+
+        courseRepository.save(course);
 
         log.info("Course created with ID: {}", course.getId());
         return courseMapper.toResponse(course);
@@ -100,7 +101,8 @@ public class CourseServiceImpl implements CourseService {
             course.setExamWeight(examWeight);
         }
 
-        course = courseRepository.save(course);
+        courseRepository.save(course);
+
         return courseMapper.toResponse(course);
     }
 

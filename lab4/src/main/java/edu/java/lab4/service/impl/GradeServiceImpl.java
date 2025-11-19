@@ -54,53 +54,55 @@ public class GradeServiceImpl implements GradeService {
     public Double calculateStudentTotalGrade(Long courseId, Long studentId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException("Course", courseId));
-                
-        boolean isEnrolled = course.getStudents().stream()
-                .anyMatch(student -> student.getId().equals(studentId));
-                
-        if (!isEnrolled) {
+        
+        if (!isStudentEnrolled(course, studentId)) {
             log.info("Student {} is not enrolled in course {}. Returning zero grade.", studentId, courseId);
             return 0.0;
         }
+        
+        return calculateTotalGrade(course, studentId);
+    }
 
+    
+    private boolean isStudentEnrolled(Course course, Long studentId) {
+        return course.getStudents().stream()
+            .anyMatch(student -> student.getId().equals(studentId));
+    }
+    
+    private Double calculateTotalGrade(Course course, Long studentId) {
         Double labTotal = calculateLabTotal(course, studentId);
         Double examGrade = getExamGrade(course, studentId);
-
         return labTotal + (examGrade != null ? examGrade : 0.0);
     }
 
     private StudentGradeDto calculateStudentGrade(Course course, Student student) {
-        List<Double> labGrades = new ArrayList<>();
-        double labTotal = 0.0;
-
-        for (int i = 1; i <= course.getLabCount(); i++) {
-            final int labNumber = i;
-
-            Optional<LabWork> labWork = course.getLabWorks()
-                    .stream()
-                    .filter(l -> l.getLabNumber().equals(labNumber))
-                    .findFirst();
-
-            if (labWork.isPresent()) {
-                Optional<LabSubmission> submission = labSubmissionRepository.findByStudentIdAndLabWorkId(
-                                student.getId(),
-                                labWork.get().getId());
-
-                double grade = submission
-                        .map(LabSubmission::getFinalGrade)
-                        .orElse(0.0);
-
-                labGrades.add(grade);
-                labTotal += grade;
-            } else {
-                labGrades.add(0.0);
-            }
-        }
+        List<Double> labGrades = collectLabGrades(course, student);
+        double labTotal = labGrades
+                .stream()
+                .mapToDouble(Double::doubleValue)
+                .sum();
 
         Double examGrade = getExamGrade(course, student.getId());
         Integer maxGrade = course.calculateMaxGrade();
 
         return journalMapper.toStudentGradeResponse(student, labGrades, labTotal, examGrade, maxGrade);
+    }
+
+    private List<Double> collectLabGrades(Course course, Student student) {
+        List<Double> labGrades = new ArrayList<>();
+        for (int labNumber = 1; labNumber <= course.getLabCount(); labNumber++) {
+            labGrades.add(getGradeForLab(course, student, labNumber));
+        }
+        return labGrades;
+    }
+
+    private double getGradeForLab(Course course, Student student, int labNumber) {
+        return course.getLabWorks().stream()
+                .filter(l -> l.getLabNumber().equals(labNumber))
+                .findFirst()
+                .flatMap(lw -> labSubmissionRepository.findByStudentIdAndLabWorkId(student.getId(), lw.getId())
+                        .map(LabSubmission::getFinalGrade))
+                .orElse(0.0);
     }
 
     private Double calculateLabTotal(Course course, Long studentId) {
