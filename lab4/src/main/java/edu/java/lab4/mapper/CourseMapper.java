@@ -1,9 +1,9 @@
 package edu.java.lab4.mapper;
 
-import edu.java.lab4.dto.request.CourseCreateRequest;
-import edu.java.lab4.dto.response.CourseDetailResponse;
-import edu.java.lab4.dto.response.CourseResponse;
-import edu.java.lab4.dto.response.StudentResponse;
+import edu.java.lab4.dto.request.CourseCreateDto;
+import edu.java.lab4.dto.response.CourseDetailDto;
+import edu.java.lab4.dto.response.CourseDto;
+import edu.java.lab4.dto.response.StudentDto;
 import edu.java.lab4.entity.Course;
 import edu.java.lab4.entity.Student;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class CourseMapper {
     /**
      * CreateRequest → Entity
      */
-    public Course toEntity(CourseCreateRequest request) {
+    public Course toEntity(CourseCreateDto request) {
         return Course.builder()
                 .name(request.getName())
                 .description(request.getDescription())
@@ -35,8 +35,8 @@ public class CourseMapper {
     /**
      * Entity → Response
      */
-    public CourseResponse toResponse(Course course) {
-        return CourseResponse.builder()
+    public CourseDto toResponse(Course course) {
+        return CourseDto.builder()
                 .id(course.getId())
                 .name(course.getName())
                 .description(course.getDescription())
@@ -54,8 +54,8 @@ public class CourseMapper {
     /**
      * Entity → DetailResponse
      */
-    public CourseDetailResponse toDetailResponse(Course course) {
-        return CourseDetailResponse.builder()
+    public CourseDetailDto toDetailResponse(Course course) {
+        return CourseDetailDto.builder()
                 .id(course.getId())
                 .name(course.getName())
                 .description(course.getDescription())
@@ -89,8 +89,8 @@ public class CourseMapper {
      |  studentMapper defined in file StudentMapper.class
      └─────┘
     */
-    private StudentResponse toStudentResponse(Student student) {
-        return StudentResponse.builder()
+    private StudentDto toStudentResponse(Student student) {
+        return StudentDto.builder()
                 .id(student.getId())
                 .firstName(student.getFirstName())
                 .lastName(student.getLastName())

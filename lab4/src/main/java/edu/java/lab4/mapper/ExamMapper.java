@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Component
 public class ExamMapper {
 
-    public Exam toEntity(ExamCreateRequest request, Course course) {
+    public Exam toEntity(ExamCreateDto request, Course course) {
         return Exam.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -20,7 +20,7 @@ public class ExamMapper {
                 .build();
     }
 
-    public Task toTaskEntity(TaskCreateRequest request, Exam exam) {
+    public Task toTaskEntity(TaskCreateDto request, Exam exam) {
         return Task.builder()
                 .exam(exam)
                 .variantNumber(request.getVariantNumber())
@@ -29,7 +29,7 @@ public class ExamMapper {
                 .build();
     }
 
-    public ExamSubmission toSubmissionEntity(ExamSubmissionRequest request, Student student, Exam exam, Task assignedTask) {
+    public ExamSubmission toSubmissionEntity(ExamSubmissionCreateDto request, Student student, Exam exam, Task assignedTask) {
         return ExamSubmission.builder()
                 .student(student)
                 .exam(exam)
@@ -40,8 +40,8 @@ public class ExamMapper {
                 .build();
     }
 
-    public ExamResponse toResponse(Exam exam) {
-        return ExamResponse.builder()
+    public ExamDto toResponse(Exam exam) {
+        return ExamDto.builder()
                 .id(exam.getId())
                 .title(exam.getTitle())
                 .description(exam.getDescription())
@@ -55,8 +55,8 @@ public class ExamMapper {
                 .build();
     }
 
-    public TaskResponse toTaskResponse(Task task) {
-        return TaskResponse.builder()
+    public TaskDto toTaskResponse(Task task) {
+        return TaskDto.builder()
                 .id(task.getId())
                 .variantNumber(task.getVariantNumber())
                 .title(task.getTitle())
@@ -67,8 +67,8 @@ public class ExamMapper {
                 .build();
     }
 
-    public ExamSubmissionResponse toSubmissionResponse(ExamSubmission submission) {
-        return ExamSubmissionResponse.builder()
+    public ExamSubmissionDto toSubmissionResponse(ExamSubmission submission) {
+        return ExamSubmissionDto.builder()
                 .id(submission.getId())
                 .studentId(submission.getStudent().getId())
                 .studentName(submission.getStudent().getFullName())

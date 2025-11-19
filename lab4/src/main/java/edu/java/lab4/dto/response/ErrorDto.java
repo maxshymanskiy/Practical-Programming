@@ -3,13 +3,12 @@ package edu.java.lab4.dto.response;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorResponse {
+public class ErrorDto {
     private Integer status;
     private String error;
     private String message;

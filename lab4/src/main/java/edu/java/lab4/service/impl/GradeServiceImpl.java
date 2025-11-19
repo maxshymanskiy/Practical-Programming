@@ -34,16 +34,16 @@ public class GradeServiceImpl implements GradeService {
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = CACHE_JOURNAL, key = "#courseId")
-    public JournalResponse calculateCourseJournal(Long courseId) {
+    public JournalDto calculateCourseJournal(Long courseId) {
         log.info("Calculating journal for course ID: {}", courseId);
 
         Course course = courseRepository.findByIdWithDetails(courseId)
                 .orElseThrow(() -> new EntityNotFoundException("Course", courseId));
 
-        List<StudentGradeResponse> studentGrades = course.getStudents()
+        List<StudentGradeDto> studentGrades = course.getStudents()
                 .stream()
                 .map(student -> calculateStudentGrade(course, student))
-                .sorted(Comparator.comparing(StudentGradeResponse::getStudentName))
+                .sorted(Comparator.comparing(StudentGradeDto::getStudentName))
                 .toList();
 
         return journalMapper.toJournalResponse(course, studentGrades);
@@ -69,7 +69,7 @@ public class GradeServiceImpl implements GradeService {
         return labTotal + (examGrade != null ? examGrade : 0.0);
     }
 
-    private StudentGradeResponse calculateStudentGrade(Course course, Student student) {
+    private StudentGradeDto calculateStudentGrade(Course course, Student student) {
         List<Double> labGrades = new ArrayList<>();
         double labTotal = 0.0;
 

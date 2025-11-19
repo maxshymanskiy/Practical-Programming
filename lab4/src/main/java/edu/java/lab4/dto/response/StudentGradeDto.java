@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentGradeResponse {
+public class StudentGradeDto {
     private Long studentId;
     private String studentName;
     private String studentNumber;

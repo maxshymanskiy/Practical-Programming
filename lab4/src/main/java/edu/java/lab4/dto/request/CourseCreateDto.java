@@ -12,7 +12,7 @@ import static edu.java.lab4.constant.GradingConstants.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseCreateRequest {
+public class CourseCreateDto {
 
     @NotBlank(message = "Course name is required")
     @Size(min = MIN_COURSE_NAME_LENGTH,

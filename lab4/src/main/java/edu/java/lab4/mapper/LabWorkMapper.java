@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Component
 public class LabWorkMapper {
 
-    public LabWork toEntity(LabWorkCreateRequest request, Course course) {
+    public LabWork toEntity(LabWorkCreateDto request, Course course) {
         return LabWork.builder()
                 .labNumber(request.getLabNumber())
                 .title(request.getTitle())
@@ -23,8 +23,8 @@ public class LabWorkMapper {
                 .build();
     }
 
-    public LabWorkResponse toResponse(LabWork labWork) {
-        return LabWorkResponse.builder()
+    public LabWorkDto toResponse(LabWork labWork) {
+        return LabWorkDto.builder()
                 .id(labWork.getId())
                 .labNumber(labWork.getLabNumber())
                 .title(labWork.getTitle())
@@ -40,7 +40,7 @@ public class LabWorkMapper {
                 .build();
     }
 
-    public LabSubmission toSubmissionEntity(LabSubmissionRequest request, Student student, LabWork labWork) {
+    public LabSubmission toSubmissionEntity(LabSubmissionCreateDto request, Student student, LabWork labWork) {
         return LabSubmission.builder()
                 .student(student)
                 .labWork(labWork)
@@ -50,8 +50,8 @@ public class LabWorkMapper {
                 .build();
     }
 
-    public LabSubmissionResponse toSubmissionResponse(LabSubmission submission) {
-        return LabSubmissionResponse.builder()
+    public LabSubmissionDto toSubmissionResponse(LabSubmission submission) {
+        return LabSubmissionDto.builder()
                 .id(submission.getId())
                 .studentId(submission.getStudent().getId())
                 .studentName(submission.getStudent().getFullName())

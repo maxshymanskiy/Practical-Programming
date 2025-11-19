@@ -11,7 +11,7 @@ import static edu.java.lab4.constant.GradingConstants.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LabWorkCreateRequest {
+public class LabWorkCreateDto {
 
     @NotNull(message = "Course ID is required")
     private Long courseId;

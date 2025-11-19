@@ -7,17 +7,19 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LabSubmissionRequest {
+public class ExamSubmissionCreateDto {
 
     @NotNull(message = "Student ID is required")
     private Long studentId;
 
-    @NotNull(message = "Lab work ID is required")
-    private Long labWorkId;
+    @NotNull(message = "Exam ID is required")
+    private Long examId;
+
+    private Long assignedTaskId; // Optional: auto-assign if null
 
     @Size(max = 500)
     private String submissionUrl;
 
     @Size(max = 1000)
-    private String notes;
+    private String answer;
 }

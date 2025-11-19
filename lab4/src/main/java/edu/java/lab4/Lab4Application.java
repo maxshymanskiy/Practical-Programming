@@ -65,6 +65,7 @@ public class Lab4Application {
     3) instead of ```task = taskRepository.save(task);``` use ```taskRepository.save(task);```
     4) for tables make ```if not exist```
     5) @PreAutorized
+    6) Change SecurityFilterChain in WebSecurityConfig
 
      */
 }

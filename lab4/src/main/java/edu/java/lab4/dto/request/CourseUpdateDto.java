@@ -16,7 +16,7 @@ import static edu.java.lab4.constant.GradingConstants.MIN_COURSE_NAME_LENGTH;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseUpdateRequest {
+public class CourseUpdateDto {
 
     @Size(min = MIN_COURSE_NAME_LENGTH,
             max = MAX_COURSE_NAME_LENGTH)

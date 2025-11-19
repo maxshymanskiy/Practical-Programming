@@ -6,21 +6,21 @@ import java.util.List;
 
 public interface ExamService {
 
-    ExamResponse createExam(ExamCreateRequest request);
+    ExamDto createExam(ExamCreateDto request);
 
-    ExamResponse getExamById(Long id);
+    ExamDto getExamById(Long id);
 
-    List<ExamResponse> getExamsByCourse(Long courseId);
+    List<ExamDto> getExamsByCourse(Long courseId);
 
     void deleteExam(Long id);
 
-    TaskResponse createTask(TaskCreateRequest request);
+    TaskDto createTask(TaskCreateDto request);
 
-    List<TaskResponse> getTasksByExam(Long examId);
+    List<TaskDto> getTasksByExam(Long examId);
 
-    ExamSubmissionResponse submitExam(ExamSubmissionRequest request);
+    ExamSubmissionDto submitExam(ExamSubmissionCreateDto request);
 
-    ExamSubmissionResponse gradeExamSubmission(ExamGradeRequest request);
+    ExamSubmissionDto gradeExamSubmission(ExamGradeDto request);
 
-    List<ExamSubmissionResponse> getSubmissionsByExam(Long examId);
+    List<ExamSubmissionDto> getSubmissionsByExam(Long examId);
 }

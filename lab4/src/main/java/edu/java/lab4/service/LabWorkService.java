@@ -1,27 +1,27 @@
 package edu.java.lab4.service;
 
-import edu.java.lab4.dto.request.LabGradeRequest;
-import edu.java.lab4.dto.request.LabSubmissionRequest;
-import edu.java.lab4.dto.request.LabWorkCreateRequest;
-import edu.java.lab4.dto.response.LabSubmissionResponse;
-import edu.java.lab4.dto.response.LabWorkResponse;
+import edu.java.lab4.dto.request.LabGradeEvaluateDto;
+import edu.java.lab4.dto.request.LabSubmissionCreateDto;
+import edu.java.lab4.dto.request.LabWorkCreateDto;
+import edu.java.lab4.dto.response.LabSubmissionDto;
+import edu.java.lab4.dto.response.LabWorkDto;
 import java.util.List;
 
 public interface LabWorkService {
 
-    LabWorkResponse createLabWork(LabWorkCreateRequest request);
+    LabWorkDto createLabWork(LabWorkCreateDto request);
 
-    LabWorkResponse getLabWorkById(Long id);
+    LabWorkDto getLabWorkById(Long id);
 
-    List<LabWorkResponse> getLabWorksByCourse(Long courseId);
+    List<LabWorkDto> getLabWorksByCourse(Long courseId);
 
     void deleteLabWork(Long id);
 
-    LabSubmissionResponse submitLabWork(LabSubmissionRequest request);
+    LabSubmissionDto submitLabWork(LabSubmissionCreateDto request);
 
-    LabSubmissionResponse gradeLabSubmission(LabGradeRequest request);
+    LabSubmissionDto gradeLabSubmission(LabGradeEvaluateDto request);
 
-    List<LabSubmissionResponse> getSubmissionsByLabWork(Long labWorkId);
+    List<LabSubmissionDto> getSubmissionsByLabWork(Long labWorkId);
 
-    List<LabSubmissionResponse> getSubmissionsByStudent(Long studentId);
+    List<LabSubmissionDto> getSubmissionsByStudent(Long studentId);
 }

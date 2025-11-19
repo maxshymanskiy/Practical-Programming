@@ -8,18 +8,19 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExamSubmissionResponse {
+public class LabSubmissionDto {
     private Long id;
     private Long studentId;
     private String studentName;
-    private Long examId;
-    private String examTitle;
-    private Long assignedTaskId;
-    private Integer taskVariant;
+    private Long labWorkId;
+    private String labTitle;
     private String submissionUrl;
-    private String answer;
+    private String notes;
     private LocalDateTime submittedAt;
-    private Double grade;
+    private Boolean isLate;
+    private Double rawGrade;
+    private Double finalGrade;
+    private Double penaltyApplied;
     private LocalDateTime gradedAt;
     private String graderNotes;
 }

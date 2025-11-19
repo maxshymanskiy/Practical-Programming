@@ -8,12 +8,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JournalResponse {
+public class JournalDto {
     private Long courseId;
     private String courseName;
     private String academicYear;
     private Integer labWeight;
     private Integer examWeight;
     private Integer maxGrade;
-    private List<StudentGradeResponse> studentGrades;
+    private List<StudentGradeDto> studentGrades;
 }

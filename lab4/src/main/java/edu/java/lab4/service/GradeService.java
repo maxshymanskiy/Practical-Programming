@@ -1,10 +1,10 @@
 package edu.java.lab4.service;
 
-import edu.java.lab4.dto.response.JournalResponse;
+import edu.java.lab4.dto.response.JournalDto;
 
 public interface GradeService {
 
-    JournalResponse calculateCourseJournal(Long courseId);
+    JournalDto calculateCourseJournal(Long courseId);
 
     Double calculateStudentTotalGrade(Long courseId, Long studentId);
 }

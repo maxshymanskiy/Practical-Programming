@@ -37,7 +37,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional
-    public ExamResponse createExam(ExamCreateRequest request) {
+    public ExamDto createExam(ExamCreateDto request) {
         log.info("Creating exam: {} for course {}", request.getTitle(), request.getCourseId());
 
         Course course = courseRepository.findById(request.getCourseId())
@@ -52,7 +52,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional(readOnly = true)
-    public ExamResponse getExamById(Long id) {
+    public ExamDto getExamById(Long id) {
         Exam exam = examRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Exam", id));
         return examMapper.toResponse(exam);
@@ -60,7 +60,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ExamResponse> getExamsByCourse(Long courseId) {
+    public List<ExamDto> getExamsByCourse(Long courseId) {
         return examRepository.findByCourseIdOrderByScheduledDate(courseId)
                 .stream()
                 .map(examMapper::toResponse)
@@ -81,7 +81,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional
-    public TaskResponse createTask(TaskCreateRequest request) {
+    public TaskDto createTask(TaskCreateDto request) {
         log.info("Creating task variant {} for exam {}", request.getVariantNumber(), request.getExamId());
 
         Exam exam = examRepository.findById(request.getExamId())
@@ -102,7 +102,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TaskResponse> getTasksByExam(Long examId) {
+    public List<TaskDto> getTasksByExam(Long examId) {
         return taskRepository.findByExamIdOrderByVariantNumber(examId)
                 .stream()
                 .map(examMapper::toTaskResponse)
@@ -111,7 +111,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional
-    public ExamSubmissionResponse submitExam(ExamSubmissionRequest request) {
+    public ExamSubmissionDto submitExam(ExamSubmissionCreateDto request) {
         log.info("Student {} submitting exam {}", request.getStudentId(), request.getExamId());
 
         Student student = studentRepository.findById(request.getStudentId())
@@ -138,7 +138,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     @Transactional
     @CacheEvict(value = CACHE_JOURNAL, allEntries = true)
-    public ExamSubmissionResponse gradeExamSubmission(ExamGradeRequest request) {
+    public ExamSubmissionDto gradeExamSubmission(ExamGradeDto request) {
         log.info("Grading exam submission ID: {}", request.getSubmissionId());
 
         ExamSubmission submission = examSubmissionRepository.findById(request.getSubmissionId())
@@ -158,7 +158,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ExamSubmissionResponse> getSubmissionsByExam(Long examId) {
+    public List<ExamSubmissionDto> getSubmissionsByExam(Long examId) {
         return examSubmissionRepository.findByExamIdOrderBySubmittedAt(examId)
                 .stream()
                 .map(examMapper::toSubmissionResponse)
@@ -169,7 +169,7 @@ public class ExamServiceImpl implements ExamService {
     /**
      * Assigns a task to a student if not specified in the request.
      */
-    private Task assignTaskToStudent(ExamSubmissionRequest request, Exam exam) {
+    private Task assignTaskToStudent(ExamSubmissionCreateDto request, Exam exam) {
         if (request.getAssignedTaskId() != null) {
             return taskRepository.findById(request.getAssignedTaskId())
                     .orElseThrow(() -> new EntityNotFoundException("Task", request.getAssignedTaskId()));

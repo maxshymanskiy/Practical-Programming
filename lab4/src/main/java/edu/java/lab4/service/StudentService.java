@@ -1,23 +1,23 @@
 package edu.java.lab4.service;
 
-import edu.java.lab4.dto.request.StudentCreateRequest;
+import edu.java.lab4.dto.request.StudentCreateDto;
 import edu.java.lab4.dto.response.StudentDetailResponse;
-import edu.java.lab4.dto.response.StudentResponse;
+import edu.java.lab4.dto.response.StudentDto;
 import java.util.List;
 
 public interface StudentService {
 
-    StudentResponse createStudent(StudentCreateRequest request);
+    StudentDto createStudent(StudentCreateDto request);
 
-    StudentResponse getStudentById(Long id);
+    StudentDto getStudentById(Long id);
 
     StudentDetailResponse getStudentDetails(Long id);
 
-    List<StudentResponse> getAllStudents();
+    List<StudentDto> getAllStudents();
 
-    StudentResponse findByEmail(String email);
+    StudentDto findByEmail(String email);
 
-    StudentResponse findByStudentNumber(String studentNumber);
+    StudentDto findByStudentNumber(String studentNumber);
 
     void deleteStudent(Long id);
 }

@@ -1,10 +1,10 @@
 package edu.java.lab4.service.impl;
 
-import edu.java.lab4.dto.request.LabGradeRequest;
-import edu.java.lab4.dto.request.LabSubmissionRequest;
-import edu.java.lab4.dto.request.LabWorkCreateRequest;
-import edu.java.lab4.dto.response.LabSubmissionResponse;
-import edu.java.lab4.dto.response.LabWorkResponse;
+import edu.java.lab4.dto.request.LabGradeEvaluateDto;
+import edu.java.lab4.dto.request.LabSubmissionCreateDto;
+import edu.java.lab4.dto.request.LabWorkCreateDto;
+import edu.java.lab4.dto.response.LabSubmissionDto;
+import edu.java.lab4.dto.response.LabWorkDto;
 import edu.java.lab4.entity.*;
 import edu.java.lab4.exception.EntityNotFoundException;
 import edu.java.lab4.mapper.LabWorkMapper;
@@ -38,7 +38,7 @@ public class LabWorkServiceImpl implements LabWorkService {
 
     @Override
     @Transactional
-    public LabWorkResponse createLabWork(LabWorkCreateRequest request) {
+    public LabWorkDto createLabWork(LabWorkCreateDto request) {
         log.info("Creating lab work: {} for course {}", request.getTitle(), request.getCourseId());
 
         Course course = courseRepository.findById(request.getCourseId())
@@ -65,7 +65,7 @@ public class LabWorkServiceImpl implements LabWorkService {
 
     @Override
     @Transactional(readOnly = true)
-    public LabWorkResponse getLabWorkById(Long id) {
+    public LabWorkDto getLabWorkById(Long id) {
         LabWork labWork = labWorkRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("LabWork", id));
         return labWorkMapper.toResponse(labWork);
@@ -73,7 +73,7 @@ public class LabWorkServiceImpl implements LabWorkService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LabWorkResponse> getLabWorksByCourse(Long courseId) {
+    public List<LabWorkDto> getLabWorksByCourse(Long courseId) {
         return labWorkRepository.findByCourseIdOrderByLabNumber(courseId)
                 .stream()
                 .map(labWorkMapper::toResponse)
@@ -94,7 +94,7 @@ public class LabWorkServiceImpl implements LabWorkService {
 
     @Override
     @Transactional
-    public LabSubmissionResponse submitLabWork(LabSubmissionRequest request) {
+    public LabSubmissionDto submitLabWork(LabSubmissionCreateDto request) {
         log.info("Student {} submitting lab work {}", request.getStudentId(), request.getLabWorkId());
 
         Student student = studentRepository.findById(request.getStudentId())
@@ -116,7 +116,7 @@ public class LabWorkServiceImpl implements LabWorkService {
     @Override
     @Transactional
     @CacheEvict(value = CACHE_JOURNAL, allEntries = true)
-    public LabSubmissionResponse gradeLabSubmission(LabGradeRequest request) {
+    public LabSubmissionDto gradeLabSubmission(LabGradeEvaluateDto request) {
         log.info("Grading lab submission ID: {}", request.getSubmissionId());
 
         LabSubmission submission = labSubmissionRepository.findById(request.getSubmissionId())
@@ -140,7 +140,7 @@ public class LabWorkServiceImpl implements LabWorkService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LabSubmissionResponse> getSubmissionsByLabWork(Long labWorkId) {
+    public List<LabSubmissionDto> getSubmissionsByLabWork(Long labWorkId) {
         return labSubmissionRepository.findByLabWorkIdOrderBySubmittedAt(labWorkId)
                 .stream()
                 .map(labWorkMapper::toSubmissionResponse)
@@ -149,7 +149,7 @@ public class LabWorkServiceImpl implements LabWorkService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LabSubmissionResponse> getSubmissionsByStudent(Long studentId) {
+    public List<LabSubmissionDto> getSubmissionsByStudent(Long studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student", studentId));
 

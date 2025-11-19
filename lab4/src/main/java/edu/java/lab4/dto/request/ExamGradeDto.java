@@ -9,14 +9,14 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LabGradeRequest {
+public class ExamGradeDto {
 
     @NotNull(message = "Submission ID is required")
     private Long submissionId;
 
     @NotNull(message = "Grade is required")
-    @DecimalMin(value = "0.0", message = "Grade cannot be negative")
-    @DecimalMax(value = "100.0", message = "Grade cannot exceed 100")
+    @DecimalMin(value = "0.0")
+    @DecimalMax(value = "100.0")
     private Double grade;
 
     @Size(max = 1000)

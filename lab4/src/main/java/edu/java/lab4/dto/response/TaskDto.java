@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
+public class TaskDto {
     private Long id;
     private Integer variantNumber;
     private String title;

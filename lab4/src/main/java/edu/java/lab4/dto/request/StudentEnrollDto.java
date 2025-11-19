@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentEnrollRequest {
+public class StudentEnrollDto {
 
     @NotNull(message = "Student ID is required")
     private Long studentId;

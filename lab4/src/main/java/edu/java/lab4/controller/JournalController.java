@@ -1,6 +1,6 @@
 package edu.java.lab4.controller;
 
-import edu.java.lab4.dto.response.JournalResponse;
+import edu.java.lab4.dto.response.JournalDto;
 import edu.java.lab4.service.GradeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +16,9 @@ public class JournalController {
     private final GradeService gradeService;
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<JournalResponse> getCourseJournal(@PathVariable Long courseId) {
+    public ResponseEntity<JournalDto> getCourseJournal(@PathVariable Long courseId) {
         log.info("REST: Getting journal for course {}", courseId);
-        JournalResponse journal = gradeService.calculateCourseJournal(courseId);
+        JournalDto journal = gradeService.calculateCourseJournal(courseId);
         return ResponseEntity.ok(journal);
     }
 

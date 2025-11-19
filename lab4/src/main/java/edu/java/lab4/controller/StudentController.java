@@ -1,8 +1,8 @@
 package edu.java.lab4.controller;
 
-import edu.java.lab4.dto.request.StudentCreateRequest;
+import edu.java.lab4.dto.request.StudentCreateDto;
 import edu.java.lab4.dto.response.StudentDetailResponse;
-import edu.java.lab4.dto.response.StudentResponse;
+import edu.java.lab4.dto.response.StudentDto;
 import edu.java.lab4.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,25 +22,25 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping
-    public ResponseEntity<StudentResponse> createStudent(@Valid @RequestBody StudentCreateRequest request) {
+    public ResponseEntity<StudentDto> createStudent(@Valid @RequestBody StudentCreateDto request) {
         log.info("REST: Creating student {}", request.getEmail());
-        StudentResponse response = studentService.createStudent(request);
+        StudentDto response = studentService.createStudent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @GetMapping
-    public ResponseEntity<List<StudentResponse>> getAllStudents() {
+    public ResponseEntity<List<StudentDto>> getAllStudents() {
         log.info("REST: Getting all students");
-        List<StudentResponse> students = studentService.getAllStudents();
+        List<StudentDto> students = studentService.getAllStudents();
         return ResponseEntity.ok(students);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentResponse> getStudent(@PathVariable Long id) {
+    public ResponseEntity<StudentDto> getStudent(@PathVariable Long id) {
         log.info("REST: Getting student {}", id);
-        StudentResponse response = studentService.getStudentById(id);
+        StudentDto response = studentService.getStudentById(id);
         return ResponseEntity.ok(response);
     }
 
@@ -54,9 +54,9 @@ public class StudentController {
 
 
     @GetMapping("/search")
-    public ResponseEntity<StudentResponse> findByEmail(@RequestParam String email) {
+    public ResponseEntity<StudentDto> findByEmail(@RequestParam String email) {
         log.info("REST: Finding student by email {}", email);
-        StudentResponse response = studentService.findByEmail(email);
+        StudentDto response = studentService.findByEmail(email);
         return ResponseEntity.ok(response);
     }
 

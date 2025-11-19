@@ -21,25 +21,25 @@ public class LabWorkController {
     private final LabWorkService labWorkService;
 
     @PostMapping
-    public ResponseEntity<LabWorkResponse> createLabWork(@Valid @RequestBody LabWorkCreateRequest request) {
+    public ResponseEntity<LabWorkDto> createLabWork(@Valid @RequestBody LabWorkCreateDto request) {
         log.info("REST: Creating lab work {}", request.getTitle());
-        LabWorkResponse response = labWorkService.createLabWork(request);
+        LabWorkDto response = labWorkService.createLabWork(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<LabWorkResponse>> getLabWorksByCourse(@PathVariable Long courseId) {
+    public ResponseEntity<List<LabWorkDto>> getLabWorksByCourse(@PathVariable Long courseId) {
         log.info("REST: Getting labs for course {}", courseId);
-        List<LabWorkResponse> labs = labWorkService.getLabWorksByCourse(courseId);
+        List<LabWorkDto> labs = labWorkService.getLabWorksByCourse(courseId);
         return ResponseEntity.ok(labs);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<LabWorkResponse> getLabWork(@PathVariable Long id) {
+    public ResponseEntity<LabWorkDto> getLabWork(@PathVariable Long id) {
         log.info("REST: Getting lab work {}", id);
-        LabWorkResponse response = labWorkService.getLabWorkById(id);
+        LabWorkDto response = labWorkService.getLabWorkById(id);
         return ResponseEntity.ok(response);
     }
 
@@ -53,25 +53,25 @@ public class LabWorkController {
 
 
     @PostMapping("/submit")
-    public ResponseEntity<LabSubmissionResponse> submitLabWork(@Valid @RequestBody LabSubmissionRequest request) {
+    public ResponseEntity<LabSubmissionDto> submitLabWork(@Valid @RequestBody LabSubmissionCreateDto request) {
         log.info("REST: Submitting lab work {} for student {}", request.getLabWorkId(), request.getStudentId());
-        LabSubmissionResponse response = labWorkService.submitLabWork(request);
+        LabSubmissionDto response = labWorkService.submitLabWork(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @PostMapping("/grade")
-    public ResponseEntity<LabSubmissionResponse> gradeLabSubmission(@Valid @RequestBody LabGradeRequest request) {
+    public ResponseEntity<LabSubmissionDto> gradeLabSubmission(@Valid @RequestBody LabGradeEvaluateDto request) {
         log.info("REST: Grading lab submission {}", request.getSubmissionId());
-        LabSubmissionResponse response = labWorkService.gradeLabSubmission(request);
+        LabSubmissionDto response = labWorkService.gradeLabSubmission(request);
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/{labId}/submissions")
-    public ResponseEntity<List<LabSubmissionResponse>> getLabSubmissions(@PathVariable Long labId) {
+    public ResponseEntity<List<LabSubmissionDto>> getLabSubmissions(@PathVariable Long labId) {
         log.info("REST: Getting submissions for lab {}", labId);
-        List<LabSubmissionResponse> submissions = labWorkService.getSubmissionsByLabWork(labId);
+        List<LabSubmissionDto> submissions = labWorkService.getSubmissionsByLabWork(labId);
         return ResponseEntity.ok(submissions);
     }
 }

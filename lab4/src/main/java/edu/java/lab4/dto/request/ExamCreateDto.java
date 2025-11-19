@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExamCreateRequest {
+public class ExamCreateDto {
 
     @NotNull(message = "Course ID is required")
     private Long courseId;

@@ -1,9 +1,9 @@
 package edu.java.lab4.mapper;
 
-import edu.java.lab4.dto.request.StudentCreateRequest;
-import edu.java.lab4.dto.response.CourseResponse;
+import edu.java.lab4.dto.request.StudentCreateDto;
+import edu.java.lab4.dto.response.CourseDto;
 import edu.java.lab4.dto.response.StudentDetailResponse;
-import edu.java.lab4.dto.response.StudentResponse;
+import edu.java.lab4.dto.response.StudentDto;
 import edu.java.lab4.entity.Course;
 import edu.java.lab4.entity.Student;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentMapper {
 
-    public Student toEntity(StudentCreateRequest request) {
+    public Student toEntity(StudentCreateDto request) {
         return Student.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -24,8 +24,8 @@ public class StudentMapper {
                 .build();
     }
 
-    public StudentResponse toResponse(Student student) {
-        return StudentResponse.builder()
+    public StudentDto toResponse(Student student) {
+        return StudentDto.builder()
                 .id(student.getId())
                 .firstName(student.getFirstName())
                 .lastName(student.getLastName())
@@ -60,8 +60,8 @@ public class StudentMapper {
      |  studentMapper defined in file StudentMapper.class
      └─────┘
     */
-    private CourseResponse toCourseResponse(Course course) {
-        return CourseResponse.builder()
+    private CourseDto toCourseResponse(Course course) {
+        return CourseDto.builder()
                 .id(course.getId())
                 .name(course.getName())
                 .description(course.getDescription())

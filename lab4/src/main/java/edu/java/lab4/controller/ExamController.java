@@ -1,12 +1,12 @@
 package edu.java.lab4.controller;
 
-import edu.java.lab4.dto.request.ExamCreateRequest;
-import edu.java.lab4.dto.request.ExamGradeRequest;
-import edu.java.lab4.dto.request.ExamSubmissionRequest;
-import edu.java.lab4.dto.request.TaskCreateRequest;
-import edu.java.lab4.dto.response.ExamResponse;
-import edu.java.lab4.dto.response.ExamSubmissionResponse;
-import edu.java.lab4.dto.response.TaskResponse;
+import edu.java.lab4.dto.request.ExamCreateDto;
+import edu.java.lab4.dto.request.ExamGradeDto;
+import edu.java.lab4.dto.request.ExamSubmissionCreateDto;
+import edu.java.lab4.dto.request.TaskCreateDto;
+import edu.java.lab4.dto.response.ExamDto;
+import edu.java.lab4.dto.response.ExamSubmissionDto;
+import edu.java.lab4.dto.response.TaskDto;
 import edu.java.lab4.service.*;
 import jakarta.validation.Valid;
 import lombok.*;
@@ -26,26 +26,26 @@ class ExamController {
     private final ExamService examService;
 
     @PostMapping
-    public ResponseEntity<ExamResponse> createExam(@Valid @RequestBody ExamCreateRequest request) {
+    public ResponseEntity<ExamDto> createExam(@Valid @RequestBody ExamCreateDto request) {
         log.info("REST: Creating exam {}", request.getTitle());
-        ExamResponse response = examService.createExam(request);
+        ExamDto response = examService.createExam(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<ExamResponse>> getExamsByCourse(
+    public ResponseEntity<List<ExamDto>> getExamsByCourse(
             @PathVariable Long courseId) {
         log.info("REST: Getting exams for course {}", courseId);
-        List<ExamResponse> exams = examService.getExamsByCourse(courseId);
+        List<ExamDto> exams = examService.getExamsByCourse(courseId);
         return ResponseEntity.ok(exams);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExamResponse> getExam(@PathVariable Long id) {
+    public ResponseEntity<ExamDto> getExam(@PathVariable Long id) {
         log.info("REST: Getting exam {}", id);
-        ExamResponse response = examService.getExamById(id);
+        ExamDto response = examService.getExamById(id);
         return ResponseEntity.ok(response);
     }
 
@@ -59,41 +59,41 @@ class ExamController {
 
 
     @PostMapping("/tasks")
-    public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskCreateRequest request) {
+    public ResponseEntity<TaskDto> createTask(@Valid @RequestBody TaskCreateDto request) {
         log.info("REST: Creating task for exam {}", request.getExamId());
-        TaskResponse response = examService.createTask(request);
+        TaskDto response = examService.createTask(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @GetMapping("/{examId}/tasks")
-    public ResponseEntity<List<TaskResponse>> getExamTasks(@PathVariable Long examId) {
+    public ResponseEntity<List<TaskDto>> getExamTasks(@PathVariable Long examId) {
         log.info("REST: Getting tasks for exam {}", examId);
-        List<TaskResponse> tasks = examService.getTasksByExam(examId);
+        List<TaskDto> tasks = examService.getTasksByExam(examId);
         return ResponseEntity.ok(tasks);
     }
 
 
     @PostMapping("/submit")
-    public ResponseEntity<ExamSubmissionResponse> submitExam(@Valid @RequestBody ExamSubmissionRequest request) {
+    public ResponseEntity<ExamSubmissionDto> submitExam(@Valid @RequestBody ExamSubmissionCreateDto request) {
         log.info("REST: Submitting exam {} for student {}", request.getExamId(), request.getStudentId());
-        ExamSubmissionResponse response = examService.submitExam(request);
+        ExamSubmissionDto response = examService.submitExam(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @PostMapping("/grade")
-    public ResponseEntity<ExamSubmissionResponse> gradeExamSubmission(@Valid @RequestBody ExamGradeRequest request) {
+    public ResponseEntity<ExamSubmissionDto> gradeExamSubmission(@Valid @RequestBody ExamGradeDto request) {
         log.info("REST: Grading exam submission {}", request.getSubmissionId());
-        ExamSubmissionResponse response = examService.gradeExamSubmission(request);
+        ExamSubmissionDto response = examService.gradeExamSubmission(request);
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/{examId}/submissions")
-    public ResponseEntity<List<ExamSubmissionResponse>> getExamSubmissions(@PathVariable Long examId) {
+    public ResponseEntity<List<ExamSubmissionDto>> getExamSubmissions(@PathVariable Long examId) {
         log.info("REST: Getting submissions for exam {}", examId);
-        List<ExamSubmissionResponse> submissions = examService.getSubmissionsByExam(examId);
+        List<ExamSubmissionDto> submissions = examService.getSubmissionsByExam(examId);
         return ResponseEntity.ok(submissions);
     }
 }

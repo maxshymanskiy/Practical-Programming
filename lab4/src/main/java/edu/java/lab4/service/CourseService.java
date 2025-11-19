@@ -1,28 +1,28 @@
 
 package edu.java.lab4.service;
 
-import edu.java.lab4.dto.request.CourseCreateRequest;
-import edu.java.lab4.dto.request.CourseUpdateRequest;
-import edu.java.lab4.dto.response.CourseDetailResponse;
-import edu.java.lab4.dto.response.CourseResponse;
+import edu.java.lab4.dto.request.CourseCreateDto;
+import edu.java.lab4.dto.request.CourseUpdateDto;
+import edu.java.lab4.dto.response.CourseDetailDto;
+import edu.java.lab4.dto.response.CourseDto;
 import java.util.List;
 
 
 public interface CourseService {
 
-    CourseResponse createCourse(CourseCreateRequest request);
+    CourseDto createCourse(CourseCreateDto request);
 
-    CourseResponse updateCourse(Long id, CourseUpdateRequest request);
+    CourseDto updateCourse(Long id, CourseUpdateDto request);
 
     void deleteCourse(Long id);
 
-    CourseResponse getCourseById(Long id);
+    CourseDto getCourseById(Long id);
 
-    CourseDetailResponse getCourseDetails(Long id);
+    CourseDetailDto getCourseDetails(Long id);
 
-    List<CourseResponse> getAllCourses();
+    List<CourseDto> getAllCourses();
 
-    List<CourseResponse> getCoursesByAcademicYear(String academicYear);
+    List<CourseDto> getCoursesByAcademicYear(String academicYear);
 
     void enrollStudent(Long courseId, Long studentId);
 

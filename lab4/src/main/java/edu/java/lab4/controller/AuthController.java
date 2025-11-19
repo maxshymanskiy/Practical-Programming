@@ -1,8 +1,8 @@
 package edu.java.lab4.controller;
 
-import edu.java.lab4.dto.request.LoginRequest;
-import edu.java.lab4.dto.request.RegisterRequest;
-import edu.java.lab4.dto.response.AuthResponse;
+import edu.java.lab4.dto.request.LoginDto;
+import edu.java.lab4.dto.request.RegisterDto;
+import edu.java.lab4.dto.response.AuthDto;
 import edu.java.lab4.entity.Student;
 import edu.java.lab4.entity.User;
 import edu.java.lab4.entity.UserRole;
@@ -36,7 +36,7 @@ public class AuthController {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<AuthDto> login(@Valid @RequestBody LoginDto request) {
         log.info("Login attempt for user: {}", request.getUsername());
 
         Authentication authentication = authenticationManager.authenticate(
@@ -50,7 +50,7 @@ public class AuthController {
 
         log.info("User {} logged in successfully", request.getUsername());
 
-        return ResponseEntity.ok(AuthResponse.builder()
+        return ResponseEntity.ok(AuthDto.builder()
                 .token(token)
                 .username(user.getUsername())
                 .role(user.getRole().name())
@@ -60,12 +60,12 @@ public class AuthController {
 
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthDto> register(@Valid @RequestBody RegisterDto request) {
         log.info("Register attempt for username: {} with role: {}", request.getUsername(), request.getRole());
 
         if (userRepository.existsByUsername(request.getUsername())) {
             return ResponseEntity.badRequest()
-                    .body(AuthResponse.builder()
+                    .body(AuthDto.builder()
                             .message("Username already exists")
                             .build());
         }
@@ -90,7 +90,7 @@ public class AuthController {
         log.info("User {} registered successfully", user.getUsername());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(AuthResponse.builder()
+                .body(AuthDto.builder()
                         .username(user.getUsername())
                         .role(user.getRole().name())
                         .message("User registered successfully")

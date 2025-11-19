@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StudentCreateRequest {
+public class StudentCreateDto {
 
     @NotBlank(message = "First name is required")
     @Size(min = 2, max = 50)

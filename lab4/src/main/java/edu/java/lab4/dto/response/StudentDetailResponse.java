@@ -15,6 +15,6 @@ public class StudentDetailResponse {
     private String lastName;
     private String email;
     private String studentNumber;
-    private List<CourseResponse> courses;
+    private List<CourseDto> courses;
     private LocalDateTime createdAt;
 }

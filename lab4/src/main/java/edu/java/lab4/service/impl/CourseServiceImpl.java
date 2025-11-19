@@ -1,9 +1,9 @@
 package edu.java.lab4.service.impl;
 
-import edu.java.lab4.dto.request.CourseCreateRequest;
-import edu.java.lab4.dto.request.CourseUpdateRequest;
-import edu.java.lab4.dto.response.CourseDetailResponse;
-import edu.java.lab4.dto.response.CourseResponse;
+import edu.java.lab4.dto.request.CourseCreateDto;
+import edu.java.lab4.dto.request.CourseUpdateDto;
+import edu.java.lab4.dto.response.CourseDetailDto;
+import edu.java.lab4.dto.response.CourseDto;
 import edu.java.lab4.entity.Course;
 import edu.java.lab4.entity.Student;
 import edu.java.lab4.exception.DuplicateEntityException;
@@ -38,7 +38,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     @CacheEvict(value = CACHE_COURSES, allEntries = true)
-    public CourseResponse createCourse(CourseCreateRequest request) {
+    public CourseDto createCourse(CourseCreateDto request) {
         log.info("Creating course: {}", request.getName());
 
         courseValidator.validateCourseUniqueness(
@@ -61,7 +61,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     @CacheEvict(value = {CACHE_COURSES, CACHE_JOURNAL}, allEntries = true)
-    public CourseResponse updateCourse(Long id, CourseUpdateRequest request) {
+    public CourseDto updateCourse(Long id, CourseUpdateDto request) {
         log.info("Updating course ID: {}", id);
 
         Course course = courseRepository.findById(id)
@@ -120,7 +120,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = CACHE_COURSES, key = "#id")
-    public CourseResponse getCourseById(Long id) {
+    public CourseDto getCourseById(Long id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course", id));
         return courseMapper.toResponse(course);
@@ -128,7 +128,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional(readOnly = true)
-    public CourseDetailResponse getCourseDetails(Long id) {
+    public CourseDetailDto getCourseDetails(Long id) {
         Course course = courseRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course", id));
         return courseMapper.toDetailResponse(course);
@@ -137,7 +137,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = CACHE_COURSES, key = "'all'")
-    public List<CourseResponse> getAllCourses() {
+    public List<CourseDto> getAllCourses() {
         return courseRepository.findAll()
                 .stream()
                 .map(courseMapper::toResponse)
@@ -146,7 +146,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CourseResponse> getCoursesByAcademicYear(String academicYear) {
+    public List<CourseDto> getCoursesByAcademicYear(String academicYear) {
         return courseRepository.findByAcademicYear(academicYear)
                 .stream()
                 .map(courseMapper::toResponse)

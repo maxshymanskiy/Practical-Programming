@@ -1,8 +1,8 @@
 package edu.java.lab4.mapper;
 
 import edu.java.lab4.constant.GradingConstants;
-import edu.java.lab4.dto.response.JournalResponse;
-import edu.java.lab4.dto.response.StudentGradeResponse;
+import edu.java.lab4.dto.response.JournalDto;
+import edu.java.lab4.dto.response.StudentGradeDto;
 import edu.java.lab4.entity.Course;
 import edu.java.lab4.entity.Student;
 import org.springframework.stereotype.Component;
@@ -12,8 +12,8 @@ import java.util.List;
 @Component
 public class JournalMapper {
 
-    public JournalResponse toJournalResponse(Course course, List<StudentGradeResponse> studentGrades) {
-        return JournalResponse.builder()
+    public JournalDto toJournalResponse(Course course, List<StudentGradeDto> studentGrades) {
+        return JournalDto.builder()
                 .courseId(course.getId())
                 .courseName(course.getName())
                 .academicYear(course.getAcademicYear())
@@ -24,7 +24,7 @@ public class JournalMapper {
                 .build();
     }
 
-    public StudentGradeResponse toStudentGradeResponse(
+    public StudentGradeDto toStudentGradeResponse(
             Student student,
             List<Double> labGrades,
             Double labTotal,
@@ -34,7 +34,7 @@ public class JournalMapper {
         Double totalGrade = labTotal + (examGrade != null ? examGrade : 0.0);
         Boolean passed = totalGrade >= GradingConstants.PASSING_GRADE;
 
-        return StudentGradeResponse.builder()
+        return StudentGradeDto.builder()
                 .studentId(student.getId())
                 .studentName(student.getFullName())
                 .studentNumber(student.getStudentNumber())

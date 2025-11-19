@@ -8,15 +8,17 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExamResponse {
+public class LabWorkDto {
     private Long id;
+    private Integer labNumber;
     private String title;
     private String description;
-    private LocalDateTime scheduledDate;
-    private Integer durationMinutes;
+    private LocalDateTime deadline;
+    private Boolean allowsLateSubmission;
+    private Double latePenaltyPerDay;
+    private Integer maxLateDays;
     private Long courseId;
     private String courseName;
-    private Integer tasksCount;
     private Integer submissionsCount;
     private LocalDateTime createdAt;
 }

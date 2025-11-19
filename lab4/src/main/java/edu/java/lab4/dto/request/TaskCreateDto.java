@@ -12,7 +12,7 @@ import static edu.java.lab4.constant.GradingConstants.MIN_TASK_DESCRIPTION_LENGT
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TaskCreateRequest {
+public class TaskCreateDto {
 
     @NotNull(message = "Exam ID is required")
     private Long examId;

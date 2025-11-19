@@ -1,10 +1,10 @@
 package edu.java.lab4.controller;
 
-import edu.java.lab4.dto.request.CourseCreateRequest;
-import edu.java.lab4.dto.request.CourseUpdateRequest;
-import edu.java.lab4.dto.request.StudentEnrollRequest;
-import edu.java.lab4.dto.response.CourseDetailResponse;
-import edu.java.lab4.dto.response.CourseResponse;
+import edu.java.lab4.dto.request.CourseCreateDto;
+import edu.java.lab4.dto.request.CourseUpdateDto;
+import edu.java.lab4.dto.request.StudentEnrollDto;
+import edu.java.lab4.dto.response.CourseDetailDto;
+import edu.java.lab4.dto.response.CourseDto;
 import edu.java.lab4.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,17 +24,17 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CourseCreateRequest request) {
+    public ResponseEntity<CourseDto> createCourse(@Valid @RequestBody CourseCreateDto request) {
         log.info("REST: Creating new course request received");
-        CourseResponse response = courseService.createCourse(request);
+        CourseDto response = courseService.createCourse(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
     @GetMapping
-    public ResponseEntity<List<CourseResponse>> getAllCourses(@RequestParam(required = false) String academicYear) {
+    public ResponseEntity<List<CourseDto>> getAllCourses(@RequestParam(required = false) String academicYear) {
         log.info("REST: Getting all courses{}", academicYear != null ? " for year " + academicYear : "");
-        List<CourseResponse> courses = academicYear != null
+        List<CourseDto> courses = academicYear != null
                 ? courseService.getCoursesByAcademicYear(academicYear)
                 : courseService.getAllCourses();
         return ResponseEntity.ok(courses);
@@ -42,25 +42,25 @@ public class CourseController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseResponse> getCourse(@PathVariable Long id) {
+    public ResponseEntity<CourseDto> getCourse(@PathVariable Long id) {
         log.info("REST: Getting course {}", id);
-        CourseResponse response = courseService.getCourseById(id);
+        CourseDto response = courseService.getCourseById(id);
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/{id}/details")
-    public ResponseEntity<CourseDetailResponse> getCourseDetails(@PathVariable Long id) {
+    public ResponseEntity<CourseDetailDto> getCourseDetails(@PathVariable Long id) {
         log.info("REST: Getting course details {}", id);
-        CourseDetailResponse response = courseService.getCourseDetails(id);
+        CourseDetailDto response = courseService.getCourseDetails(id);
         return ResponseEntity.ok(response);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<CourseResponse> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseUpdateRequest request) {
+    public ResponseEntity<CourseDto> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseUpdateDto request) {
         log.info("REST: Updating course {}", id);
-        CourseResponse response = courseService.updateCourse(id, request);
+        CourseDto response = courseService.updateCourse(id, request);
         return ResponseEntity.ok(response);
     }
 
@@ -74,7 +74,7 @@ public class CourseController {
 
 
     @PostMapping("/enroll")
-    public ResponseEntity<Void> enrollStudent(@Valid @RequestBody StudentEnrollRequest request) {
+    public ResponseEntity<Void> enrollStudent(@Valid @RequestBody StudentEnrollDto request) {
         log.info("REST: Enrolling student {} in course {}", request.getStudentId(), request.getCourseId());
         courseService.enrollStudent(request.getCourseId(), request.getStudentId());
         return ResponseEntity.ok().build();
@@ -82,7 +82,7 @@ public class CourseController {
 
 
     @PostMapping("/unenroll")
-    public ResponseEntity<Void> unenrollStudent(@Valid @RequestBody StudentEnrollRequest request) {
+    public ResponseEntity<Void> unenrollStudent(@Valid @RequestBody StudentEnrollDto request) {
         log.info("REST: Unenrolling student {} from course {}", request.getStudentId(), request.getCourseId());
         courseService.unenrollStudent(request.getCourseId(), request.getStudentId());
         return ResponseEntity.ok().build();
