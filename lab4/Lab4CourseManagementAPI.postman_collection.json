@@ -1,928 +1,924 @@
 {
-	"info": {
-		"_postman_id": "2953e782-d864-47b4-a444-96472fedfb37",
-		"name": "Lab4 Course Management API",
-		"description": "Complete API collection for Course Management System",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "49769948",
-		"_collection_link": "https://maxshymanskiy-10e5883a-8894096.postman.co/workspace/Max-Shymanskiy's-Workspace~985a68d1-be71-44f7-8b69-c487ee7d925d/collection/49769948-2953e782-d864-47b4-a444-96472fedfb37?action=share&source=collection_link&creator=49769948"
-	},
-	"item": [
-		{
-			"name": "Students",
-			"item": [
-				{
-					"name": "Create Student",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MzA2MTMxMiwiZXhwIjoxNzYzMTQ3NzEyfQ.DL4CphlFYJEq4c1dEA0PMTh9K2Oms8Sk1kzCqE9MfaK4EqaKor4m3wdnlYskXbJ1S3XUZXY97e3kG5_SgZ59Yg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"firstName\": \"Steve\",\n  \"lastName\": \"Wotson\",\n  \"email\": \"steve.wotson@university.edu\",\n  \"studentNumber\": \"VS1239905\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/students",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"students"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Students",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MzA2MTMxMiwiZXhwIjoxNzYzMTQ3NzEyfQ.DL4CphlFYJEq4c1dEA0PMTh9K2Oms8Sk1kzCqE9MfaK4EqaKor4m3wdnlYskXbJ1S3XUZXY97e3kG5_SgZ59Yg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/students",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"students"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Student by ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTZWNvbmQgQWRtaW4vVGVhY2hlciIsImlhdCI6MTc2MzA1Nzg0NywiZXhwIjoxNzYzMTQ0MjQ3fQ.dhHsyn8-9LvXDdmJ6K3cQmVIQuK5dX3e0dZoBtt1hoSDzi2iE9kZTMx5xZjTcMEtzpTgjgAdGePEdSsM8Vwqmg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/students/2",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"students",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Student Details",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/students/1/details",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"students",
-								"1",
-								"details"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Search Student by Email",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2Mjk2MjkyNiwiZXhwIjoxNzYzMDQ5MzI2fQ.cVdyCctHqdtczgJqF4ii19Yr-z31isJPClmuhYXfK6Z5qyzF0VV_KYuPcdf2aFQRCnukn3GD__-9uTZ2YP64cA",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/students/search?email=test@gmail.com",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"students",
-								"search"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "test@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Student",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/students/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"students",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Courses",
-			"item": [
-				{
-					"name": "Create Course",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Advanced Java Programming\",\n  \"description\": \"Learn advanced Java concepts including Spring Boot and Hibernate\",\n  \"academicYear\": \"2024-2025\",\n  \"labWeight\": 10,\n  \"labCount\": 3,\n  \"examWeight\": 70\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/courses",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Courses",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/courses",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Courses by Academic Year",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/courses?academicYear=2024-2025",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses"
-							],
-							"query": [
-								{
-									"key": "academicYear",
-									"value": "2024-2025"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Course by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/courses/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Course Details",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/courses/1/details",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								"1",
-								"details"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Course",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Advanced Java Programming - Updated\",\n  \"description\": \"Updated course description\",\n  \"academicYear\": \"2024-2025\",\n  \"labWeight\": 35,\n  \"labCount\": 12,\n  \"examWeight\": 65\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/courses/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Course",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/courses/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Enroll Student",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"studentId\": 1,\n  \"courseId\": 1\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/courses/enroll",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								"enroll"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Unenroll Student",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"studentId\": 1,\n  \"courseId\": 1\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/courses/unenroll",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								"unenroll"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Lab Works",
-			"item": [
-				{
-					"name": "Create Lab Work",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"courseId\": 1,\n  \"labNumber\": 1,\n  \"title\": \"Introduction to Spring Boot\",\n  \"description\": \"Create a simple REST API using Spring Boot framework with CRUD operations\",\n  \"deadline\": \"2025-12-01T23:59:59\",\n  \"allowsLateSubmission\": true,\n  \"latePenaltyPerDay\": 0.1,\n  \"maxLateDays\": 5\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/labs",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"labs"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Lab Works by Course",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/labs/course/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"labs",
-								"course",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Lab Work by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/labs/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"labs",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Lab Work",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/labs/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"labs",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Submit Lab Work",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"studentId\": 1,\n  \"labWorkId\": 1,\n  \"submissionUrl\": \"https://github.com/student/lab1\",\n  \"notes\": \"Implemented all required features\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/labs/submit",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"labs",
-								"submit"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Grade Lab Submission",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"submissionId\": 1,\n  \"grade\": 85.5,\n  \"graderNotes\": \"Good work, but missing some edge cases\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/labs/grade",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"labs",
-								"grade"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Lab Submissions",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/labs/1/submissions",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"labs",
-								"1",
-								"submissions"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Exams",
-			"item": [
-				{
-					"name": "Create Exam",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"courseId\": 1,\n  \"title\": \"Midterm Exam - Java Programming\",\n  \"description\": \"Covers topics from weeks 1-8\",\n  \"scheduledDate\": \"2025-12-15T10:00:00\",\n  \"durationMinutes\": 120\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/exams",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Exams by Course",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/exams/course/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"course",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Exam by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/exams/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Exam",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/exams/1",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Task",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"examId\": 1,\n  \"variantNumber\": 1,\n  \"title\": \"Variant 1 - Data Structures\",\n  \"description\": \"Implement a binary search tree with insert, delete, and search operations. Include unit tests.\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/exams/tasks",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"tasks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Exam Tasks",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/exams/1/tasks",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"1",
-								"tasks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Submit Exam",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"studentId\": 1,\n  \"examId\": 1,\n  \"assignedTaskId\": 1,\n  \"submissionUrl\": \"https://github.com/student/exam-submission\",\n  \"answer\": \"Implemented BST with all required methods. Time complexity: O(log n)\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/exams/submit",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"submit"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Grade Exam Submission",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MzA2NTYyOSwiZXhwIjoxNzYzMTUyMDI5fQ.Xjk388X6eOePbcplxZNVzyHJR6ucvL2pst7IUepcSMsgUXLIxuvtvRFTg7NTiURuUmwmTqxGqvQk7ihbsfL4CA",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"submissionId\": 1,\n  \"grade\": 62,\n  \"graderNotes\": \"Excellent implementation with proper test coverage, but some fixes needed :)\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/exams/grade",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"grade"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Exam Submissions",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/exams/1/submissions",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"exams",
-								"1",
-								"submissions"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Journals",
-			"item": [
-				{
-					"name": "Get Course Journal",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/journal/course/2",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"journal",
-								"course",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Student Grade",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2Mjk2MjkyNiwiZXhwIjoxNzYzMDQ5MzI2fQ.cVdyCctHqdtczgJqF4ii19Yr-z31isJPClmuhYXfK6Z5qyzF0VV_KYuPcdf2aFQRCnukn3GD__-9uTZ2YP64cA",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseURL}}/api/journal/course/2/student/2",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"journal",
-								"course",
-								"2",
-								"student",
-								"2"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Auth",
-			"item": [
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/auth/login",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Register",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MzA1Nzc4NiwiZXhwIjoxNzYzMTQ0MTg2fQ.oIjNLIO26Hvsq_POfjI3LEamZ7PKtekJSYEjJjMogGn4r2MGmgQpVDEwlP9RDfOe0yW3f3uaFYffzUoUzLdxog",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"Second Admin/Teacher\",\n  \"password\": \"admin\",\n  \"role\": \"ADMIN\"\n}"
-						},
-						"url": {
-							"raw": "{{baseURL}}/api/auth/register",
-							"host": [
-								"{{baseURL}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"register"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"variable": [
-		{
-			"key": "baseURL",
-			"value": "",
-			"type": "default"
-		}
-	]
+  "info": {
+    "_postman_id": "2953e782-d864-47b4-a444-96472fedfb37",
+    "name": "Lab4 Course Management API",
+    "description": "Complete API collection for Course Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49769948",
+    "_collection_link": "https://maxshymanskiy-10e5883a-8894096.postman.co/workspace/985a68d1-be71-44f7-8b69-c487ee7d925d/collection/49769948-2953e782-d864-47b4-a444-96472fedfb37?action=share&source=collection_link&creator=49769948"
+  },
+  "item": [
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Mark\",\n  \"lastName\": \"Maker\",\n  \"email\": \"mark.makfer@university.edu\",\n  \"studentNumber\": \"VS77577777\"\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/students",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/students",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/students/2",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "students",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/students/1/details",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "students",
+                "1",
+                "details"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Student by Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/students/search?email=test@gmail.com",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "test@gmail.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/students/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "students",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Operating System and Network Technology\",\n  \"description\": \"Lean basic of UNIX, Linux OS, layers of internet OSI model\",\n  \"academicYear\": \"2024-2025\",\n  \"labWeight\": 10,\n  \"labCount\": 5,\n  \"examWeight\": 50\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/courses",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/courses",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Courses by Academic Year",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/courses?academicYear=2024-2025",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses"
+              ],
+              "query": [
+                {
+                  "key": "academicYear",
+                  "value": "2024-2025"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Course by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/courses/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Course Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/courses/1/details",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "1",
+                "details"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Course",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Advanced Java Programming - Updated\",\n  \"description\": \"Updated course description\",\n  \"academicYear\": \"2024-2025\",\n  \"labWeight\": 35,\n  \"labCount\": 12,\n  \"examWeight\": 65\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/courses/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/courses/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Enroll Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"studentId\": 6,\n    \"courseId\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/courses/enroll",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "enroll"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unenroll Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentId\": 1,\n  \"courseId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/courses/unenroll",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "courses",
+                "unenroll"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Lab Works",
+      "item": [
+        {
+          "name": "Create Lab Work",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseId\": 3,\n  \"labNumber\": 1,\n  \"title\": \"Linux\",\n  \"description\": \"Install debian on VM\",\n  \"deadline\": \"2025-12-04T23:59:59\",\n  \"allowsLateSubmission\": true,\n  \"latePenaltyPerDay\": 0.1,\n  \"maxLateDays\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/labs",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "labs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Lab Works by Course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/labs/course/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "labs",
+                "course",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Lab Work by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/labs/3",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "labs",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Lab Work",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/labs/4",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "labs",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Lab Work",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentId\": 1,\n  \"labWorkId\": 1,\n  \"submissionUrl\": \"https://github.com/student/lab1\",\n  \"notes\": \"Implemented all required features\"\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/labs/submit",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "labs",
+                "submit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Grade Lab Submission",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionId\": 1,\n  \"grade\": 85.5,\n  \"graderNotes\": \"Good work, but missing some edge cases\"\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/labs/grade",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "labs",
+                "grade"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Lab Submissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/labs/1/submissions",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "labs",
+                "1",
+                "submissions"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Exams",
+      "item": [
+        {
+          "name": "Create Exam",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseId\": 1,\n  \"title\": \"Java Exam\",\n  \"description\": \"Java Exam\",\n  \"scheduledDate\": \"2025-12-15T10:00:00\",\n  \"durationMinutes\": 80\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/exams",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Exams by Course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/exams/course/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "course",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Exam by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/exams/2",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Exam",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/exams/1",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"examId\": 1,\n  \"variantNumber\": 1,\n  \"title\": \"Variant 1 - Data Structures\",\n  \"description\": \"Implement a binary search tree with insert, delete, and search operations. Include unit tests.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/exams/tasks",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Exam Tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/exams/1/tasks",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "1",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Exam",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentId\": 4,\n  \"examId\": 2,\n  \"assignedTaskId\": 1,\n  \"submissionUrl\": \"https://github.com/student/exam-submission\",\n  \"answer\": \"Done\"\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/exams/submit",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "submit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Grade Exam Submission",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionId\": 1,\n  \"grade\": 62,\n  \"graderNotes\": \"Excellent implementation with proper test coverage, but some fixes needed :)\"\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/exams/grade",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "grade"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Exam Submissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/exams/1/submissions",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "exams",
+                "1",
+                "submissions"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Journals",
+      "item": [
+        {
+          "name": "Get Course Journal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/journal/course/2",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "journal",
+                "course",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student Grade",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/api/journal/course/2/student/2",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "journal",
+                "course",
+                "2",
+                "student",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();\r",
+                  "if(jsonData.token) {\r",
+                  "    pm.environment.set(\"my_jwt_token\", jsonData.token)\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/auth/login",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"Jane Allison\",\n  \"password\": \"Jane\",\n  \"role\": \"STUDENT\",\n  \"studentId\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/auth/register",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{my_jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": ""
+    },
+    {
+      "key": "{{my_jwt_token}}",
+      "value": "",
+      "type": "default"
+    }
+  ]
 }

@@ -59,20 +59,13 @@ The application exposes the following REST endpoints:
 ### Journal (`/api/journal`)
 - `GET /student/{studentId}`: Get the academic journal (grades) for a specific student.
 
-## How to Run
-
-1. **Prerequisites**:
-   - JDK 21 or later.
-- Maven.
-
-2. **Build the project**:
-   ```bash
-   mvn clean install
-   ```
-
-3. **Run the application**:
-   ```bash
-   mvn spring-boot:run
-   ```
-
-The application will start on the default port `8080`.
+### Postman Collection
+`Lab4CourseManagementAPI.postman_collection.json`
+- create in environment variables: `my_jwt_token`
+- add this script in `post-request`:
+```javascript
+let jsonData = pm.response.json();
+if(jsonData.token) {
+    pm.environment.set("my_jwt_token", jsonData.token)
+}
+```
