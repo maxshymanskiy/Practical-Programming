@@ -13,7 +13,17 @@ This project is a Spring Boot application designed to manage university-related 
 - **Flyway**: For database migrations.
 - **Lombok**: To reduce boilerplate code.
 - **Maven**: For project build and dependency management.
-- **JUnit 5 & Mockito**: For unit and integration testing.
+
+### Postman Collection
+`Lab4CourseManagementAPI.postman_collection.json`
+- Create in environment variables: `my_jwt_token`
+- Add this script in `post-request`:
+```javascript
+let jsonData = pm.response.json();
+if(jsonData.token) {
+    pm.environment.set("my_jwt_token", jsonData.token)
+}
+```
 
 ## API Endpoints
 
@@ -53,19 +63,14 @@ The application exposes the following REST endpoints:
 ### Exams (`/api/exams`)
 - `POST /`: Create a new exam.
 - `GET /course/{courseId}`: Get all exams for a specific course.
+- `GET /{id}`: Get a specific exam by its ID.
 - `DELETE /{id}`: Delete an exam.
-- `POST /grade`: Grade an exam for a student.
+- `POST /tasks`: Create an exam task/variant.
+- `GET /{examId}/tasks`: Get all tasks for a specific exam.
+- `POST /submit`: Submit an exam for a student.
+- `POST /grade`: Grade an exam submission.
+- `GET /{examId}/submissions`: Get all submissions for a specific exam.
 
 ### Journal (`/api/journal`)
-- `GET /student/{studentId}`: Get the academic journal (grades) for a specific student.
-
-### Postman Collection
-`Lab4CourseManagementAPI.postman_collection.json`
-- create in environment variables: `my_jwt_token`
-- add this script in `post-request`:
-```javascript
-let jsonData = pm.response.json();
-if(jsonData.token) {
-    pm.environment.set("my_jwt_token", jsonData.token)
-}
-```
+- `GET /course/{courseId}`: Get the academic journal (grades) for a specific course.
+- `GET /course/{courseId}/student/{studentId}`: Get the academic journal for a specific student in a course.
