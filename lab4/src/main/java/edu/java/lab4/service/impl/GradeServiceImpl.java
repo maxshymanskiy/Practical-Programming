@@ -6,6 +6,7 @@ import edu.java.lab4.exception.EntityNotFoundException;
 import edu.java.lab4.mapper.JournalMapper;
 import edu.java.lab4.repository.*;
 import edu.java.lab4.service.GradeService;
+import edu.java.lab4.util.GradingCalculator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,11 +17,6 @@ import java.util.*;
 
 import static edu.java.lab4.constant.GradingConstants.CACHE_JOURNAL;
 
-/**
- * Calculates student grades and generates journal reports.
- * USES CACHING: Journal calculation is expensive (read-heavy).
- * Cache is invalidated when grades are updated.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -65,8 +61,9 @@ public class GradeServiceImpl implements GradeService {
 
     
     private boolean isStudentEnrolled(Course course, Long studentId) {
-        return course.getStudents().stream()
-            .anyMatch(student -> student.getId().equals(studentId));
+        return course.getStudents()
+                .stream()
+                .anyMatch(student -> student.getId().equals(studentId));
     }
     
     private Double calculateTotalGrade(Course course, Long studentId) {
@@ -83,26 +80,18 @@ public class GradeServiceImpl implements GradeService {
                 .sum();
 
         Double examGrade = getExamGrade(course, student.getId());
-        Integer maxGrade = course.calculateMaxGrade();
+        Integer maxGrade = GradingCalculator.calculateMaxGrade(course);
 
         return journalMapper.toStudentGradeResponse(student, labGrades, labTotal, examGrade, maxGrade);
     }
 
     private List<Double> collectLabGrades(Course course, Student student) {
-        List<Double> labGrades = new ArrayList<>();
-        for (int labNumber = 1; labNumber <= course.getLabCount(); labNumber++) {
-            labGrades.add(getGradeForLab(course, student, labNumber));
-        }
-        return labGrades;
-    }
-
-    private double getGradeForLab(Course course, Student student, int labNumber) {
         return course.getLabWorks().stream()
-                .filter(l -> l.getLabNumber().equals(labNumber))
-                .findFirst()
-                .flatMap(lw -> labSubmissionRepository.findByStudentIdAndLabWorkId(student.getId(), lw.getId())
-                        .map(LabSubmission::getFinalGrade))
-                .orElse(0.0);
+                .sorted(Comparator.comparing(LabWork::getLabNumber))
+                .map(labWork -> labSubmissionRepository.findByStudentIdAndLabWorkId(student.getId(), labWork.getId())
+                        .map(LabSubmission::getFinalGrade)
+                        .orElse(0.0))
+                .toList();
     }
 
     private Double calculateLabTotal(Course course, Long studentId) {
@@ -114,7 +103,8 @@ public class GradeServiceImpl implements GradeService {
     }
 
     private Double getExamGrade(Course course, Long studentId) {
-        return course.getExams().stream()
+        return course.getExams()
+                .stream()
                 .findFirst()
                 .flatMap(exam -> examSubmissionRepository.findByStudentIdAndExamId(studentId, exam.getId())
                         .map(ExamSubmission::getGrade))

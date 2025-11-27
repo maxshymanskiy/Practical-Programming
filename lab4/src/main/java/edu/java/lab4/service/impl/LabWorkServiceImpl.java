@@ -12,6 +12,7 @@ import edu.java.lab4.repository.*;
 import edu.java.lab4.service.LabWorkService;
 import edu.java.lab4.service.validation.LabWorkValidator;
 import edu.java.lab4.service.validation.GradeValidator;
+import edu.java.lab4.util.LabSubmissionGrader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -128,7 +129,7 @@ public class LabWorkServiceImpl implements LabWorkService {
         submission.setRawGrade(request.getGrade());
         submission.setGraderNotes(request.getGraderNotes());
 
-        submission.calculateFinalGrade();
+        LabSubmissionGrader.calculateFinalGrade(submission);
 
         labSubmissionRepository.save(submission);
 

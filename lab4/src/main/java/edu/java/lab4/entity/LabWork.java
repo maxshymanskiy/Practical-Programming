@@ -59,18 +59,4 @@ public class LabWork {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
-
-    public double calculatePenaltyMultiplier(LocalDateTime submissionTime) {
-        if (submissionTime.isBefore(deadline) || !allowsLateSubmission) {
-            return 1.0; // No penalty
-        }
-
-        long daysLate = java.time.Duration.between(deadline, submissionTime).toDays();
-        if (maxLateDays != null && daysLate > maxLateDays) {
-            return 0.0; // Too late, no points
-        }
-
-        double penalty = (latePenaltyPerDay != null ? latePenaltyPerDay : 0.0) * daysLate;
-        return Math.max(0.0, (1.0 - penalty));
-    }
 }

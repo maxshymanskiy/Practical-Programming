@@ -64,15 +64,4 @@ public class LabSubmission {
             isLate = submittedAt.isAfter(labWork.getDeadline());
         }
     }
-
-    public void calculateFinalGrade() {
-        if (rawGrade == null || labWork == null) {
-            return;
-        }
-
-        double multiplier = labWork.calculatePenaltyMultiplier(submittedAt);
-        penaltyApplied = 1.0 - multiplier;
-        finalGrade = rawGrade * multiplier;
-        gradedAt = LocalDateTime.now();
-    }
 }

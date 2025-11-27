@@ -13,6 +13,7 @@ import edu.java.lab4.repository.CourseRepository;
 import edu.java.lab4.repository.StudentRepository;
 import edu.java.lab4.service.CourseService;
 import edu.java.lab4.service.validation.CourseValidator;
+import edu.java.lab4.util.CourseStudentManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -170,7 +171,7 @@ public class CourseServiceImpl implements CourseService {
             throw new DuplicateEntityException("Student already enrolled in this course");
         }
 
-        course.addStudent(student);
+        CourseStudentManager.addStudent(course, student);
         courseRepository.save(course);
     }
 
@@ -185,7 +186,7 @@ public class CourseServiceImpl implements CourseService {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new EntityNotFoundException("Student", studentId));
 
-        course.removeStudent(student);
+        CourseStudentManager.removeStudent(course, student);
         courseRepository.save(course);
     }
 }

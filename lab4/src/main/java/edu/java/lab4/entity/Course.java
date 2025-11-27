@@ -39,7 +39,6 @@ public class Course {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // ✅ Grading formula configuration
     @Column(name = "lab_weight", nullable = false)
     private Integer labWeight; // Points per lab (default: 10)
 
@@ -75,19 +74,5 @@ public class Course {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    public void addStudent(Student student) {
-        students.add(student);
-        student.getCourses().add(this);
-    }
-
-    public void removeStudent(Student student) {
-        students.remove(student);
-        student.getCourses().remove(this);
-    }
-
-    public int calculateMaxGrade() {
-        return (labWeight * labCount) + examWeight;
     }
 }
