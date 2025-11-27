@@ -13,7 +13,7 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
     List<Exam> findByCourseIdOrderByScheduledDate(Long courseId);
 
     @Query("SELECT e FROM Exam e " +
-            "LEFT JOIN FETCH e.tasks " +
+            "LEFT JOIN e.tasks " +
             "WHERE e.id = :id")
     Optional<Exam> findByIdWithTasks(@Param("id") Long id);
 }
