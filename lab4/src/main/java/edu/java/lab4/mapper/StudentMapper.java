@@ -6,6 +6,7 @@ import edu.java.lab4.dto.response.StudentDetailResponse;
 import edu.java.lab4.dto.response.StudentDto;
 import edu.java.lab4.entity.Course;
 import edu.java.lab4.entity.Student;
+import edu.java.lab4.util.GradingCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -69,7 +70,7 @@ public class StudentMapper {
                 .labWeight(course.getLabWeight())
                 .labCount(course.getLabCount())
                 .examWeight(course.getExamWeight())
-                .maxGrade(course.calculateMaxGrade())
+                .maxGrade(GradingCalculator.calculateMaxGrade(course))
                 .enrolledStudents(course.getStudents().size())
                 .createdAt(course.getCreatedAt())
                 .updatedAt(course.getUpdatedAt())

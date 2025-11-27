@@ -5,6 +5,7 @@ import edu.java.lab4.dto.response.JournalDto;
 import edu.java.lab4.dto.response.StudentGradeDto;
 import edu.java.lab4.entity.Course;
 import edu.java.lab4.entity.Student;
+import edu.java.lab4.util.GradingCalculator;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class JournalMapper {
                 .academicYear(course.getAcademicYear())
                 .labWeight(course.getLabWeight())
                 .examWeight(course.getExamWeight())
-                .maxGrade(course.calculateMaxGrade())
+                .maxGrade(GradingCalculator.calculateMaxGrade(course))
                 .studentGrades(studentGrades)
                 .build();
     }
