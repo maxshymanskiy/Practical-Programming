@@ -13,6 +13,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -83,6 +84,7 @@ class ExamController {
 
 
     @PostMapping("/grade")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ExamSubmissionDto> gradeExamSubmission(@Valid @RequestBody ExamGradeDto request) {
         log.info("REST: Grading exam submission {}", request.getSubmissionId());
         ExamSubmissionDto response = examService.gradeExamSubmission(request);

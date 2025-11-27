@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -82,6 +83,7 @@ public class CourseController {
 
 
     @PostMapping("/unenroll")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> unenrollStudent(@Valid @RequestBody StudentEnrollDto request) {
         log.info("REST: Unenrolling student {} from course {}", request.getStudentId(), request.getCourseId());
         courseService.unenrollStudent(request.getCourseId(), request.getStudentId());
