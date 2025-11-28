@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/labs")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class LabWorkController {
 
     private final LabWorkService labWorkService;
@@ -30,6 +31,7 @@ public class LabWorkController {
 
 
     @GetMapping("/course/{courseId}")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<List<LabWorkDto>> getLabWorksByCourse(@PathVariable Long courseId) {
         log.info("REST: Getting labs for course {}", courseId);
         List<LabWorkDto> labs = labWorkService.getLabWorksByCourse(courseId);
@@ -46,14 +48,14 @@ public class LabWorkController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLabWork(@PathVariable Long id) {
+    public void deleteLabWork(@PathVariable Long id) {
         log.info("REST: Deleting lab work {}", id);
         labWorkService.deleteLabWork(id);
-        return ResponseEntity.noContent().build();
     }
 
 
     @PostMapping("/submit")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<LabSubmissionDto> submitLabWork(@Valid @RequestBody LabSubmissionCreateDto request) {
         log.info("REST: Submitting lab work {} for student {}", request.getLabWorkId(), request.getStudentId());
         LabSubmissionDto response = labWorkService.submitLabWork(request);
@@ -62,7 +64,6 @@ public class LabWorkController {
 
 
     @PostMapping("/grade")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LabSubmissionDto> gradeLabSubmission(@Valid @RequestBody LabGradeEvaluateDto request) {
         log.info("REST: Grading lab submission {}", request.getSubmissionId());
         LabSubmissionDto response = labWorkService.gradeLabSubmission(request);
@@ -71,6 +72,7 @@ public class LabWorkController {
 
 
     @GetMapping("/{labId}/submissions")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<List<LabSubmissionDto>> getLabSubmissions(@PathVariable Long labId) {
         log.info("REST: Getting submissions for lab {}", labId);
         List<LabSubmissionDto> submissions = labWorkService.getSubmissionsByLabWork(labId);

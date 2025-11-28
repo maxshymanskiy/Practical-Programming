@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class CourseController {
 
     private final CourseService courseService;
@@ -51,6 +52,7 @@ public class CourseController {
 
 
     @GetMapping("/{id}/details")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<CourseDetailDto> getCourseDetails(@PathVariable Long id) {
         log.info("REST: Getting course details {}", id);
         CourseDetailDto response = courseService.getCourseDetails(id);
@@ -67,26 +69,22 @@ public class CourseController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+    public void deleteCourse(@PathVariable Long id) {
         log.info("REST: Deleting course {}", id);
         courseService.deleteCourse(id);
-        return ResponseEntity.noContent().build();
     }
 
 
     @PostMapping("/enroll")
-    public ResponseEntity<Void> enrollStudent(@Valid @RequestBody StudentEnrollDto request) {
+    public void enrollStudent(@Valid @RequestBody StudentEnrollDto request) {
         log.info("REST: Enrolling student {} in course {}", request.getStudentId(), request.getCourseId());
         courseService.enrollStudent(request.getCourseId(), request.getStudentId());
-        return ResponseEntity.ok().build();
     }
 
 
     @PostMapping("/unenroll")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> unenrollStudent(@Valid @RequestBody StudentEnrollDto request) {
+    public void unenrollStudent(@Valid @RequestBody StudentEnrollDto request) {
         log.info("REST: Unenrolling student {} from course {}", request.getStudentId(), request.getCourseId());
         courseService.unenrollStudent(request.getCourseId(), request.getStudentId());
-        return ResponseEntity.ok().build();
     }
 }

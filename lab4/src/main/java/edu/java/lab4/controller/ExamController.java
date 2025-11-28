@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/exams")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 class ExamController {
 
     private final ExamService examService;
@@ -52,10 +53,9 @@ class ExamController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteExam(@PathVariable Long id) {
+    public void deleteExam(@PathVariable Long id) {
         log.info("REST: Deleting exam {}", id);
         examService.deleteExam(id);
-        return ResponseEntity.noContent().build();
     }
 
 
@@ -68,6 +68,7 @@ class ExamController {
 
 
     @GetMapping("/{examId}/tasks")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<List<TaskDto>> getExamTasks(@PathVariable Long examId) {
         log.info("REST: Getting tasks for exam {}", examId);
         List<TaskDto> tasks = examService.getTasksByExam(examId);
@@ -76,6 +77,7 @@ class ExamController {
 
 
     @PostMapping("/submit")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<ExamSubmissionDto> submitExam(@Valid @RequestBody ExamSubmissionCreateDto request) {
         log.info("REST: Submitting exam {} for student {}", request.getExamId(), request.getStudentId());
         ExamSubmissionDto response = examService.submitExam(request);
@@ -84,7 +86,6 @@ class ExamController {
 
 
     @PostMapping("/grade")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ExamSubmissionDto> gradeExamSubmission(@Valid @RequestBody ExamGradeDto request) {
         log.info("REST: Grading exam submission {}", request.getSubmissionId());
         ExamSubmissionDto response = examService.gradeExamSubmission(request);

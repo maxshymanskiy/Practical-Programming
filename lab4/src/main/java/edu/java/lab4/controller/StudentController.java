@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class StudentController {
 
     private final StudentService studentService;
@@ -63,10 +64,8 @@ public class StudentController {
 
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+    public void deleteStudent(@PathVariable Long id) {
         log.info("REST: Deleting student {}", id);
         studentService.deleteStudent(id);
-        return ResponseEntity.noContent().build();
     }
 }

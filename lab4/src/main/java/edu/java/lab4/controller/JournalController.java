@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/journal")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class JournalController {
 
     private final GradeService gradeService;
 
     @GetMapping("/course/{courseId}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<JournalDto> getCourseJournal(@PathVariable Long courseId) {
         log.info("REST: Getting journal for course {}", courseId);
         JournalDto journal = gradeService.calculateCourseJournal(courseId);
@@ -26,7 +26,6 @@ public class JournalController {
 
 
     @GetMapping("/course/{courseId}/student/{studentId}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Double> getStudentGrade(@PathVariable Long courseId, @PathVariable Long studentId) {
         log.info("REST: Getting grade for student {} in course {}", studentId, courseId);
         Double grade = gradeService.calculateStudentTotalGrade(courseId, studentId);
