@@ -6,6 +6,7 @@ import edu.java.lab4.dto.response.AuthDto;
 import edu.java.lab4.entity.Student;
 import edu.java.lab4.entity.User;
 import edu.java.lab4.entity.UserRole;
+import edu.java.lab4.exception.DuplicateEntityException;
 import edu.java.lab4.exception.ResourceNotFoundException;
 import edu.java.lab4.mapper.AuthMapper;
 import edu.java.lab4.repository.StudentRepository;
@@ -58,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
 
         if (userRepository.existsByUsername(request.getUsername())) {
             log.warn("Registration failed: username {} already exists", request.getUsername());
-            return authMapper.toErrorDto("Username already exists");
+            throw new DuplicateEntityException("User", "username", request.getUsername());
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());

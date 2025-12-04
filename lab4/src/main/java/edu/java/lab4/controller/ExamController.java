@@ -36,8 +36,7 @@ class ExamController {
 
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<ExamDto>> getExamsByCourse(
-            @PathVariable Long courseId) {
+    public ResponseEntity<List<ExamDto>> getExamsByCourse(@PathVariable Long courseId) {
         log.info("REST: Getting exams for course {}", courseId);
         List<ExamDto> exams = examService.getExamsByCourse(courseId);
         return ResponseEntity.ok(exams);

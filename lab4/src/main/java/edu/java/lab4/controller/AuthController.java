@@ -32,11 +32,6 @@ public class AuthController {
     public ResponseEntity<AuthDto> register(@Valid @RequestBody RegisterDto request) {
         log.info("REST: Register request for username: {} with role: {}", request.getUsername(), request.getRole());
         AuthDto response = authService.register(request);
-
-        if (response.getToken() == null && "Username already exists".equals(response.getMessage())) {
-            return ResponseEntity.badRequest().body(response);
-        }
-
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

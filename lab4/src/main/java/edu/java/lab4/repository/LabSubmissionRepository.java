@@ -16,8 +16,10 @@ public interface LabSubmissionRepository extends JpaRepository<LabSubmission, Lo
 
     List<LabSubmission> findByLabWorkIdOrderBySubmittedAt(Long labWorkId);
 
-    @Query("SELECT ls FROM LabSubmission ls " +
-            "WHERE ls.student.id = :studentId " +
-            "AND ls.labWork.course.id = :courseId")
+    @Query("""
+            SELECT ls FROM LabSubmission ls
+            WHERE ls.student.id = :studentId
+              AND ls.labWork.course.id = :courseId
+            """)
     List<LabSubmission> findByStudentIdAndCourseId(@Param("studentId") Long studentId, @Param("courseId") Long courseId);
 }

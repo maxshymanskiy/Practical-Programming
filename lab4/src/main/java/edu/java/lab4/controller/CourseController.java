@@ -69,6 +69,7 @@ public class CourseController {
 
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCourse(@PathVariable Long id) {
         log.info("REST: Deleting course {}", id);
         courseService.deleteCourse(id);
@@ -76,6 +77,7 @@ public class CourseController {
 
 
     @PostMapping("/enroll")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void enrollStudent(@Valid @RequestBody StudentEnrollDto request) {
         log.info("REST: Enrolling student {} in course {}", request.getStudentId(), request.getCourseId());
         courseService.enrollStudent(request.getCourseId(), request.getStudentId());
@@ -83,6 +85,7 @@ public class CourseController {
 
 
     @PostMapping("/unenroll")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void unenrollStudent(@Valid @RequestBody StudentEnrollDto request) {
         log.info("REST: Unenrolling student {} from course {}", request.getStudentId(), request.getCourseId());
         courseService.unenrollStudent(request.getCourseId(), request.getStudentId());
