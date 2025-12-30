@@ -3,6 +3,7 @@ package com.theatre.app;
 import com.theatre.app.model.*;
 import com.theatre.app.service.*;
 import com.theatre.app.service.impl.*;
+import com.theatre.app.view.CinemaView;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -11,57 +12,52 @@ import java.time.LocalTime;
 
 public class Main {
     public static void main(String[] args) {
-        // Initialize Services (Program to interface, not implementation)
+
         CinemaService cinemaService = new CinemaServiceImpl();
         ShopService shopService = new ShopServiceImpl();
-        ReportService reportService = new ReportServiceImpl(cinemaService, shopService);
+        CinemaView view = new CinemaView();
+        ReportService reportService = new ReportServiceImpl(cinemaService, shopService, view);
 
-        // Setup Data
+        // Filling with test/mock data
         setupCinema(cinemaService);
         setupShop(shopService);
 
-        // Simulate Operations
         LocalDate today = LocalDate.now();
 
-        System.out.println("\n--- Morning Schedule ---");
+        view.printSection("Morning Schedule");
         reportService.printSchedule(today);
 
-        // Buy tickets
-        System.out.println("\n--- Buying Tickets ---");
+        view.printSection("Trying to buy tickets");
         try {
             cinemaService.buyTicket("S1", today);
             cinemaService.buyTicket("S1", today);
             cinemaService.buyTicket("S2", today);
-            System.out.println("Tickets purchased successfully.");
+            view.printMessage("Tickets purchased successfully.");
         } catch (Exception e) {
-            System.err.println("Error buying ticket: " + e.getMessage());
+            view.printError(e.getMessage());
         }
 
-        // Shop operations
-        System.out.println("\n--- Shop Operations ---");
+        view.printSection("Trying shop operations");
         try {
-            shopService.sellProduct("P1", 5); // Popcorn
-            shopService.sellProduct("P2", 2); // Soda
-            System.out.println("Products sold successfully.");
+            shopService.sellProduct("P1", 5);
+            shopService.sellProduct("P2", 2);
+            view.printMessage("Products sold successfully.");
         } catch (Exception e) {
-            System.err.println("Error in shop: " + e.getMessage());
+            view.printError(e.getMessage());
         }
 
-        // End of day report
-        System.out.println("\n--- End of Day Report ---");
+        view.printSection("End of Day Report");
         reportService.printDailyReport(today);
+
     }
 
     private static void setupCinema(CinemaService cinemaService) {
-        // Create Halls
         Hall hall1 = new Hall("H1", "Main Hall", HallType.NORMAL, 100);
         Hall hall2 = new Hall("H2", "4D Experience", HallType.FOUR_D, 50);
 
-        // Create Movies
         Movie movie1 = new Movie("M1", "Inception", Duration.ofMinutes(148));
         Movie movie2 = new Movie("M2", "Avatar 2", Duration.ofMinutes(192));
 
-        // Create Schedules
         LocalDate today = LocalDate.now();
         LocalDate nextWeek = today.plusDays(7);
 
@@ -83,29 +79,7 @@ public class Main {
         shopService.addProduct(popcorn);
         shopService.addProduct(soda);
 
-        // Initial Stock
         shopService.restockProduct("P1", 50);
         shopService.restockProduct("P2", 100);
     }
 }
-
-
-/*
- * Теорія
- * 1. (5 б). Що таке Set та Map? Яка між ними різниця? Чи є у них щось спільне? Продемонструйте їхнє використання.
- * 2. (5 б). Що REST API? Яке його призначення? Наведіть приклад
- *
- *
- * Практика
- * 1 (35 б). Реалізуйте ієрархію класів для моделювання роботи кінотеатру.
- * Кінотеатр має декілька видів залів (звичайні та 4D) і власний магазин із продажу їжі.
- * Необхідно змоделювати систему роботи кінотеатру: створення нового фільму (початок прокату), зняття фільму з прокату,
- * купівля квитків, повернення квитків, облік товарів (купівля і продаж) із магазину кінотеатру
- * Реалізуйте клас Report з методом report() що повинен вивести на екран структуру доходів для заданого дня.
- * Створити метод який виводить усі сеанси усіх фільмів на день.
- * Створіть 2 нових Exceptions на власний розсуд та використайте їх у програмі.
- * Використовуйте Stream API де це потрібно.
- *
- * УВАГА!!! Для спрощення роботи із датами можна використовувати класи LocalDate та LocalTime, також можна припускати що
- * фільми показуються в той самий час впродовж усього прокату фільму.
- */
