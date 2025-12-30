@@ -7,9 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Service for cinema operations: schedules and ticket management.
- */
 public interface CinemaService {
 
     void addMovieSchedule(MovieSchedule schedule);
