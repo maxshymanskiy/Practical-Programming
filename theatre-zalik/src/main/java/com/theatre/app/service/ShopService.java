@@ -14,5 +14,7 @@ public interface ShopService {
     void sellProduct(String productId, int quantity);
 
     List<ShopTransaction> getTransactions();
+
+    int getStock(String productId);
 }
 

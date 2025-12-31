@@ -1,5 +1,7 @@
 package com.theatre.app.service.impl;
 
+import static com.theatre.app.util.validation.ModelValidator.*;
+
 import com.theatre.app.model.ShopTransaction;
 import com.theatre.app.model.TransactionType;
 import com.theatre.app.model.Ticket;
@@ -8,7 +10,6 @@ import com.theatre.app.service.ReportService;
 import com.theatre.app.service.ShopService;
 import com.theatre.app.view.CinemaView;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,39 +19,45 @@ public class ReportServiceImpl implements ReportService {
     private final CinemaView view;
 
     public ReportServiceImpl(CinemaService cinemaService, ShopService shopService, CinemaView view) {
+        validateNotNull(cinemaService, "CinemaService");
+        validateNotNull(shopService, "ShopService");
+        validateNotNull(view, "CinemaView");
         this.cinemaService = cinemaService;
         this.shopService = shopService;
         this.view = view;
     }
 
     @Override
-    public void printDailyReport(LocalDate date) {
+    public void report(LocalDate date) {
+        validateNotNull(date, "Date");
+
         List<Ticket> tickets = cinemaService.getSoldTicketsForDay(date);
-        BigDecimal ticketRevenue = calculateRevenue(tickets);
+        double ticketRevenue = calculateRevenue(tickets);
 
         List<ShopTransaction> shopSales = getShopSalesForDay(date);
-        BigDecimal shopRevenue = calculateShopRevenue(shopSales);
+        double shopRevenue = calculateShopRevenue(shopSales);
 
         view.printDailyReport(date, tickets.size(), ticketRevenue, shopSales.size(), shopRevenue);
     }
 
     @Override
     public void printSchedule(LocalDate date) {
+        validateNotNull(date, "Date");
         view.printSchedule(date, cinemaService.getSchedulesForDay(date));
     }
 
-    private BigDecimal calculateRevenue(List<Ticket> tickets) {
+    private double calculateRevenue(List<Ticket> tickets) {
         return tickets
                 .stream()
-                .map(Ticket::price)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .mapToDouble(Ticket::price)
+                .sum();
     }
 
-    private BigDecimal calculateShopRevenue(List<ShopTransaction> transactions) {
+    private double calculateShopRevenue(List<ShopTransaction> transactions) {
         return transactions
                 .stream()
-                .map(t -> t.product().price().multiply(BigDecimal.valueOf(t.quantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .mapToDouble(t -> t.product().price() * t.quantity())
+                .sum();
     }
 
     private List<ShopTransaction> getShopSalesForDay(LocalDate date) {

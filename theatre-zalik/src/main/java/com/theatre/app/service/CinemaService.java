@@ -5,7 +5,6 @@ import com.theatre.app.model.Ticket;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 public interface CinemaService {
 
@@ -15,7 +14,7 @@ public interface CinemaService {
 
     Ticket buyTicket(String scheduleId, LocalDate date);
 
-    void returnTicket(UUID ticketId);
+    void returnTicket(String ticketId);
 
     List<MovieSchedule> getSchedulesForDay(LocalDate date);
 
