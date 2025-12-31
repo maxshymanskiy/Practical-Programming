@@ -1,4 +1,4 @@
-package com.theatre.app.validation;
+package com.theatre.app.util.validation;
 
 import com.theatre.app.exception.TicketOperationException;
 import com.theatre.app.model.MovieSchedule;
@@ -6,14 +6,17 @@ import com.theatre.app.model.Ticket;
 
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.UUID;
+
+import static com.theatre.app.util.validation.ModelValidator.validateNotBlank;
+import static com.theatre.app.util.validation.ModelValidator.validateNotNull;
 
 public final class CinemaValidator {
     private CinemaValidator() {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    public static MovieSchedule requireSchedule(Map<String, MovieSchedule> schedules, String scheduleId) {
+    public static MovieSchedule validateScheduleExists(Map<String, MovieSchedule> schedules, String scheduleId) {
+        validateNotBlank(scheduleId, "Schedule ID");
         MovieSchedule schedule = schedules.get(scheduleId);
         if (schedule == null) {
             throw new TicketOperationException("Schedule not found: " + scheduleId);
@@ -22,12 +25,13 @@ public final class CinemaValidator {
     }
 
     public static void validateScheduleActive(MovieSchedule schedule, LocalDate date) {
+        validateNotNull(date, "Date");
         if (!schedule.isActive(date)) {
             throw new TicketOperationException("Movie is not showing on this date: " + date);
         }
     }
 
-    public static void validateHallCapacity(MovieSchedule schedule, LocalDate date, Map<UUID, Ticket> soldTickets) {
+    public static void validateHallCapacity(MovieSchedule schedule, LocalDate date, Map<String, Ticket> soldTickets) {
         long ticketsSoldForSession = soldTickets.values()
                 .stream()
                 .filter(t -> t.schedule().id().equals(schedule.id()))
@@ -39,7 +43,8 @@ public final class CinemaValidator {
         }
     }
 
-    public static Ticket requireTicket(Map<UUID, Ticket> soldTickets, UUID ticketId) {
+    public static Ticket validateTicketExists(Map<String, Ticket> soldTickets, String ticketId) {
+        validateNotBlank(ticketId, "Ticket ID");
         Ticket ticket = soldTickets.get(ticketId);
         if (ticket == null) {
             throw new TicketOperationException("Ticket not found: " + ticketId);

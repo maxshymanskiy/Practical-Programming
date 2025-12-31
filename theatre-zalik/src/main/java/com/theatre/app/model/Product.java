@@ -1,15 +1,13 @@
 package com.theatre.app.model;
 
-import static com.theatre.app.validation.ModelValidator.*;
+import static com.theatre.app.util.validation.ModelValidator.*;
 
 import lombok.NonNull;
-
-import java.math.BigDecimal;
 
 public record Product(
         @NonNull String id,
         @NonNull String name,
-        @NonNull BigDecimal price
+        double price
 ) {
     public Product {
         validateNotBlank(id, "Product ID");

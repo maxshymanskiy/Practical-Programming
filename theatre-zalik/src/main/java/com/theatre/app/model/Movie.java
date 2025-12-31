@@ -1,6 +1,6 @@
 package com.theatre.app.model;
 
-import static com.theatre.app.validation.ModelValidator.*;
+import static com.theatre.app.util.validation.ModelValidator.*;
 
 import lombok.NonNull;
 

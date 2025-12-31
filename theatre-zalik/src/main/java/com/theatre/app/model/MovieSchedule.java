@@ -1,10 +1,9 @@
 package com.theatre.app.model;
 
-import static com.theatre.app.validation.ModelValidator.*;
+import static com.theatre.app.util.validation.ModelValidator.*;
 
 import lombok.NonNull;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,7 +12,7 @@ public record MovieSchedule(
         @NonNull Movie movie,
         @NonNull Hall hall,
         @NonNull LocalTime startTime,
-        @NonNull BigDecimal price,
+        double price,
         @NonNull LocalDate startDate,
         @NonNull LocalDate endDate
 ) {
