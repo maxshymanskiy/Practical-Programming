@@ -2,7 +2,6 @@ package com.theatre.app.view;
 
 import com.theatre.app.model.MovieSchedule;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,13 +19,13 @@ public class CinemaView {
         System.err.println("Error: " + message);
     }
 
-    public void printDailyReport(LocalDate date, int ticketCount, BigDecimal ticketRevenue, int shopCount, BigDecimal shopRevenue) {
+    public void printDailyReport(LocalDate date, int ticketCount, double ticketRevenue, int shopCount, double shopRevenue) {
         System.out.println("=== Daily Report for " + date + " ===");
         System.out.println("Tickets sold: " + ticketCount);
-        System.out.println("Ticket Revenue: $" + ticketRevenue);
+        System.out.printf("Ticket Revenue: $%.2f%n", ticketRevenue);
         System.out.println("Shop Transactions: " + shopCount);
-        System.out.println("Shop Revenue: $" + shopRevenue);
-        System.out.println("Total Revenue: $" + ticketRevenue.add(shopRevenue));
+        System.out.printf("Shop Revenue: $%.2f%n", shopRevenue);
+        System.out.printf("Total Revenue: $%.2f%n", (ticketRevenue + shopRevenue));
         System.out.println("=================================");
     }
 
@@ -36,11 +35,10 @@ public class CinemaView {
             System.out.println("No movies scheduled for today.");
         } else {
             schedules.forEach(s -> System.out.printf(
-                    "Time: %s | Movie: %s | Hall: %s (%s) | Price: $%s%n",
+                    "Time: %s | Movie: %s | Hall: %s (%s) | Price: $%.2f%n",
                     s.startTime(), s.movie().title(), s.hall().name(), s.hall().type(), s.price()
             ));
         }
         System.out.println("=================================");
     }
 }
-
