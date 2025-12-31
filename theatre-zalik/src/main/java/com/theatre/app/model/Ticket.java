@@ -6,16 +6,16 @@ import lombok.NonNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 
 public record Ticket(
-        @NonNull UUID id,
+        @NonNull String id,
         @NonNull MovieSchedule schedule,
         @NonNull LocalDate date,
         @NonNull BigDecimal price
 ) {
     public Ticket {
+        validateNotBlank(id, "Ticket ID");
         validatePositive(price, "Ticket price");
     }
 }

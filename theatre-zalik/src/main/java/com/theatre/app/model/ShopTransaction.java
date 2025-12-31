@@ -14,7 +14,7 @@ public record ShopTransaction(
         @NonNull LocalDateTime timestamp
 ) {
     public ShopTransaction {
+        validateNotBlank(id, "Transaction ID");
         validatePositive(quantity, "Quantity");
     }
 }
-
