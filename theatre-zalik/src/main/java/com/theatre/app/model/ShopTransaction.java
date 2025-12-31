@@ -2,19 +2,20 @@ package com.theatre.app.model;
 
 import static com.theatre.app.util.validation.ModelValidator.*;
 
-import lombok.NonNull;
-
 import java.time.LocalDateTime;
 
 public record ShopTransaction(
-        @NonNull String id,
-        @NonNull Product product,
+        String id,
+        Product product,
         int quantity,
-        @NonNull TransactionType type,
-        @NonNull LocalDateTime timestamp
+        TransactionType type,
+        LocalDateTime timestamp
 ) {
     public ShopTransaction {
         validateNotBlank(id, "Transaction ID");
+        validateNotNull(product, "Product");
         validatePositive(quantity, "Quantity");
+        validateNotNull(type, "Transaction type");
+        validateNotNull(timestamp, "Timestamp");
     }
 }

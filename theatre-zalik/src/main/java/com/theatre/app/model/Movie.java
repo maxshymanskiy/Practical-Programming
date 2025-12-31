@@ -2,14 +2,12 @@ package com.theatre.app.model;
 
 import static com.theatre.app.util.validation.ModelValidator.*;
 
-import lombok.NonNull;
-
 import java.time.Duration;
 
 public record Movie(
-        @NonNull String id,
-        @NonNull String title,
-        @NonNull Duration duration
+        String id,
+        String title,
+        Duration duration
 ) {
     public Movie {
         validateNotBlank(id, "Movie ID");

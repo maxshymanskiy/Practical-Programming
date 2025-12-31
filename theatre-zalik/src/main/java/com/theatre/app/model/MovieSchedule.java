@@ -2,22 +2,23 @@ package com.theatre.app.model;
 
 import static com.theatre.app.util.validation.ModelValidator.*;
 
-import lombok.NonNull;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record MovieSchedule(
-        @NonNull String id,
-        @NonNull Movie movie,
-        @NonNull Hall hall,
-        @NonNull LocalTime startTime,
+        String id,
+        Movie movie,
+        Hall hall,
+        LocalTime startTime,
         double price,
-        @NonNull LocalDate startDate,
-        @NonNull LocalDate endDate
+        LocalDate startDate,
+        LocalDate endDate
 ) {
     public MovieSchedule {
         validateNotBlank(id, "Schedule ID");
+        validateNotNull(movie, "Movie");
+        validateNotNull(hall, "Hall");
+        validateNotNull(startTime, "Start time");
         validatePositive(price, "Price");
         validateDateRange(startDate, endDate);
     }

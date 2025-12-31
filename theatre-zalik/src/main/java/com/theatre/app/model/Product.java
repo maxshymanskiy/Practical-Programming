@@ -2,11 +2,9 @@ package com.theatre.app.model;
 
 import static com.theatre.app.util.validation.ModelValidator.*;
 
-import lombok.NonNull;
-
 public record Product(
-        @NonNull String id,
-        @NonNull String name,
+        String id,
+        String name,
         double price
 ) {
     public Product {
