@@ -14,10 +14,12 @@ This repository is structured by lab number. Each directory contains the source 
 * `lab2/` - Java OOP
 * `lab3/` - StreamAPI, Exception
 * `lab4/` - Spring Boot, Maven
-  
+* `theatre-zalik/` - Final project: Theatre management system
 ---
 
 ### Prerequisites
 
-* **Java Development Kit (JDK)** - 21.
+* **Java Development Kit (JDK)** - 24.
 * IDE [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+* Build tool [Maven](https://maven.apache.org/)
+* [Postman](https://www.postman.com/) for API testing (optional)
