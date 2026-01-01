@@ -12,6 +12,7 @@ import com.theatre.app.view.CinemaView;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ReportServiceImpl implements ReportService {
     private final CinemaService cinemaService;
@@ -63,8 +64,10 @@ public class ReportServiceImpl implements ReportService {
     private List<ShopTransaction> getShopSalesForDay(LocalDate date) {
         return shopService.getTransactions()
                 .stream()
-                .filter(t -> t.timestamp().toLocalDate().equals(date))
-                .filter(t -> t.type() == TransactionType.SELL_OUT)
+                .filter(t ->
+                        t.type() == TransactionType.SELL_OUT
+                        && t.timestamp().toLocalDate().equals(date)
+                )
                 .toList();
     }
 }

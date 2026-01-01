@@ -34,8 +34,10 @@ public final class CinemaValidator {
     public static void validateHallCapacity(MovieSchedule schedule, LocalDate date, Map<String, Ticket> soldTickets) {
         long ticketsSoldForSession = soldTickets.values()
                 .stream()
-                .filter(t -> t.schedule().id().equals(schedule.id()))
-                .filter(t -> t.date().equals(date))
+                .filter(t ->
+                        t.schedule().id().equals(schedule.id())
+                        && t.date().equals(date)
+                )
                 .count();
 
         if (ticketsSoldForSession >= schedule.hall().capacity()) {
